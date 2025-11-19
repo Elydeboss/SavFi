@@ -4,7 +4,7 @@ import SavingsPlan from './pages/SavingsPlan';
 import Transaction from './pages/Transaction';
 import Referrals from './pages/Referrals';
 import SaveBot from './pages/SaveBot';
-import Profile from './pages/profile';
+import Profile from './pages/Profile';
 
 const App: React.FC = () => {
   return (

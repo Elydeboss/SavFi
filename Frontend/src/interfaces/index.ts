@@ -3,3 +3,8 @@ export interface SidebarProps {
   label: string;
   path: string;
 }
+
+export interface NavbarProps {
+  title: string;
+  profileImage?: string;
+}
