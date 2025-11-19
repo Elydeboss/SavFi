@@ -1,4 +1,51 @@
-# React + TypeScript + Vite
+# 🟢 SavFi
+
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![React](https://img.shields.io/badge/react-18-blue)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-5-blue)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/vite-4-yellow)](https://vitejs.dev/)
+[![Tailwind](https://img.shields.io/badge/tailwindcss-3-teal)](https://tailwindcss.com/)
+
+A React + TypeScript dashboard project with a **sidebar**, **routing**, **icons**, and **responsive design**. Built with **React Router DOM**, **Lucide Icons**, and **Tailwind CSS**.
+
+---
+
+-npm install react react-dom
+-npm install react-router-dom
+-npm install lucide-react
+
+# 🟢 SavFi Dashboard
+
+## 🌟 Features
+
+- Fully typed with **TypeScript**
+- Sidebar with **icons first** and buttons
+- SPA navigation with **React Router DOM**
+- Responsive design with **Tailwind CSS**
+- Easy to extend with new routes or pages
+
+---
+
+## 📸 Screenshots
+
+![Sidebar Example](./screenshots/sidebar.png)
+_Sidebar with icons first, active link highlighted_
+
+![Dashboard Example](./screenshots/dashboard.png)
+_Sample dashboard page_
+
+> Replace the screenshots with your own images in `./screenshots/`.
+
+---
+
+## 🛠 Project Setup
+
+### 1️⃣ Clone the repository
+
+````bash
+git clone <your-repo-url>
+cd frontend
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -43,14 +90,14 @@ export default defineConfig([
     },
   },
 ])
-```
+````
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
 ```js
 // eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+import reactX from 'eslint-plugin-react-x';
+import reactDom from 'eslint-plugin-react-dom';
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -71,5 +118,5 @@ export default defineConfig([
       // other options...
     },
   },
-])
+]);
 ```
