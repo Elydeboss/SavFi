@@ -1,9 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FiSearch, FiBell, FiCalendar, FiX } from 'react-icons/fi';
+import {
+  FiSearch,
+  FiBell,
+  FiCalendar,
+  FiX,
+  FiChevronDown,
+} from 'react-icons/fi';
 import ThemeToggle from './ThemeToggle';
 import type { NavbarProps } from '../../interfaces';
 
 const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
+  const [avatarOpen, setAvatarOpen] = useState(false);
+  const toggleAvatar = () => setAvatarOpen((prev) => !prev);
+
   const [searchActive, setSearchActive] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -25,11 +34,11 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
   const handleSearch = () => console.log('Search for:', searchValue);
 
   return (
-    <header className="flex flex-col md:flex-row items-start md:items-center justify-between px-2 md:px-3 lg:px-10 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-neutral-800 dark:text-white">
+    <header className="fixed top-0 right-0 left-0  md:left-65 md:h-[88px] lg:left-[332px] flex flex-col md:flex-row items-start md:items-center justify-between px-2 md:px-3 lg:px-10 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-neutral-800 dark:text-white md:pt-[90]">
       <div className="flex items-center w-full md:w-auto justify-between md:justify-start gap-2 md:gap-6">
         <h1
           className={`text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 transition-all duration-300 dark:text-white ${
-            searchActive ? 'md:hidden lg:block' : 'block'
+            searchActive ? 'md:block' : 'block'
           }`}
         >
           {title}
@@ -40,31 +49,37 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
           <button
             onClick={toggleSearch}
             aria-label={searchActive ? 'Close search' : 'Open search'}
-            className={`p-2 rounded-full w-7 h-7 flex items-center justify-center transition dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white ${
+            className={`p-2 rounded-full flex items-center justify-center transition dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white cursor-pointer ${
               searchActive
-                ? 'mr-14 bg-blue-500 text-white'
+                ? 'mr-14 bg-blue-500 text-white '
                 : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
             }`}
           >
             {searchActive ? (
-              <FiX className="w-4 h-4 dark:tex-white" />
+              <FiX className=" dark:tex-white" />
             ) : (
-              <FiSearch className="w-4 h-4" />
+              <FiSearch className="" />
             )}
           </button>
 
           {!searchActive && (
             <>
               {/* MOBILE NOTIFICATION BUTTON */}
-              <button
-                aria-label="Notifications"
-                className="p-2 rounded-full bg-gray-200 text-gray-600 dark:text-white transition w-7 h-7 flex items-center justify-center dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
-              >
-                <FiBell className="w-4 h-4" />
-              </button>
+              <div className="relative">
+                <button
+                  aria-label="Notifications"
+                  className="p-2 rounded-full bg-gray-200 text-gray-600 dark:text-white transition  flex items-center justify-center dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
+                >
+                  <FiBell className="" />
+                </button>
+
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs md:[10px] font-semibold px-1.5 py-0.5 rounded-full">
+                  8
+                </span>
+              </div>
 
               {/* MOBILE THEME TOGGLE (REPLACED FiMoon) */}
-              <div className="mr-10">
+              <div className="mr-12">
                 <ThemeToggle />
               </div>
             </>
@@ -80,15 +95,15 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
             type="text"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            placeholder="Search..."
-            className="flex-1 px-3 pr-10 py-2 rounded-md border text-black-text border-gray-300 bg-gray focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Search plan, transaction e.t.c"
+            className="flex-1 px-3 pr-10 py-2 border text-black-text dark:text-white dark:bg-neutral-800 border-gray-300 bg-gray focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full"
           />
           <button
             onClick={handleSearch}
             aria-label="Search"
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800 dark:text-white"
           >
-            <FiSearch className="w-4 h-4" />
+            <FiSearch className="cursor-pointer" />
           </button>
         </div>
       )}
@@ -100,13 +115,13 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
           <button
             onClick={toggleSearch}
             aria-label="Open search"
-            className={`p-2 lg:p-3 rounded-full w-10 h-10 lg:w-11 lg:h-11 flex items-center justify-center transition dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white ${
+            className={`p-2 md:p-3 lg:p-3 rounded-full flex items-center justify-center transition dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white z-10 cursor-pointer ${
               searchActive
-                ? 'mr-5 bg-blue-500 text-white'
+                ? 'relative  mr-5 md:top-0.5 md:right-1 bg-blue-500 text-white '
                 : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
             }`}
           >
-            <FiSearch className="lg:w-5 lg:h-5" />
+            <FiSearch className="" />
           </button>
 
           {searchActive && (
@@ -115,8 +130,8 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
               type="text"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Search..."
-              className="absolute top-0 right-full mr-5 px-3 py-2 md:py-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 w-56 md:w-72 lg:w-75 transition-all duration-300"
+              placeholder="Search plan, transaction e.t.c"
+              className="absolute rounded-full -top-1 md:right-0 lg:top-0 lg:right-0 mr-5 px-3 py-2 md:py-2.5  border border-gray-500 focus:outline-none focus:ring-2 text-black-text focus:ring-blue-500 w-56 md:w-72 lg:w-100 transition-all duration-300 dark:text-white "
             />
           )}
         </div>
@@ -131,23 +146,23 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
               aria-label="Notifications"
               className="p-2 md:p-3 rounded-full bg-gray-200 text-gray-600 transition  flex items-center justify-center  dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white"
             >
-              <FiBell className="lg:w-5 lg:h-5" />
+              <FiBell className="" />
             </button>
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs md:[10px] font-semibold px-1.5 py-0.5 rounded-full">
               8
             </span>
           </div>
-
           <ThemeToggle />
-
           {/* DATE */}
           <div className="flex items-center text-sm md:text-base lg:text-lg font-semibold text-gray-700 gap-2 dark:text-white">
-            <FiCalendar className="md:w-4 md:h-4 lg:w-6 lg:h-6" />
+            <FiCalendar className="" />
             {currentDate}
           </div>
 
-          {/* AVATAR */}
-          <div className="flex items-center space-x-2 cursor-pointer">
+          <div
+            className="flex items-center space-x-2 cursor-pointer"
+            onClick={toggleAvatar} // <-- toggle on click
+          >
             <img
               src={
                 profileImage ||
@@ -156,7 +171,11 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
               alt="User Avatar"
               className="w-8 h-8 md:w-9 md:h-9 rounded-full"
             />
-            <span className="text-sm md:text-base text-gray-700">▼</span>
+            <FiChevronDown
+              className={`transition-transform duration-300 ${
+                avatarOpen ? 'rotate-180' : 'rotate-0'
+              }`}
+            />
           </div>
         </div>
       </div>
