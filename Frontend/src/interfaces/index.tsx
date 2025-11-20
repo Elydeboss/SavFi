@@ -1,7 +1,8 @@
 export interface SidebarProps {
   icon?: React.ReactNode;
   label: string;
-  path: string;
+
+  component: React.ReactNode;
 }
 
 export interface NavbarProps {

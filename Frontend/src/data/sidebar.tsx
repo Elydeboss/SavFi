@@ -6,10 +6,16 @@ import receipt from '../assets/menu/receipt-2.png';
 import userGroup from '../assets/menu/Users Group Rounded.png';
 import bot from '../assets/menu/fluent_bot-16-regular.png';
 
+import DashboardHome from '../pages/DashboardHome';
+import SavingsPlan from '../pages/SavingsPlan';
+import Transaction from '../pages/Transaction';
+import Referrals from '../pages/Referrals';
+import SaveBotPage from '../pages/SaveBot';
+
 export const sidebarItems: SidebarProps[] = [
-  { icon: home, label: 'Dashboard', path: '/dashboard' },
-  { icon: wallet, label: 'Savings Plan', path: '/savings-plan' },
-  { icon: receipt, label: 'Transaction', path: '/transaction' },
-  { icon: userGroup, label: 'Referrals', path: '/referrals' },
-  { icon: bot, label: 'SaveBot', path: '/savebot' },
+  { icon: home, label: 'Dashboard', component: <DashboardHome /> },
+  { icon: wallet, label: 'Savings Plan', component: <SavingsPlan /> },
+  { icon: receipt, label: 'Transaction', component: <Transaction /> },
+  { icon: userGroup, label: 'Referrals', component: <Referrals /> },
+  { icon: bot, label: 'SaveBot', component: <SaveBotPage /> },
 ];
