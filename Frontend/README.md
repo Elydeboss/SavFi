@@ -12,7 +12,7 @@ A React + TypeScript dashboard project with a **sidebar**, **routing**, **icons*
 
 -npm install react react-dom
 -npm install react-router-dom
--npm install lucide-react
+-npm install react-icons
 
 # 🟢 SavFi Dashboard
 

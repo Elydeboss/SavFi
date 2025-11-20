@@ -6,12 +6,8 @@ const Dashboard: React.FC = () => {
     <div className="bg-neutral-200 min-h-screen">
       <Sidebar />
 
-      {/* MAIN CONTENT: push right to avoid overlap */}
-      <div className=" md:ml-[332px] flex flex-col flex-1 bg-neutral-50">
+      <div className=" md:ml-65 lg:ml-[332px] flex flex-col flex-1 bg-neutral-50">
         <Navbar title="Dashboard" />
-
-        {/* PAGE CONTENT */}
-        <div className="p-6">Dashboard content...</div>
       </div>
     </div>
   );

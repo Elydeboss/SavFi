@@ -19,7 +19,7 @@ const Sidebar: FC = () => {
   return (
     <>
       <button
-        className="md:hidden fixed top-5.5 right-2 z-50 p-2 bg-gray-400 h-10 w-10 text-black-text rounded-sm"
+        className="md:hidden fixed top-3 right-2 z-50 p-2 bg-gray-200 h108 w-8 text-blue rounded-sm"
         onClick={() => setIsOpen(!isOpen)}
       >
         ☰
@@ -27,7 +27,7 @@ const Sidebar: FC = () => {
       <aside>
         <div
           className={`
-          fixed top-0 left-0 w-64 md:w-[332px] max-h-[1024] bg-neutral-50 text-black-text p-4 md:p-8 font-medium
+          fixed top-0 left-0 w-55 md:w-65 lg:w-[332px] max-h-[1024] bg-neutral-50 text-black-text p-4 md:p-8 font-medium
           transform transition-transform duration-300 ease-in-out z-40
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
           md:translate-x-0
@@ -36,15 +36,17 @@ const Sidebar: FC = () => {
           <img
             src={logo}
             alt="SavFi logo"
-            className="w-auto h-8 md:h-[42px] cursor-pointer"
+            className="w-auto h-6 md:h-[42px] cursor-pointer"
           />
 
           <div className="flex flex-col justify-between h-[918px] py-12">
-            <main className="flex flex-col gap-3 w-[268px]">
-              <h2 className="text-gray-500">MAIN MENU</h2>
+            <main className="flex flex-col gap-3 w-[180px] md:w-[200px] lg:w-full">
+              <h2 className="text-sm md:base lg:text-[18px] text-gray-500">
+                MAIN MENU
+              </h2>
               <div className="relative flex flex-col gap-2">
                 <div
-                  className="absolute top-3 left-0 z-10 w-2 h-8 bg-blue-500 rounded-tr-md rounded-br-md transition-all duration-300"
+                  className="absolute  top-3 left-0 z-10 w-2 h-6 md:h-8 bg-blue-500 rounded-tr-md rounded-br-md transition-all duration-300"
                   style={{
                     transform: `translateY(${activeIndex * itemHeight}px)`,
                   }}
@@ -58,7 +60,7 @@ const Sidebar: FC = () => {
                       <li key={item.path} className="py-1 relative">
                         <button
                           onClick={() => navigate(item.path)}
-                          className={`group flex items-center gap-3 w-[200px] md:w-full h-12 py-3 px-4 font-medium rounded-xl transition
+                          className={`text-sm md:base group flex items-center gap-3 w-[190px] md:w-[220px] lg:w-full h-10 md:h-12 py-3 px-4 font-medium rounded-xl transition
                           ${isActive ? 'bg-gray-200' : ''}`}
                         >
                           <img
@@ -68,7 +70,7 @@ const Sidebar: FC = () => {
                           />
                           <span>{item.label}</span>
 
-                          <span className="absolute right-3 w-2 h-2 bg-red-500 rounded-full opacity-0 transition-opacity duration-200 group-hover:opacity-100"></span>
+                          <span className="absolute right-1 md:-right-2 lg:right-3 w-2 h-2 bg-red-500 rounded-full opacity-0 transition-opacity duration-200 group-hover:opacity-100"></span>
                         </button>
                       </li>
                     );
@@ -76,19 +78,21 @@ const Sidebar: FC = () => {
                 </ul>
               </div>
 
-              <section className="flex flex-col gap-3 w-[268px] mt-6">
-                <h3 className="text-gray-500">ACCOUNT</h3>
-                <div className="relative group">
+              <section className="flex flex-col gap-3 w-[180px] md:w-[200px] lg:w-full mt-6">
+                <h3 className="text-sm md:base lg:text-[18px] text-gray-500">
+                  ACCOUNT
+                </h3>
+                <div className="relative group text-sm md:base">
                   <button
                     onClick={() => navigate('/profile')}
-                    className={`flex items-center gap-2 w-full p-2 rounded-xl transition ${
+                    className={`flex items-center gap-2 p-2  w-[190px] md:w-[220px] lg:w-full rounded-xl transition ${
                       location.pathname === '/profile' ? 'bg-gray-200' : ''
                     }`}
                   >
                     <img src={user} alt="userIcon" className="w-5 h-5 m" />
                     <p>Profile</p>
 
-                    <span className="absolute right-3 w-2 h-2 bg-red-500 rounded-full opacity-0 transition-opacity duration-200 group-hover:opacity-100"></span>
+                    <span className="absolute right-1 md:-right-2 lg:right-3 w-2 h-2 bg-red-500 rounded-full opacity-0 transition-opacity duration-200 group-hover:opacity-100"></span>
                   </button>
                 </div>
               </section>
