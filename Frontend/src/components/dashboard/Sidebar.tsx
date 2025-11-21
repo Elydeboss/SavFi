@@ -44,7 +44,7 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
   const indicatorOffset =
     activeIndex < sidebarItems.length
       ? activeIndex * itemHeight
-      : sidebarItems.length * itemHeight + 72;
+      : sidebarItems.length * itemHeight + 68;
 
   return (
     <>
@@ -56,8 +56,8 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
       </button>
       <aside className="">
         <div
-          className={`fixed top-0 left-0 w-55 md:w-65 lg:w-[332px] max-h-[1024] bg-neutral-50 text-black-text p-4 md:p-8 font-medium
-            transform z-40
+          className={`fixed  top-0 left-0 w-55 md:w-65 lg:w-[332px] max-h-[1024] bg-neutral-50 text-black-text p-4 md:p-8 font-medium
+            transform z-50
             ${isOpen ? 'translate-x-0' : '-translate-x-full'}
             md:translate-x-0 dark:bg-gray-700 dark:text-white`}
         >
