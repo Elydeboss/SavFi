@@ -1,7 +1,7 @@
 import React from 'react';
 
-const SavingPlan = () => {
+const SavingsPlan = () => {
   return <div>SavingPlan</div>;
 };
 
-export default SavingPlan;
+export default SavingsPlan;

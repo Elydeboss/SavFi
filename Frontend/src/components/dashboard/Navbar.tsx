@@ -34,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
   const handleSearch = () => console.log('Search for:', searchValue);
 
   return (
-    <header className="fixed top-0 right-0 left-0  md:left-65 md:h-[88px] lg:left-[332px] flex flex-col md:flex-row items-start md:items-center justify-between px-2 md:px-3 lg:px-10 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-neutral-800 dark:text-white md:pt-[90]">
+    <header className="fixed top-0 right-0 left-0  md:left-65 md:h-[88px] lg:left-[332px] flex flex-col md:flex-row items-start md:items-center justify-between px-3 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-neutral-800 dark:text-white">
       <div className="flex items-center w-full md:w-auto justify-between md:justify-start gap-2 md:gap-6">
         <h1
           className={`text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 transition-all duration-300 dark:text-white ${
@@ -45,7 +45,6 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
         </h1>
 
         <div className="md:hidden flex items-center gap-3">
-          {/* MOBILE SEARCH BUTTON */}
           <button
             onClick={toggleSearch}
             aria-label={searchActive ? 'Close search' : 'Open search'}
@@ -64,7 +63,6 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
 
           {!searchActive && (
             <>
-              {/* MOBILE NOTIFICATION BUTTON */}
               <div className="relative">
                 <button
                   aria-label="Notifications"
@@ -78,7 +76,6 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
                 </span>
               </div>
 
-              {/* MOBILE THEME TOGGLE (REPLACED FiMoon) */}
               <div className="mr-12">
                 <ThemeToggle />
               </div>
@@ -87,7 +84,6 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
         </div>
       </div>
 
-      {/* MOBILE SEARCH FIELD */}
       {searchActive && (
         <div className="relative flex w-full md:hidden mt-2">
           <input
@@ -108,16 +104,14 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
         </div>
       )}
 
-      {/* DESKTOP SECTION */}
       <div className="hidden md:flex items-center gap-3 relative">
-        {/* DESKTOP SEARCH */}
         <div className="relative flex items-center">
           <button
             onClick={toggleSearch}
             aria-label="Open search"
             className={`p-2 md:p-3 lg:p-3 rounded-full flex items-center justify-center transition dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white z-10 cursor-pointer ${
               searchActive
-                ? 'relative  mr-5 md:top-0.5 md:right-1 bg-blue-500 text-white '
+                ? 'relative  mr-5 md:-top-0.5 lg:top-0.5 md:right-1 bg-blue-500 text-white '
                 : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
             }`}
           >
@@ -161,7 +155,7 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
 
           <div
             className="flex items-center space-x-2 cursor-pointer"
-            onClick={toggleAvatar} // <-- toggle on click
+            onClick={toggleAvatar}
           >
             <img
               src={
