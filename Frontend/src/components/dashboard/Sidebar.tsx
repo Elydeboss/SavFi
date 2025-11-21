@@ -4,6 +4,7 @@ import { sidebarItems } from '../../data/sidebar';
 import type { SidebarProps } from '../../interfaces';
 import logo from '../../assets/SavFi-logo.png';
 import user from '../../assets/menu/profile.png';
+import Profile from '../../pages/Profile';
 
 const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,12 +36,10 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
 
           <div className="flex flex-col justify-between h-[918px] py-12">
             <main className="flex flex-col gap-3 w-[180px] md:w-[200px] lg:w-full">
-              {/* MAIN MENU */}
               <h2 className="text-sm md:base lg:text-[18px] text-gray-500 dark:text-gray-400">
                 MAIN MENU
               </h2>
               <div className="relative flex flex-col gap-2">
-                {/* 🔹 Active indicator */}
                 <div
                   className="absolute top-3 left-0 z-10 w-2 h-6 md:h-8 bg-blue-500 rounded-tr-md rounded-br-md transition-all duration-300"
                   style={{
@@ -90,8 +89,7 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
                       onClick={() => {
                         setActiveIndex(sidebarItems.length);
                         if (onTitleChange) onTitleChange('Profile');
-                        if (onPageChange)
-                          onPageChange(<div>Profile Page Coming Soon</div>);
+                        if (onPageChange) onPageChange(<Profile />);
                       }}
                       className={`text-sm md:text-base lg:text-6 group flex items-center gap-3 w-[190px] md:w-[220px] lg:w-full h-10 md:h-12 py-3 px-4 font-medium rounded-xl transition
                         ${
