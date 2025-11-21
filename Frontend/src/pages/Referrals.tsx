@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import Share from "../assets/referral/Share.svg";
-import User from "../assets/referral/user-add.svg";
-import Cubes from "../assets/referral/3dcube.svg";
-import Gift from "../assets/referral/gift.svg";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import Share from '../assets/referral/Share.svg';
+import User from '../assets/referral/user-add.svg';
+import Cubes from '../assets/referral/cube.svg';
+import Gift from '../assets/referral/gift.svg';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 
 type FaqItem = {
   id: string;
@@ -14,34 +14,34 @@ type FaqItem = {
 
 const faqs: FaqItem[] = [
   {
-    id: "what-is",
-    question: "What is SaveFi point?",
+    id: 'what-is',
+    question: 'What is SaveFi point?',
     answer:
-      "SaveFi points (SFP) are rewards you earn when you and your friends save using eligible plans. You can later convert them to USDT or withdraw to your wallet once unlocked.",
+      'SaveFi points (SFP) are rewards you earn when you and your friends save using eligible plans. You can later convert them to USDT or withdraw to your wallet once unlocked.',
   },
   {
-    id: "why-5",
-    question: "Why 5 referrals to unlock?",
+    id: 'why-5',
+    question: 'Why 5 referrals to unlock?',
     answer:
-      "You need a total of 5 successful referrals to unlock withdrawals. A referral is successful when your friend signs up, completes KYC and saves with any eligible plan.",
+      'You need a total of 5 successful referrals to unlock withdrawals. A referral is successful when your friend signs up, completes KYC and saves with any eligible plan.',
   },
   {
-    id: "point-usdt",
-    question: "Point to USDT conversion rules",
+    id: 'point-usdt',
+    question: 'Point to USDT conversion rules',
     answer:
-      "The conversion rate is based on the current SaveFi point valuation shown in your dashboard. When you convert, SFP will be deducted and equivalent USDT will be credited to your balance.",
+      'The conversion rate is based on the current SaveFi point valuation shown in your dashboard. When you convert, SFP will be deducted and equivalent USDT will be credited to your balance.',
   },
   {
-    id: "swiftfi",
-    question: "Why doesn’t the emergency plan (SwiftFi) count",
+    id: 'swiftfi',
+    question: 'Why doesn’t the emergency plan (SwiftFi) count',
     answer:
-      "SwiftFi plans are designed for instant access and do not participate in long-term savings rewards, so they are excluded from the referral bonus calculation.",
+      'SwiftFi plans are designed for instant access and do not participate in long-term savings rewards, so they are excluded from the referral bonus calculation.',
   },
 ];
 
 const Card: React.FC<React.PropsWithChildren<{ className?: string }>> = ({
   children,
-  className = "",
+  className = '',
 }) => (
   <div
     className={`bg-neutral-50 rounded-2xl shadow-card px-4 dark:bg-gray-700 dark:text-white py-8 ${className}`}
@@ -57,7 +57,7 @@ const SectionTitle: React.FC<React.PropsWithChildren> = ({ children }) => (
 );
 
 const Referrals = () => {
-  const [openFaqId, setOpenFaqId] = useState<string | null>("what-is");
+  const [openFaqId, setOpenFaqId] = useState<string | null>('what-is');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [toastVisible, setToastVisible] = useState(false);
 
@@ -68,13 +68,13 @@ const Referrals = () => {
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      setToastMessage("Copied to clipboard!");
+      setToastMessage('Copied to clipboard!');
       setToastVisible(true);
       setTimeout(() => {
         setToastVisible(false);
       }, 2000);
     } catch {
-      setToastMessage("Unable to copy. Please copy manually.");
+      setToastMessage('Unable to copy. Please copy manually.');
       setToastVisible(true);
       setTimeout(() => {
         setToastVisible(false);
@@ -112,7 +112,7 @@ const Referrals = () => {
                   </span>
                   <button
                     onClick={() =>
-                      copyToClipboard("https://savefi.com/invite/jolly2025")
+                      copyToClipboard('https://savefi.com/invite/jolly2025')
                     }
                     className="cursor-pointer ml-auto"
                     aria-label="Copy referral link"
@@ -150,7 +150,7 @@ const Referrals = () => {
                     JOLLY2025
                   </span>
                   <button
-                    onClick={() => copyToClipboard("JOLLY2025")}
+                    onClick={() => copyToClipboard('JOLLY2025')}
                     className="cursor-pointer ml-auto"
                     aria-label="Copy referral code"
                   >
@@ -280,13 +280,13 @@ const Referrals = () => {
               <button
                 className="inline-flex flex-1 items-center justify-center rounded-full bg-blue px-2 py-2.5 opacity-60 font-semibold text-white text-[15px] "
                 disabled
-                onClick={() => alert("Convert to USDT clicked")}
+                onClick={() => alert('Convert to USDT clicked')}
               >
                 Convert to USDT
               </button>
               <button
                 className="inline-flex flex-1 items-center justify-center rounded-full border border-[#98CDF5] cursor-pointer  px-2 py-2.5 text-[15px] font-semibold text-[#98CDF5] hover:bg-white"
-                onClick={() => alert("Withdraw to wallet clicked")}
+                onClick={() => alert('Withdraw to wallet clicked')}
               >
                 Withdraw to wallet
               </button>
@@ -301,23 +301,23 @@ const Referrals = () => {
             {[
               {
                 icon: Share,
-                title: "1. Share your link",
-                desc: "Send your unique referral link or code to your friends",
+                title: '1. Share your link',
+                desc: 'Send your unique referral link or code to your friends',
               },
               {
                 icon: User,
-                title: "2. Friends join SaveFi",
-                desc: "Friends sign up and complete KYC",
+                title: '2. Friends join SaveFi',
+                desc: 'Friends sign up and complete KYC',
               },
               {
                 icon: Cubes,
-                title: "3. Choose a saving plan",
-                desc: "Friends choose any saving plan of their choice except SwiftFi",
+                title: '3. Choose a saving plan',
+                desc: 'Friends choose any saving plan of their choice except SwiftFi',
               },
               {
                 icon: Gift,
-                title: "3. You both get rewarded",
-                desc: "Once they complete saving, you both receive 0.5 SFP",
+                title: '3. You both get rewarded',
+                desc: 'Once they complete saving, you both receive 0.5 SFP',
               },
             ].map((step, idx) => (
               <div key={idx} className="text-center">
@@ -430,7 +430,7 @@ const Referrals = () => {
                     </span>
                     <span
                       className={`ml-4 inline-flex h-7 w-7 items-center justify-center rounded-full text-slate-500 transition-transform ${
-                        isOpen ? "rotate-180" : ""
+                        isOpen ? 'rotate-180' : ''
                       }`}
                     >
                       <ChevronDown size={24} />
