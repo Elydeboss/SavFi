@@ -1,20 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import {
   FiSearch,
   FiBell,
   FiCalendar,
   FiX,
   FiChevronDown,
-} from 'react-icons/fi';
-import ThemeToggle from './ThemeToggle';
-import type { NavbarProps } from '../../interfaces';
+} from "react-icons/fi";
+import ThemeToggle from "./ThemeToggle";
+import type { NavbarProps } from "../../interfaces";
 
 const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
   const [avatarOpen, setAvatarOpen] = useState(false);
   const toggleAvatar = () => setAvatarOpen((prev) => !prev);
 
   const [searchActive, setSearchActive] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -23,22 +23,22 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
 
   const today = new Date();
   const currentDate = today
-    .toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
+    .toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
     })
-    .replace(',', '');
+    .replace(",", "");
 
   const toggleSearch = () => setSearchActive((prev) => !prev);
-  const handleSearch = () => console.log('Search for:', searchValue);
+  const handleSearch = () => console.log("Search for:", searchValue);
 
   return (
-    <header className="fixed top-0 right-0 left-0  md:left-65 md:h-[88px] lg:left-[332px] flex flex-col md:flex-row items-start md:items-center justify-between px-3 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-neutral-800 dark:text-white">
+    <header className="fixed top-0 right-0 left-0  md:left-65 md:h-[88px] lg:left-[332px] flex flex-col md:flex-row items-start md:items-center justify-between px-3 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-gray-700 dark:text-white z-40">
       <div className="flex items-center w-full md:w-auto justify-between md:justify-start gap-2 md:gap-6">
         <h1
           className={`text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 transition-all duration-300 dark:text-white ${
-            searchActive ? 'md:block' : 'block'
+            searchActive ? "md:block" : "block"
           }`}
         >
           {title}
@@ -47,11 +47,11 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
         <div className="md:hidden flex items-center gap-3">
           <button
             onClick={toggleSearch}
-            aria-label={searchActive ? 'Close search' : 'Open search'}
+            aria-label={searchActive ? "Close search" : "Open search"}
             className={`p-2 rounded-full flex items-center justify-center transition dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white cursor-pointer ${
               searchActive
-                ? 'mr-14 bg-blue-500 text-white '
-                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                ? "mr-14 bg-blue-500 text-white "
+                : "bg-gray-200 text-gray-600 hover:bg-gray-300"
             }`}
           >
             {searchActive ? (
@@ -109,10 +109,10 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
           <button
             onClick={toggleSearch}
             aria-label="Open search"
-            className={`p-2 md:p-3 lg:p-3 rounded-full flex items-center justify-center transition dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white z-10 cursor-pointer ${
+            className={`p-2 md:p-3 lg:p-3 rounded-full flex items-center justify-center transition dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white z-10 cursor-pointer ${
               searchActive
-                ? 'relative  mr-5 md:-top-0.5 lg:top-0.5 md:right-1 bg-blue-500 text-white '
-                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                ? "relative  mr-5 md:-top-0.5 lg:top-0.5 md:right-1 bg-blue-500 text-white "
+                : "bg-gray-200 text-gray-600 hover:bg-gray-300"
             }`}
           >
             <FiSearch className="" />
@@ -132,13 +132,13 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
 
         <div
           className={`items-center gap-3 ${
-            searchActive ? 'md:hidden lg:flex' : 'flex'
+            searchActive ? "md:hidden lg:flex" : "flex"
           }`}
         >
           <div className="relative">
             <button
               aria-label="Notifications"
-              className="p-2 md:p-3 rounded-full bg-gray-200 text-gray-600 transition  flex items-center justify-center  dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white"
+              className="p-2 md:p-3 rounded-full bg-gray-200 text-gray-600 transition  flex items-center justify-center  dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white"
             >
               <FiBell className="" />
             </button>
@@ -160,14 +160,14 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
             <img
               src={
                 profileImage ||
-                'https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff&size=32'
+                "https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff&size=32"
               }
               alt="User Avatar"
               className="w-8 h-8 md:w-9 md:h-9 rounded-full"
             />
             <FiChevronDown
               className={`transition-transform duration-300 ${
-                avatarOpen ? 'rotate-180' : 'rotate-0'
+                avatarOpen ? "rotate-180" : "rotate-0"
               }`}
             />
           </div>
