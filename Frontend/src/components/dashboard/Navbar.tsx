@@ -34,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
   const handleSearch = () => console.log('Search for:', searchValue);
 
   return (
-    <header className="fixed top-0 right-0 left-0  md:left-65 md:h-[88px] lg:left-[332px] flex flex-col md:flex-row items-start md:items-center justify-between px-3 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-gray-700 dark:text-white z-40">
+    <header className="fixed top-0 right-0 left-0  md:left-65 md:h-[88px] lg:left-[332px] flex flex-col md:flex-row items-start md:items-center justify-between px-3 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-gray-700 dark:text-white z-40 ">
       <div className="flex items-center w-full md:w-auto justify-between md:justify-start gap-2 md:gap-6">
         <h1
           className={`text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 transition-all duration-300 dark:text-white ${
@@ -48,13 +48,15 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
           <button
             onClick={toggleSearch}
             aria-label={searchActive ? 'Close search' : 'Open search'}
-            className={`p-2 md:p-3 rounded-full bg-gray-200 text-gray-600 transition  flex items-center justify-center  dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white cursor-pointer ${
-              searchActive
-                ? 'mr-14 bg-blue-500 text-white '
-                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+            className={`cursor-pointer p-2 md:p-3 rounded-full bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 ${
+              searchActive ? 'mr-14 bg-blue-500 text-white ' : ''
             }`}
           >
-            {searchActive ? <FiX className=" dark:tex-white" /> : <FiSearch />}
+            {searchActive ? (
+              <FiX className=" dark:tex-white" />
+            ) : (
+              <FiSearch className="" />
+            )}
           </button>
 
           {!searchActive && (
@@ -62,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
               <div className="relative">
                 <button
                   aria-label="Notifications"
-                  className="p-2 md:p-3 rounded-full bg-gray-200 text-gray-600 transition  flex items-center justify-center  dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white"
+                  className="cursor-pointer p-2 md:p-3 rounded-full bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300"
                 >
                   <FiBell className="" />
                 </button>
@@ -88,7 +90,7 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             placeholder="Search plan, transaction e.t.c"
-            className="flex-1 px-3 pr-10 py-2 border text-black-text dark:text-white dark:bg-neutral-800 border-gray-300 bg-gray focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full"
+            className="flex-1 px-3 pr-10 py-2 border text-black-text border-gray-300 bg-gray focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full"
           />
           <button
             onClick={handleSearch}
@@ -100,36 +102,32 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
         </div>
       )}
 
-      <div className="hidden md:flex items-center gap-3 relative">
-        <div className="relative flex items-center">
-          <button
-            onClick={toggleSearch}
-            aria-label="Open search"
-            className={`p-2 md:p-3 lg:p-3 rounded-full flex items-center justify-center transition dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white z-10 cursor-pointer ${
-              searchActive
-                ? 'relative  mr-5 md:-top-0.5 lg:top-0.5 md:right-1 bg-blue-500 text-white '
-                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-            }`}
-          >
-            {searchActive ? <FiX /> : <FiSearch />}
-          </button>
-
-          {/* Expanded input for md/lg */}
+      <div className="relative flex-1 flex items-center ">
+        {searchActive && (
           <input
             ref={inputRef}
             type="text"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             placeholder="Search plan, transaction e.t.c"
-            className={`absolute -top-1 md:right-0 lg:top-0 lg:right-0 mr-5 px-3 py-2 md:py-2.5 border border-gray-500 focus:outline-none focus:ring-2 text-black-text focus:ring-blue-500 transition-all duration-300 rounded-full dark:text-white
-              ${
-                searchActive
-                  ? 'w-56 md:w-80 lg:min-w-[500px] opacity-100'
-                  : 'w-0 opacity-0 pointer-events-none'
-              }`}
+            className="hidden md:flex flex-1 rounded-full ml-5 px-3 py-2 border border-gray-500 focus:outline-none focus:ring-2 text-black-text focus:ring-blue-500   transition-all duration-300 dark:text-white "
           />
-        </div>
+        )}
 
+        <button
+          onClick={toggleSearch}
+          aria-label="Open search"
+          className={`absolute hidden md:block  md:right-1 p-2 md:p-3 lg:p-3 rounded-full  items-center justify-center transition dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white z-10 cursor-pointer ${
+            searchActive
+              ? ' bg-blue-500 text-white '
+              : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+          }`}
+        >
+          <FiSearch className="" />
+        </button>
+      </div>
+
+      <div className="hidden md:flex items-center gap-3 relative">
         <div
           className={`items-center gap-3 ${
             searchActive ? 'md:hidden lg:flex' : 'flex'

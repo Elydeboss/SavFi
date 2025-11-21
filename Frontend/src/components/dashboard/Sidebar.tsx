@@ -14,7 +14,21 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
     return saved !== null ? Number(saved) : 0;
   });
 
-  const itemHeight = 56;
+  const [itemHeight, setItemHeight] = useState(40);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      if (window.innerWidth < 768) {
+        setItemHeight(48);
+      } else {
+        setItemHeight(56);
+      }
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
 
   useEffect(() => {
     if (activeIndex < sidebarItems.length) {
@@ -27,6 +41,11 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
     }
   }, [activeIndex, onTitleChange, onPageChange]);
 
+  const indicatorOffset =
+    activeIndex < sidebarItems.length
+      ? activeIndex * itemHeight
+      : sidebarItems.length * itemHeight + 68;
+
   return (
     <>
       <button
@@ -35,10 +54,10 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
       >
         ☰
       </button>
-      <aside>
+      <aside className="">
         <div
-          className={`fixed top-0 left-0 w-55 md:w-65 lg:w-[332px] max-h-[1024] bg-neutral-50 text-black-text p-4 md:p-8 font-medium
-            transform transition-transform duration-300 ease-in-out z-40
+          className={`fixed  top-0 left-0 w-55 md:w-65 lg:w-[332px] max-h-[1024] bg-neutral-50 text-black-text p-4 md:p-8 font-medium
+            transform z-50
             ${isOpen ? 'translate-x-0' : '-translate-x-full'}
             md:translate-x-0 dark:bg-gray-700 dark:text-white`}
         >
@@ -58,7 +77,7 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
                 <div
                   className="absolute top-3 left-0 z-10 w-2 h-6 md:h-8 bg-blue-500 rounded-tr-md rounded-br-md transition-all duration-300"
                   style={{
-                    transform: `translateY(${activeIndex * itemHeight}px)`,
+                    transform: `translateY(${indicatorOffset}px)`,
                   }}
                 />
 
