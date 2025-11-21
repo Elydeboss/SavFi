@@ -109,7 +109,7 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
           <button
             onClick={toggleSearch}
             aria-label="Open search"
-            className={`p-2 md:p-3 lg:p-3 rounded-full flex items-center justify-center transition dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white z-10 cursor-pointer ${
+            className={`p-2 md:p-3 lg:p-3 rounded-full flex items-center justify-center transition dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white z-10 cursor-pointer ${
               searchActive
                 ? "relative  mr-5 md:-top-0.5 lg:top-0.5 md:right-1 bg-blue-500 text-white "
                 : "bg-gray-200 text-gray-600 hover:bg-gray-300"
@@ -138,7 +138,7 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
           <div className="relative">
             <button
               aria-label="Notifications"
-              className="p-2 md:p-3 rounded-full bg-gray-200 text-gray-600 transition  flex items-center justify-center  dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white"
+              className="p-2 md:p-3 rounded-full bg-gray-200 text-gray-600 transition  flex items-center justify-center  dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white"
             >
               <FiBell className="" />
             </button>
