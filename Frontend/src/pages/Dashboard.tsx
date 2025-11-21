@@ -1,17 +1,17 @@
-import { useState } from "react";
-import Navbar from "../components/dashboard/Navbar";
-import Sidebar from "../components/dashboard/Sidebar";
-import DashboardHome from "../pages/DashboardHome";
-import { sidebarItems } from "../data/sidebar";
+import { useState } from 'react';
+import Navbar from '../components/dashboard/Navbar';
+import Sidebar from '../components/dashboard/Sidebar';
+import DashboardHome from '../pages/DashboardHome';
+import { sidebarItems } from '../data/sidebar';
 
 const Dashboard: React.FC = () => {
-  const [title, setTitle] = useState("Dashboard");
+  const [title, setTitle] = useState('Dashboard');
   const [currentPage, setCurrentPage] = useState<React.ReactNode>(
     <DashboardHome />
   );
 
   return (
-    <div className="bg-neutral-200 min-h-screen">
+    <div className="bg-neutral-200 min-h-screen ">
       <Sidebar
         items={sidebarItems}
         onTitleChange={setTitle}
