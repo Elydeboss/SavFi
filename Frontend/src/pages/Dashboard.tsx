@@ -4,21 +4,19 @@ import Sidebar from '../components/dashboard/Sidebar';
 import DashboardHome from '../pages/DashboardHome';
 
 const Dashboard: React.FC = () => {
-  const [title, setTitle] = useState('Dashboard'); // 🔵 ADDED
-  const [currentPage, setCurrentPage] = useState(<DashboardHome />); // 🔵 ADDED
+  const [title, setTitle] = useState('Dashboard');
+  const [currentPage, setCurrentPage] = useState<React.ReactNode>(
+    <DashboardHome />
+  );
 
   return (
     <div className="bg-neutral-200 min-h-screen">
-      <Sidebar
-        onTitleChange={setTitle} // 🔵 ADDED
-        onPageChange={setCurrentPage} // 🔵 ADDED
-      />
+      <Sidebar onTitleChange={setTitle} onPageChange={setCurrentPage} />
 
       <div className="md:ml-65 lg:ml-[332px] flex flex-col flex-1 bg-neutral-50">
         <Navbar title={title} />
 
-        {/* 🔵 This now changes without routing */}
-        <div className="p-6">{currentPage}</div>
+        <div className="px-3 mt-[90px]">{currentPage}</div>
       </div>
     </div>
   );
