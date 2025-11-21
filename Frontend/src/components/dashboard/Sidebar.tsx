@@ -1,12 +1,9 @@
-import { FC, useState } from 'react';
+import type { FC } from 'react';
+import { useState } from 'react';
 import { sidebarItems } from '../../data/sidebar';
+import type { SidebarProps } from '../../interfaces';
 import logo from '../../assets/SavFi-logo.png';
 import user from '../../assets/menu/profile.png';
-
-interface SidebarProps {
-  onTitleChange?: (title: string) => void;
-  onPageChange?: (page: React.ReactNode) => void;
-}
 
 const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
   const [isOpen, setIsOpen] = useState(false);
