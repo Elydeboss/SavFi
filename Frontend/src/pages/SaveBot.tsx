@@ -1,5 +1,77 @@
-const SaveBot = () => {
-  return <div>SaveBot</div>;
-};
+// App.jsx
+import { useState } from "react";
 
-export default SaveBot;
+function ChatBot() {
+  const [messages, setMessages] = useState([
+    { from: "bot", text: "Hi there! Ask me anything." },
+  ]);
+  const [input, setInput] = useState("");
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+
+    const userMessage = { from: "user", text: input };
+
+    // Custom question logic: for example “What is the capital of France?”
+    let botReplyText = "Sorry, I don’t know the answer to that.";
+    if (input.toLowerCase().includes("capital of france")) {
+      botReplyText = "The capital of France is Paris.";
+    }
+
+    const botMessage = { from: "bot", text: botReplyText };
+    setMessages((prev) => [...prev, userMessage, botMessage]);
+    setInput("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSend();
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="w-full max-w-md bg-white rounded shadow-lg p-4 flex flex-col">
+        <div className="flex-1 overflow-auto mb-4">
+          {messages.map((m, idx) => (
+            <div
+              key={idx}
+              className={`mb-2 flex ${
+                m.from === "bot" ? "justify-start" : "justify-end"
+              }`}
+            >
+              <div
+                className={`px-4 py-2 rounded ${
+                  m.from === "bot"
+                    ? "bg-blue-100 text-blue-900"
+                    : "bg-green-100 text-green-900"
+                }`}
+              >
+                {m.text}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex">
+          <input
+            className="flex-1 border border-gray-300 rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Type your question..."
+          />
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600"
+            onClick={handleSend}
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ChatBot;
