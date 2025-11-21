@@ -18,10 +18,10 @@ const Dashboard: React.FC = () => {
         onPageChange={setCurrentPage}
       />
 
-      <div className="md:ml-65 lg:ml-[332px] flex flex-col flex-1 bg-neutral-50">
+      <div className=" md:ml-65 lg:ml-[332px] flex flex-col flex-1 bg-neutral-50">
         <Navbar title={title} />
 
-        <div className="px-3 pt-[70px] md:pt-[95px] bg-neutral-200 dark:bg-gray-600 dark:text-white">
+        <div className="px-3 pt-20 md:pt-[95px] bg-neutral-200 dark:bg-gray-600 dark:text-white">
           {currentPage}
         </div>
       </div>

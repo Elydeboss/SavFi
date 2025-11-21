@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Share from '../assets/referral/Share.svg';
 import User from '../assets/referral/user-add.svg';
-import Cubes from '../assets/referral/cube.svg';
+import Cubes from '../assets/referral/3dcube.svg';
 import Gift from '../assets/referral/gift.svg';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
