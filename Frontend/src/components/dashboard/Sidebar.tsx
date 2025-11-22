@@ -5,6 +5,7 @@ import type { SidebarProps } from '../../interfaces';
 import logo from '../../assets/SavFi-logo.png';
 import user from '../../assets/menu/profile.png';
 import Profile from '../../pages/Profile';
+import { FiGift } from 'react-icons/fi';
 
 const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,13 +16,25 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
   });
 
   const [itemHeight, setItemHeight] = useState(40);
+  const [topOffset, setTopOffset] = useState(0);
+  const [add, setAdd] = useState(0);
 
   useEffect(() => {
     const updateHeight = () => {
-      if (window.innerWidth < 768) {
+      const width = window.innerWidth;
+
+      if (width < 768) {
         setItemHeight(48);
+        setTopOffset(40);
+        setAdd(64);
+      } else if (width >= 768 && width < 1024) {
+        setItemHeight(56);
+        setTopOffset(40);
+        setAdd(64);
       } else {
         setItemHeight(56);
+        setTopOffset(46);
+        setAdd(68);
       }
     };
 
@@ -42,9 +55,9 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
   }, [activeIndex, onTitleChange, onPageChange]);
 
   const indicatorOffset =
-    activeIndex < sidebarItems.length
+    (activeIndex < sidebarItems.length
       ? activeIndex * itemHeight
-      : sidebarItems.length * itemHeight + 68;
+      : sidebarItems.length * itemHeight + add) + topOffset;
 
   return (
     <>
@@ -54,9 +67,9 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
       >
         ☰
       </button>
-      <aside className="">
+      <aside>
         <div
-          className={`fixed  top-0 left-0 w-55 md:w-65 lg:w-[332px] max-h-[1024] bg-neutral-50 text-black-text p-4 md:p-8 font-medium
+          className={`fixed top-0 left-0 w-55 md:w-65 lg:w-[332px]  py-12 bg-neutral-50 text-black-text p-4 md:p-8 font-medium
             transform z-50
             ${isOpen ? 'translate-x-0' : '-translate-x-full'}
             md:translate-x-0 dark:bg-gray-700 dark:text-white`}
@@ -67,89 +80,132 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
             className="w-auto h-6 md:h-[42px] cursor-pointer"
           />
 
-          <div className="flex flex-col justify-between h-[918px] py-12">
-            <main className="flex flex-col gap-3 w-[180px] md:w-[200px] lg:w-full">
+          <main className="flex flex-col h-full w-[180px]  md:w-[200px] justify-between lg:w-full py-12 gap-12 md:pb-16 ">
+            <div className="relative  flex flex-col gap-2 max-h-[430px]">
+              <div
+                className="absolute top-0 left-0 z-10 w-2 h-6 md:h-8 bg-blue-500 rounded-tr-md rounded-br-md transition-transform duration-300 ease-out"
+                style={{
+                  transform: `translateY(${indicatorOffset}px)`,
+                }}
+              />
+
               <h2 className="text-sm md:base lg:text-[18px] text-gray-500 dark:text-gray-400">
                 MAIN MENU
               </h2>
 
-              <div className="relative flex flex-col gap-2">
-                <div
-                  className="absolute top-3 left-0 z-10 w-2 h-6 md:h-8 bg-blue-500 rounded-tr-md rounded-br-md transition-all duration-300"
-                  style={{
-                    transform: `translateY(${indicatorOffset}px)`,
-                  }}
-                />
-
-                <ul className="relative list-none">
-                  {sidebarItems.map((item, index) => {
-                    const isActive = index === activeIndex;
-                    return (
-                      <li key={item.label} className="py-1 relative">
-                        <button
-                          onClick={() => {
-                            setActiveIndex(index);
-                            localStorage.setItem(
-                              'activeSidebarIndex',
-                              index.toString()
-                            );
-                          }}
-                          className={`text-sm md:text-base lg:text-6 group flex items-center gap-3 w-[190px] md:w-[220px] lg:w-full h-10 md:h-12 py-3 px-4 font-medium rounded-xl transition cursor-pointer
+              <ul className="relative list-none">
+                {sidebarItems.map((item, index) => {
+                  const isActive = index === activeIndex;
+                  return (
+                    <li key={item.label} className="py-1 relative">
+                      <button
+                        onClick={() => {
+                          setActiveIndex(index);
+                          localStorage.setItem(
+                            'activeSidebarIndex',
+                            index.toString()
+                          );
+                        }}
+                        className={`text-sm md:text-base lg:text-6 group flex items-center gap-3 w-[190px] md:w-[220px] lg:w-full h-10 md:h-12 py-3 px-4 font-medium rounded-xl transition cursor-pointer
                             ${
                               isActive
                                 ? 'bg-gray-200 dark:bg-gray-500'
                                 : 'hover:opacity-50'
                             }`}
-                        >
-                          <img
-                            src={item.icon}
-                            alt={item.label}
-                            className="w-5 h-5 object-contain dark:bg-white rounded-sm"
-                          />
-                          <span>{item.label}</span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+                      >
+                        <img
+                          src={item.icon}
+                          alt={item.label}
+                          className="w-5 h-5 object-contain dark:bg-white rounded-sm"
+                        />
+                        <span>{item.label}</span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
 
-              <h3 className="text-sm md:base lg:text-[18px] text-gray-500 dark:text-gray-400 mt-6">
+              <h3 className=" text-sm md:base lg:text-[18px] text-gray-500 dark:text-gray-400 mt-6">
                 ACCOUNT
               </h3>
 
-              <div className="relative flex flex-col gap-2">
-                <ul className="relative list-none">
-                  <li className="py-1 relative">
-                    <button
-                      onClick={() => {
-                        setActiveIndex(sidebarItems.length);
-                        localStorage.setItem(
-                          'activeSidebarIndex',
-                          sidebarItems.length.toString()
-                        );
-                      }}
-                      className={`text-sm md:text-base lg:text-6 group flex items-center gap-3 w-[190px] md:w-[220px] lg:w-full h-10 md:h-12 py-3 px-4 font-medium rounded-xl cursor-pointer transition
+              <ul className=" list-none">
+                <li className="py-2 relative">
+                  <button
+                    onClick={() => {
+                      setActiveIndex(sidebarItems.length);
+                      localStorage.setItem(
+                        'activeSidebarIndex',
+                        sidebarItems.length.toString()
+                      );
+                    }}
+                    className={`text-sm md:text-base lg:text-6 group flex items-center gap-3 w-[190px] md:w-[220px] lg:w-full h-10 md:h-12 py-3 px-4 font-medium rounded-xl cursor-pointer transition
                         ${
                           activeIndex === sidebarItems.length
                             ? 'bg-gray-200 dark:bg-gray-500'
                             : 'hover:opacity-50'
                         }`}
-                    >
-                      <img
-                        src={user}
-                        alt="userIcon"
-                        className="w-5 h-5 object-contain dark:bg-white rounded-sm"
-                      />
-                      <p>Profile</p>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </main>
+                  >
+                    <img
+                      src={user}
+                      alt="userIcon"
+                      className="w-5 h-5 object-contain dark:bg-white rounded-sm"
+                    />
+                    <p>Profile</p>
+                  </button>
+                </li>
+              </ul>
+            </div>
 
-            <div className="mt-auto w-[268px] min-h-[163px]">Invite</div>
-          </div>
+            <section className="w-full flex justify-center">
+              <div
+                className="
+      max-w-[268px] rounded-xl p-4 shadow-sm
+      bg-[#EAF4FF] dark:bg-[#1E293B]
+    "
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <div
+                    className="
+          w-7 h-7 rounded-md flex items-center justify-center font-semibold
+          bg-[#D6EBFF] dark:bg-[#334155]
+        "
+                  >
+                    <FiGift
+                      className="
+            h-6 w-6 p-1 rounded-sm text-lg
+            text-[#007AFF] dark:text-[#60A5FA]
+            bg-[#D6EBFF] dark:bg-[#334155]
+          "
+                    />
+                  </div>
+
+                  <h2
+                    className="
+          text-sm md:text-[16px] lg:text-[18px]
+          text-black-text dark:text-gray-100
+        "
+                  >
+                    Invite and Earn Reward
+                  </h2>
+                </div>
+
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                  Get bonuses when your invited friends save.
+                </p>
+
+                <button
+                  className="
+        w-full py-2 text-white text-sm font-medium rounded-full transition cursor-pointer
+        bg-[#007AFF] hover:bg-[#0067dc]
+        dark:bg-[#3B82F6] dark:hover:bg-[#2563EB]
+      "
+                >
+                  Invite Now
+                </button>
+              </div>
+            </section>
+          </main>
         </div>
       </aside>
     </>
