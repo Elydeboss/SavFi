@@ -117,7 +117,7 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
         <button
           onClick={toggleSearch}
           aria-label="Open search"
-          className={`absolute hidden md:block  md:right-1 p-2 md:p-3 lg:p-3 rounded-full  items-center justify-center transition dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white z-10 cursor-pointer ${
+          className={`absolute hidden md:block  md:right-0.5 p-2 md:p-3 lg:p-3 rounded-full  items-center justify-center transition dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white z-10 cursor-pointer ${
             searchActive
               ? ' bg-blue-500 text-white '
               : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
