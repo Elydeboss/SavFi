@@ -34,10 +34,10 @@ const Navbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
   const handleSearch = () => console.log("Search for:", searchValue);
 
   return (
-    <header className="fixed top-0 right-0 left-0  md:left-65 md:h-[88px] lg:left-[332px] flex flex-col md:flex-row items-start md:items-center justify-between px-3 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-gray-700 dark:text-white z-40 ">
+    <header className="sticky top-0 right-0 left-0  md:left-65 md:h-18 lg:left-75 flex flex-col md:flex-row items-start md:items-center justify-between px-x py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-gray-700 dark:text-white z-40 ">
       <div className="flex items-center w-full md:w-auto justify-between md:justify-start gap-2 md:gap-6">
         <h1
-          className={`text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 transition-all duration-300 dark:text-white ${
+          className={`text-2xl md:text-3xl font-semibold ml-15 md:ml-0 text-gray-800 transition-all duration-300 dark:text-white ${
             searchActive ? "md:block" : "block"
           }`}
         >

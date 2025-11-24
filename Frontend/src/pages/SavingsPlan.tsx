@@ -4,7 +4,7 @@ import SavingsOverviewCard from "../components/savingplans/SavingsOverviewCard";
 import SavingsPlanCard from "../components/savingplans/SavingsPlanCard";
 import { TabButton } from "../components/savingplans/TabButton";
 import { useNavigate } from "react-router-dom";
-// import { Button } from '../components/ui/button';
+import Navbar from "../components/dashboard/Navbar";
 import { savingsOverview, savingsPlans } from "../data/savings";
 import type { PlanStatus } from "../types/savings";
 import PiggyBank from "../assets/savingplan/piggy.svg";
@@ -28,8 +28,9 @@ const SavingsPlan = () => {
       : savingsPlans.filter((plan) => plan.status === activeTab);
 
   return (
-    <div className="min-h-screen">
-      <div className="">
+    <div className="min-h-screen dark:bg-gray-600 dark:text-white">
+      <Navbar title="Savings plan" />
+      <div className="p-4">
         {/* Header */}
         <div className="flex justify-end mt-3 mb-6">
           <button

@@ -1,8 +1,5 @@
-import { useState } from "react";
 import Navbar from "../components/dashboard/Navbar";
-import Sidebar from "../components/dashboard/Sidebar";
-import SavingsPlan from "../pages/SavingsPlan";
-import { sidebarItems } from "../data/sidebar";
+
 import Breadcrumb from "../components/Breadcrumb";
 
 import { RiCheckboxCircleFill } from "react-icons/ri";
@@ -66,11 +63,6 @@ const plans = [
 export default function StartNewPlan() {
   const navigate = useNavigate();
 
-  const [title, setTitle] = useState("Dashboard");
-  const [currentPage, setCurrentPage] = useState<React.ReactNode>(
-    <SavingsPlan />
-  );
-
   const handleSelectPlan = (planId: string) => {
     if (planId === "swiftfi") {
       navigate("/savings/swiftfi");
@@ -80,88 +72,80 @@ export default function StartNewPlan() {
   };
 
   return (
-    <div className="bg-neutral-200 min-h-screen">
-      <Sidebar
-        items={sidebarItems}
-        onTitleChange={setTitle}
-        onPageChange={setCurrentPage}
-      />
-
-      <div className="md:ml-65 lg:ml-[332px] flex flex-col flex-1 bg-neutral-50">
+    <div className="bg-neutral-200 min-h-screen dark:bg-gray-600 dark:text-white">
+      <div className="">
         <Navbar title="Start new plan" />
-        <main className="px-3 pt-[70px] md:pt-[95px] bg-neutral-200 dark:bg-gray-600 dark:text-white">
+
+        <div className="p-4">
           <Breadcrumb
             items={[
               { label: "Savings plan", href: "/savings" },
               { label: "Start new plan" },
             ]}
           />
+          <h2 className="text-2xl font-bold text-foreground mb-2">
+            Pick a plan that best fits your saving goal
+          </h2>
+          <p className="text-muted-foreground mb-8">
+            All plans are funded from your USDT total balance. Lock in for
+            interest, or stay flexible with SwiftFi
+          </p>
 
-          <div className="">
-            <h2 className="text-2xl font-bold text-foreground mb-2">
-              Pick a plan that best fits your saving goal
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              All plans are funded from your USDT total balance. Lock in for
-              interest, or stay flexible with SwiftFi
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-10">
-              {plans.map((plan) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-10">
+            {plans.map((plan) => (
+              <div
+                key={plan.id}
+                className={`dark:bg-gray-700 dark:text-white rounded-2xl p-3 border transition-all ${plan.cardClass}`}
+              >
+                {/* Icon & Title */}
                 <div
-                  key={plan.id}
-                  className={`dark:bg-gray-700 dark:text-white rounded-2xl p-3 border transition-all ${plan.cardClass}`}
+                  className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 ${plan.iconClass}`}
                 >
-                  {/* Icon & Title */}
-                  <div
-                    className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 ${plan.iconClass}`}
-                  >
-                    <img src={plan.icon} className="" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-foreground mb-1">
-                    {plan.name}
-                  </h3>
-                  <p className="text-sm dark:text-white/80 text-muted-foreground mb-6">
-                    {plan.subtitle}
-                  </p>
-
-                  {/* Interest Rate */}
-                  <div className="mb-6">
-                    <p className="text-4xl font-bold text-foreground mb-1">
-                      {plan.interest}
-                      <span className="text-lg text-muted-foreground ml-1">
-                        Interest
-                      </span>
-                    </p>
-                  </div>
-
-                  {/* Features */}
-                  <div className="space-y-3 mb-6">
-                    {plan.features.map((feature, index) => (
-                      <div key={index} className="flex items-start gap-2">
-                        <RiCheckboxCircleFill
-                          className={`w-5 h-5 mt-0.5 shrink ${plan.color}`}
-                        />
-                        <span className="text-[13px] dark:text-white/80 whitespace-nowrap text-[#67686B]">
-                          {feature}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* CTA Button */}
-                  <button
-                    onClick={() => handleSelectPlan(plan.id)}
-                    className={`w-full py-2 font-semibold cursor-pointer rounded-full ${plan.buttonClass}`}
-                  >
-                    Save now
-                  </button>
+                  <img src={plan.icon} className="" />
                 </div>
-              ))}
-            </div>
+
+                <h3 className="text-xl font-bold text-foreground mb-1">
+                  {plan.name}
+                </h3>
+                <p className="text-sm dark:text-white/80 text-muted-foreground mb-6">
+                  {plan.subtitle}
+                </p>
+
+                {/* Interest Rate */}
+                <div className="mb-6">
+                  <p className="text-4xl font-bold text-foreground mb-1">
+                    {plan.interest}
+                    <span className="text-lg text-muted-foreground ml-1">
+                      Interest
+                    </span>
+                  </p>
+                </div>
+
+                {/* Features */}
+                <div className="space-y-3 mb-6">
+                  {plan.features.map((feature, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <RiCheckboxCircleFill
+                        className={`w-5 h-5 mt-0.5 shrink ${plan.color}`}
+                      />
+                      <span className="text-[13px] dark:text-white/80 whitespace-nowrap text-[#67686B]">
+                        {feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA Button */}
+                <button
+                  onClick={() => handleSelectPlan(plan.id)}
+                  className={`w-full py-2 font-semibold cursor-pointer rounded-full ${plan.buttonClass}`}
+                >
+                  Save now
+                </button>
+              </div>
+            ))}
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );
