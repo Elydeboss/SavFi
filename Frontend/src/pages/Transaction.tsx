@@ -1,5 +1,11 @@
+import DepositFlow from '../components/deposit/DepositFlow';
+
 const Transaction = () => {
-  return <div>Transaction</div>;
+  return (
+    <div>
+      <DepositFlow />
+    </div>
+  );
 };
 
 export default Transaction;
