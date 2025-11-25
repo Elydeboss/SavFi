@@ -1,36 +1,40 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 
 //import Dashboard from "./pages/Dashboard";
-import LandingPage from './pages/LandingPage';
-import UsdtWithdrawPage from './pages/UsdtWithdrawalPage';
-import Savebot from './pages/SaveBot';
-import Signup from './pages/Signup';
-//import NotFound from "./pages/notfound";
-import Login from './components/login';
-import TransactionPage from './pages/TransactionPage';
 
-import StartNewPlan from './pages/StartNewPlan';
-import SwiftFiPlan from './pages/SwiftFiPlan';
-import VaultFiPlan from './pages/VaultFiPlan';
-import GrowFiPlan from './pages/GrowFiPlan';
-import FlexiFiPlan from './pages/FlexiFiPlan';
-import HelpSupport from './pages/HelpSupport';
-import MainDashboard from './pages/MainDashboard';
-import DashboardHome from './pages/DashboardHome';
-import Referrals from './pages/Referrals';
-import SavingsPlan from './pages/SavingsPlan';
-import Profile from './pages/Profile';
-import ProfileOverview from './pages/ProfileOverview';
-import Settings from './pages/Settings';
-import Preferences from './pages/Preferences';
-import KYCVerification from './pages/KYCVerification.tsx';
-import ProfileEditForm from './pages/ProfileEditFrom.tsx';
+import Home from "./pages/Home";
+import UsdtWithdrawPage from "./pages/UsdtWithdrawalPage";
+import Savebot from "./pages/SaveBot";
+import Signup from "./pages/Signup";
+import NotFound from "./pages/notfound";
+import Login from "./components/login";
+import About from "./pages/Aboutus";
+
+import TransactionPage from "./pages/TransactionPage";
+
+import StartNewPlan from "./pages/StartNewPlan";
+import SwiftFiPlan from "./pages/SwiftFiPlan";
+import VaultFiPlan from "./pages/VaultFiPlan";
+import GrowFiPlan from "./pages/GrowFiPlan";
+import FlexiFiPlan from "./pages/FlexiFiPlan";
+import HelpSupport from "./pages/HelpSupport";
+import MainDashboard from "./pages/MainDashboard";
+import DashboardHome from "./pages/DashboardHome";
+import Referrals from "./pages/Referrals";
+import SavingsPlan from "./pages/SavingsPlan";
+import Profile from "./pages/Profile";
+import ProfileOverview from "./pages/ProfileOverview";
+import Settings from "./pages/Settings";
+import Preferences from "./pages/Preferences";
+import KYCVerification from "./pages/KYCVerification.tsx";
+import ProfileEditForm from "./pages/ProfileEditFrom.tsx";
 
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<Home />} />
 
+      <Route path="/about" element={<About />} />
       <Route path="/usdt-withdrawal" element={<UsdtWithdrawPage />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
@@ -56,7 +60,7 @@ const App: React.FC = () => {
         <Route path="edit" element={<ProfileEditForm />} />
       </Route>
 
-      {/*<Route path="*" element={<NotFound />} />*/}
+      {<Route path="*" element={<NotFound />} />}
     </Routes>
   );
 };
