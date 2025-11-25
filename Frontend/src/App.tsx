@@ -24,6 +24,7 @@ import ProfileOverview from './pages/ProfileOverview';
 import Settings from './pages/Settings';
 import Preferences from './pages/Preferences';
 import KYCVerification from './pages/KYCVerification.tsx';
+import ProfileEditForm from './pages/ProfileEditFrom.tsx';
 
 const App: React.FC = () => {
   return (
@@ -52,6 +53,7 @@ const App: React.FC = () => {
         <Route path="settings" element={<Settings />} />
         <Route path="preferences" element={<Preferences />} />
         <Route path="kyc" element={<KYCVerification />} />
+        <Route path="edit" element={<ProfileEditForm />} />
       </Route>
 
       {/*<Route path="*" element={<NotFound />} />*/}

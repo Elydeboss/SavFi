@@ -11,7 +11,7 @@ export default function KYCVerification() {
         Profile <span className="text-blue">› KYC verification</span>
       </div>
       <motion.div
-        className="w-full bg-gray-100 dark:bg-gray-700 dark:text-white min-h-screen p-4 flex justify-center items-center"
+        className="w-full bg-gray-100 dark:bg-gray-600 dark:text-white min-h-screen p-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
@@ -23,7 +23,7 @@ export default function KYCVerification() {
               =========================== */}
             {!isVerified && (
               <motion.div
-                className="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 relative"
+                className="bg-white dark:bg-gray-700 shadow rounded-2xl p-6 relative"
                 initial={{ y: 25, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.45 }}
