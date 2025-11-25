@@ -106,7 +106,7 @@ export default function TransactionsPage() {
   };
 
   return (
-    <div className="flex flex-col justify-between pb-10 h-full w-full dark:bg-gray-600 dark:text-white">
+    <div className="flex flex-col justify-between pb-10 h-full w-full max-w-screen overflow-x-hidden dark:bg-gray-600 dark:text-white">
       <div className="flex-1 flex flex-col">
         <Navbar title="Transaction" />
 
