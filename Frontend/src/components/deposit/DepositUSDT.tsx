@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import QRCode from 'qrcode.react';
 
 const walletAddress = '0x1A2b25dbduF4DSinciNHC3D4';

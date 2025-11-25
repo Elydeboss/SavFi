@@ -1,30 +1,30 @@
-// App.jsx
-import { useState } from "react";
+import { useState } from 'react';
+import Navbar from '../components/dashboard/Navbar';
 
 function ChatBot() {
   const [messages, setMessages] = useState([
-    { from: "bot", text: "Hi there! Ask me anything." },
+    { from: 'bot', text: 'Hi there! Ask me anything.' },
   ]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
 
   const handleSend = () => {
     if (!input.trim()) return;
 
-    const userMessage = { from: "user", text: input };
+    const userMessage = { from: 'user', text: input };
 
-    // Custom question logic: for example “What is the capital of France?”
-    let botReplyText = "Sorry, I don’t know the answer to that.";
-    if (input.toLowerCase().includes("capital of france")) {
-      botReplyText = "The capital of France is Paris.";
+    // Custom question logic
+    let botReplyText = "Sorry, I don't know the answer to that.";
+    if (input.toLowerCase().includes('capital of france')) {
+      botReplyText = 'The capital of France is Paris.';
     }
 
-    const botMessage = { from: "bot", text: botReplyText };
+    const botMessage = { from: 'bot', text: botReplyText };
     setMessages((prev) => [...prev, userMessage, botMessage]);
-    setInput("");
+    setInput('');
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
       handleSend();
     }
   };
@@ -37,14 +37,14 @@ function ChatBot() {
             <div
               key={idx}
               className={`mb-2 flex ${
-                m.from === "bot" ? "justify-start" : "justify-end"
+                m.from === 'bot' ? 'justify-start' : 'justify-end'
               }`}
             >
               <div
                 className={`px-4 py-2 rounded ${
-                  m.from === "bot"
-                    ? "bg-blue-100 text-blue-900"
-                    : "bg-green-100 text-green-900"
+                  m.from === 'bot'
+                    ? 'bg-blue-100 text-blue-900'
+                    : 'bg-green-100 text-green-900'
                 }`}
               >
                 {m.text}
@@ -55,7 +55,7 @@ function ChatBot() {
 
         <div className="flex">
           <input
-            className="flex-1 border border-gray-300 rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="flex-1 border border-gray-300 dark:border-gray-500 rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -63,7 +63,7 @@ function ChatBot() {
             placeholder="Type your question..."
           />
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600"
+            className="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500"
             onClick={handleSend}
           >
             Send

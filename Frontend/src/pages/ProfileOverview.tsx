@@ -17,7 +17,7 @@ export default function ProfileOverview() {
       </div>
 
       {/* Outer container */}
-      <div className="w-full bg-gray dark:bg-gray-700 dark:text-white p-4 flex justify-center">
+      <div className="w-full bg-gray dark:bg-gray-600 dark:text-white p-4 flex justify-center">
         <div
           className="
             w-full space-y-6
