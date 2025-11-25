@@ -36,7 +36,6 @@ export function ProfileSidebar() {
   return (
     <aside className="w-fit md:w-64 sticky top-22 bg-neutral-50 dark:bg-gray-700 text-black-text dark:text-white rounded-xl h-screen p-4">
       <nav className="space-y-1">
-        {/*
         {profileMenuItems.map((item) => (
           <ProfileNavLink
             key={item.path}
@@ -51,7 +50,8 @@ export function ProfileSidebar() {
             <item.icon className="w-5 h-5" />
             <span className="hidden md:flex-1 md:flex">{item.title}</span>
           </ProfileNavLink>
-        ))} */}
+        ))}{" "}
+        *
       </nav>
     </aside>
   );
