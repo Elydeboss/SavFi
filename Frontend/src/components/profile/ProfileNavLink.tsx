@@ -10,16 +10,20 @@ interface NavLinkCompatProps extends Omit<NavLinkProps, "className"> {
 }
 
 const ProfileNavLink = forwardRef<HTMLAnchorElement, NavLinkCompatProps>(
-  ({ className, activeClassName, pendingClassName, to, ...props }, ref) => {
+  (
+    { className, activeClassName, pendingClassName, to, end, ...props },
+    ref
+  ) => {
     return (
       <RouterNavLink
         ref={ref}
         to={to}
+        end={end}
         className={({ isActive, isPending }) =>
           cn(
             className,
-            isActive && activeClassName,
-            isPending && pendingClassName
+            isActive && activeClassName, // Only apply activeClassName if the link is active
+            isPending && pendingClassName // Apply pendingClassName if the link is in a pending state
           )
         }
         {...props}
