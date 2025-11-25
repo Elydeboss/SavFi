@@ -52,7 +52,9 @@ export default function TransactionRowActions({
       {open && (
         <div
           className="
-            absolute right-0 mt-2 w-48
+            absolute right-0 mt-2
+            w-48 sm:w-56 md:w-64
+            max-w-[90vw]
             bg-white dark:bg-gray-700
             rounded-lg shadow-lg border dark:border-gray-600
             z-20 animate-fadeIn
