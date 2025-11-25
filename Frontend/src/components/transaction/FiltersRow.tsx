@@ -1,4 +1,9 @@
-import { motion } from 'framer-motion';
+type Props = {
+  transactionType: string;
+  setTransactionType: (s: string) => void;
+  dateRange: string;
+  setDateRange: (s: string) => void;
+};
 
 export default function FiltersRow({
   transactionType,
@@ -7,12 +12,7 @@ export default function FiltersRow({
   setDateRange,
 }: Props) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="flex flex-col md:flex-row md:items-center gap-4 text-sm my-4  dark:text-white"
-    >
+    <div className="flex flex-col md:flex-row md:items-center gap-4 text-sm my-4  dark:text-white">
       {/* Transaction Type */}
       <div className="flex items-center gap-2">
         <span className="font-medium text-slate-700 dark:text-white">
@@ -53,6 +53,6 @@ export default function FiltersRow({
           <option value="Last 30 days">Last 30 days</option>
         </select>
       </div>
-    </motion.div>
+    </div>
   );
 }

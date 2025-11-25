@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -87,7 +87,7 @@ export default function Navbar() {
               onClick={() => setProductsOpen(!productsOpen)}
               className="flex items-center justify-between w-full hover:text-blue-600"
             >
-              Products <span>{productsOpen ? "▴" : "▾"}</span>
+              Products <span>{productsOpen ? '▴' : '▾'}</span>
             </button>
 
             {productsOpen && (

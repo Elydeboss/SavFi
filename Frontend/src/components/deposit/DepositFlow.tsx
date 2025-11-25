@@ -7,7 +7,6 @@ import DepositBankDetails from './DepositBankDetails';
 import DepositVerifyingTransfer from './DepositVerifyingTransfer';
 import DepositAwaitingConfirmation from './DepositAwaitingConfirmation';
 import DepositSuccess from './DepositSuccess';
-import DepositFailed from './DepositFailed';
 
 export default function DepositFlow() {
   const [step, setStep] = useState<'enter' | 'bank'>('enter');
@@ -55,14 +54,6 @@ export default function DepositFlow() {
       <DepositAwaitingConfirmation isOpen={modal === 'awaiting'} />
       <DepositSuccess
         isOpen={modal === 'success'}
-        onClose={() => {
-          setModal('none');
-          setStep('enter');
-        }}
-      />
-      <DepositFailed
-        isOpen={modal === 'failed'}
-        onRetry={() => setModal('verifying')}
         onClose={() => {
           setModal('none');
           setStep('enter');
