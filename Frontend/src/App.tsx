@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 
 //import Dashboard from "./pages/Dashboard";
-import LandingPage from "./pages/LandingPage";
+import Home from "./pages/Home";
 import UsdtWithdrawPage from "./pages/UsdtWithdrawalPage";
 import Savebot from "./pages/SaveBot";
 import Signup from "./pages/Signup";
-//import NotFound from "./pages/notfound";
+import NotFound from "./pages/notfound";
 import Login from "./components/login";
+import About from "./pages/Aboutus";
 
 import StartNewPlan from "./pages/StartNewPlan";
 import SwiftFiPlan from "./pages/SwiftFiPlan";
@@ -23,8 +24,9 @@ import Profile from "./pages/Profile";
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<Home />} />
 
+      <Route path="/about" element={<About />} />
       <Route path="/usdt-withdrawal" element={<UsdtWithdrawPage />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
@@ -44,7 +46,7 @@ const App: React.FC = () => {
         </Route>
       </Route>
 
-      {/*<Route path="*" element={<NotFound />} />*/}
+      {<Route path="*" element={<NotFound />} />}
     </Routes>
   );
 };

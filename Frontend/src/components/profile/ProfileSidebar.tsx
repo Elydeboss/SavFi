@@ -1,4 +1,4 @@
-import ProfileNavLink from "./ProfileNavlink"; // Import ProfileNavLink
+//import ProfileNavLink from "./ProfileNavlink"; // Import ProfileNavLink
 import {
   User,
   Edit,
@@ -26,6 +26,7 @@ export function ProfileSidebar() {
   return (
     <aside className="w-64 bg-neutral-50 dark:bg-gray-700 rounded-xl min-h-screen p-4">
       <nav className="space-y-1">
+        {/*
         {profileMenuItems.map((item) => (
           <ProfileNavLink
             key={item.path}
@@ -39,7 +40,7 @@ export function ProfileSidebar() {
             <item.icon className="w-5 h-5" />
             <span className="flex-1">{item.title}</span>
           </ProfileNavLink>
-        ))}
+        ))} */}
       </nav>
     </aside>
   );
