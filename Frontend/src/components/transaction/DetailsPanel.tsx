@@ -1,4 +1,4 @@
-import type { Transaction } from '../interfaces/transaction';
+import type { Transaction } from '../../interfaces/transaction';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type Props = {

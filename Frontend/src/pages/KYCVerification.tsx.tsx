@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { Lock } from 'lucide-react';
-import { div } from 'framer-motion/client';
 
 export default function KYCVerification() {
   const isVerified = false; // false → show Unverified only
@@ -8,8 +7,9 @@ export default function KYCVerification() {
   return (
     <div>
       <div className="px-2 flex items-center gap-1 font-medium text-sm">
-        Profile <span className="text-blue">› KYC verification</span>
+        Profile <span className="text-blue-500">› KYC verification</span>
       </div>
+
       <motion.div
         className="w-full bg-gray-100 dark:bg-gray-600 dark:text-white min-h-screen p-4"
         initial={{ opacity: 0 }}
@@ -17,10 +17,10 @@ export default function KYCVerification() {
         transition={{ duration: 0.4 }}
       >
         <div className="w-full flex justify-center mt-4">
-          <div className="w-full  space-y-6">
+          <div className="w-full max-w-md space-y-6">
             {/* ===========================
-              UNVERIFIED BLOCK
-              =========================== */}
+                UNVERIFIED BLOCK
+            ============================ */}
             {!isVerified && (
               <motion.div
                 className="bg-white dark:bg-gray-700 shadow rounded-2xl p-6 relative"
@@ -32,7 +32,7 @@ export default function KYCVerification() {
                   Verification status
                 </p>
 
-                <span className="text-xs font-medium bg-[#FFE6CB] text-yellow-700 px-3 py-1 rounded-full">
+                <span className="text-xs font-medium bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
                   KYC: Unverified
                 </span>
 
@@ -53,9 +53,8 @@ export default function KYCVerification() {
             )}
 
             {/* ===========================
-              VERIFIED SECTION
-              Only shows when isVerified === true
-              =========================== */}
+                VERIFIED SECTION
+            ============================ */}
             {isVerified && (
               <motion.div
                 className="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 space-y-4"
@@ -83,8 +82,7 @@ export default function KYCVerification() {
                       Full Name
                     </span>
                     <span className="flex items-center gap-1">
-                      Jolly Akeju
-                      <Lock size={14} />
+                      Jolly Akeju <Lock size={14} />
                     </span>
                   </div>
 
@@ -117,7 +115,7 @@ export default function KYCVerification() {
 
                 <p className="text-xs text-gray-500 dark:text-gray-300">
                   To upgrade your KYC information,
-                  <button className="text-blue underline ml-1">
+                  <button className="text-blue-500 underline ml-1">
                     Contact support
                   </button>
                 </p>

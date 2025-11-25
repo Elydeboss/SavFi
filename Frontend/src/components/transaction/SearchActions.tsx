@@ -27,7 +27,10 @@ export default function SearchActions({
           placeholder="Search plans, type, amount, status e.t.c."
           className="w-full h-11 rounded-full bg-gray-200 dark:bg-gray-800 dark:text-white pl-4 pr-12 text-sm placeholder:text-black dark:placeholder:text-gray-300 focus:outline-none"
         />
-        <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue text-white w-9 h-9 flex items-center justify-center rounded-full shadow-sm dark:bg-blue-600">
+        <button
+          title="Search"
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue text-white w-9 h-9 flex items-center justify-center rounded-full shadow-sm dark:bg-blue-600"
+        >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path
               d="M21 21l-4.35-4.35"

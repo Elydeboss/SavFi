@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);

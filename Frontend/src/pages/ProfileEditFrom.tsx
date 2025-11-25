@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 type ProfileFormValues = {
   firstName: string;
@@ -96,6 +96,7 @@ export default function ProfileEditForm({
       await Promise.resolve(onSave?.(values));
       setMessage({ type: 'success', text: 'Profile updated successfully.' });
     } catch (err) {
+      console.error(err); // log the error
       setMessage({
         type: 'error',
         text: 'Failed to save changes. Please try again.',

@@ -19,6 +19,7 @@ export default function FiltersRow({
           Transaction Type:
         </span>
         <select
+          title="Select transaction type"
           value={transactionType}
           onChange={(e) => setTransactionType(e.target.value)}
           className="px-3 py-2 rounded-md border border-slate-300 bg-white text-slate-700 shadow-sm
@@ -41,6 +42,7 @@ export default function FiltersRow({
           Date range:
         </span>
         <select
+          title="Select date range"
           value={dateRange}
           onChange={(e) => setDateRange(e.target.value)}
           className="px-3 py-2 rounded-md border border-slate-300 bg-white text-slate-700 shadow-sm
