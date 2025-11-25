@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-//import ProfileNavLink from "./ProfileNavlink"; // Import ProfileNavLink
-=======
 import ProfileNavLink from "./ProfileNavLink";
->>>>>>> 6c9cb4ed26bedd03158c525458bf37cf0f8ceb4e
 import {
   User,
   UserRoundPen,
