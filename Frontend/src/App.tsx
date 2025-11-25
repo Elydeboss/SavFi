@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 //import Dashboard from "./pages/Dashboard";
+
 import Home from "./pages/Home";
 import UsdtWithdrawPage from "./pages/UsdtWithdrawalPage";
 import Savebot from "./pages/SaveBot";
@@ -8,6 +9,8 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/notfound";
 import Login from "./components/login";
 import About from "./pages/Aboutus";
+
+import TransactionPage from "./pages/TransactionPage";
 
 import StartNewPlan from "./pages/StartNewPlan";
 import SwiftFiPlan from "./pages/SwiftFiPlan";
@@ -23,6 +26,8 @@ import Profile from "./pages/Profile";
 import ProfileOverview from "./pages/ProfileOverview";
 import Settings from "./pages/Settings";
 import Preferences from "./pages/Preferences";
+import KYCVerification from "./pages/KYCVerification.tsx";
+import ProfileEditForm from "./pages/ProfileEditFrom.tsx";
 
 const App: React.FC = () => {
   return (
@@ -43,6 +48,7 @@ const App: React.FC = () => {
         <Route path="/savings/vaultfi/create" element={<VaultFiPlan />} />
         <Route path="/savings/growfi/create" element={<GrowFiPlan />} />
         <Route path="/savings/flexfi/create" element={<FlexiFiPlan />} />
+        <Route path="transactions" element={<TransactionPage />}></Route>
         <Route path="/savebot" element={<Savebot />} />
       </Route>
       <Route path="/profile" element={<Profile />}>
@@ -50,6 +56,8 @@ const App: React.FC = () => {
         <Route path="help" element={<HelpSupport />} />
         <Route path="settings" element={<Settings />} />
         <Route path="preferences" element={<Preferences />} />
+        <Route path="kyc" element={<KYCVerification />} />
+        <Route path="edit" element={<ProfileEditForm />} />
       </Route>
 
       {<Route path="*" element={<NotFound />} />}
