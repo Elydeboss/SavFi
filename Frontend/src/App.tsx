@@ -23,6 +23,7 @@ import Profile from './pages/Profile';
 import ProfileOverview from './pages/ProfileOverview';
 import Settings from './pages/Settings';
 import Preferences from './pages/Preferences';
+import KYCVerification from './pages/KYCVerification.tsx';
 
 const App: React.FC = () => {
   return (
@@ -50,6 +51,7 @@ const App: React.FC = () => {
         <Route path="help" element={<HelpSupport />} />
         <Route path="settings" element={<Settings />} />
         <Route path="preferences" element={<Preferences />} />
+        <Route path="kyc" element={<KYCVerification />} />
       </Route>
 
       {/*<Route path="*" element={<NotFound />} />*/}
