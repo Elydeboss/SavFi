@@ -14,12 +14,15 @@ import SwiftFiPlan from "./pages/SwiftFiPlan";
 import VaultFiPlan from "./pages/VaultFiPlan";
 import GrowFiPlan from "./pages/GrowFiPlan";
 import FlexiFiPlan from "./pages/FlexiFiPlan";
-// import HelpSupport from "./pages/HelpSupport";
+import HelpSupport from "./pages/HelpSupport";
 import MainDashboard from "./pages/MainDashboard";
 import DashboardHome from "./pages/DashboardHome";
 import Referrals from "./pages/Referrals";
 import SavingsPlan from "./pages/SavingsPlan";
 import Profile from "./pages/Profile";
+import ProfileOverview from "./pages/ProfileOverview";
+import Settings from "./pages/Settings";
+import Preferences from "./pages/Preferences";
 
 const App: React.FC = () => {
   return (
@@ -41,9 +44,12 @@ const App: React.FC = () => {
         <Route path="/savings/growfi/create" element={<GrowFiPlan />} />
         <Route path="/savings/flexfi/create" element={<FlexiFiPlan />} />
         <Route path="/savebot" element={<Savebot />} />
-        <Route path="profile" element={<Profile />}>
-          {/* <Route path="/profile/help" element={<HelpSupport />} /> */}
-        </Route>
+      </Route>
+      <Route path="/profile" element={<Profile />}>
+        <Route index element={<ProfileOverview />} />
+        <Route path="help" element={<HelpSupport />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="preferences" element={<Preferences />} />
       </Route>
 
       {<Route path="*" element={<NotFound />} />}
