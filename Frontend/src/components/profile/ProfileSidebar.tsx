@@ -51,7 +51,6 @@ export function ProfileSidebar() {
             <span className="hidden md:flex-1 md:flex">{item.title}</span>
           </ProfileNavLink>
         ))}{" "}
-        *
       </nav>
     </aside>
   );

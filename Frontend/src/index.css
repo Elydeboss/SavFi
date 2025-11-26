@@ -18,10 +18,22 @@
   --color-blue-hover: #baddf8;
   --color-gray: #e5e8eb;
   --color-gray-50: #a3a5a7;
+  --color-muted-foreground: #67686b;
   --font-dm-sans: DM Sans, "sans-serif";
   --font-instrument-sans: "Instrument Sans", sans-serif;
+
+  /* Dark Mode Overrides */
+  --color-muted-foreground-dark: #ffffffcc;
+  --color-neutral-50-dark: #1a1e33;
+  --color-neutral-200-dark: #2d2d2d;
 }
 
 body {
   font-family: "Inter", sans-serif;
+}
+
+[data-theme="dark"] {
+  --color-muted-foreground: var(--color-muted-foreground-dark);
+  --color-neutral-50: var(--color-neutral-50-dark);
+  --color-neutral-200: var(--color-neutral-200-dark);
 }

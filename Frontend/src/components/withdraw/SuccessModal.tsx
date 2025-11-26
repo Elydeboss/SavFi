@@ -25,7 +25,7 @@ const SuccessModal = ({ amount, onClose }: SuccessModalProps) => {
       onClick={onClose}
     >
       <div
-        className="bg-neutral-50/95 rounded-2xl max-w-md w-full p-8 shadow-xl animate-in zoom-in-95 duration-200"
+        className="bg-neutral-50 dark:text-white rounded-2xl max-w-md w-full p-8 shadow-xl animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col items-center text-center">
