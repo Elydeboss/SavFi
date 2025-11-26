@@ -28,10 +28,11 @@ import Settings from './pages/Settings';
 import Preferences from './pages/Preferences';
 import PlanDetails from './pages/PlanDetails';
 import NairaWithdrawal from './pages/NairaWithdrawal';
-import KYCVerification from './pages/KYCVerification.tsx';
-import ProfileEditForm from './pages/ProfileEditFrom.tsx';
+import KycVerification from './pages/KycVerification.tsx';
+import ProfileEditForm from './pages/ProfileEditForm.tsx';
 import Security from './pages/Security.tsx';
 import Wallets from './pages/Wallets.tsx';
+import { KycFlow } from './components/completekyc/verificationManager.tsx';
 
 const App: React.FC = () => {
   return (
