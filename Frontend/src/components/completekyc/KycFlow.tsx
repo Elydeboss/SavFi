@@ -20,7 +20,7 @@ export default function KycFlow() {
   };
 
   return (
-    <div className=" relative w-full h-full">
+    <div className="w-full h-full">
       {/* Main Form */}
       <KycForm onVerify={startVerification} />
 
