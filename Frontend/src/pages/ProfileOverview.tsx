@@ -47,25 +47,25 @@ export default function ProfileOverview() {
             />
 
             <div className="flex-1 w-full text-center sm:text-left">
-              <p className="text-[11px] text-gray-500 dark:text-gray-300">
+              <p className="text-sm text-gray-500 dark:text-gray-300">
                 SaveFi ID: SF-1234XYZ
               </p>
 
               <h1 className="text-xl sm:text-2xl font-semibold">Jolly Akeju</h1>
 
-              <p className="text-xs text-gray-500 font-medium break-all">
+              <p className="text-sm text-gray-500 font-medium break-all">
                 Jollyakeju@gmail.com
               </p>
 
               <div className="flex justify-between gap-3 items-center pt-2">
-                <p className="text-[11px] sm:text-xs text-neutral-500 dark:text-white bg-gray py-1 px-1.5 dark:bg-gray-700 font-medium rounded">
+                <p className="text-sm text-neutral-500 dark:text-white bg-gray py-1 px-1.5 dark:bg-gray-700 font-medium rounded">
                   Signed up from Google
                 </p>
                 <Link to="edit">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.96 }}
-                    className="flex items-center gap-1.5 px-3 py-1 bg-blue text-white text-xs rounded-full font-medium"
+                    className="flex items-center gap-1.5 px-3 py-1 bg-blue text-white text-base rounded-full font-medium"
                   >
                     <PlusCircle className="w-4 h-4" />
                     Edit Profile
@@ -84,7 +84,7 @@ export default function ProfileOverview() {
               transition={{ duration: 0.5 }}
               className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-3"
             >
-              <p className="font-medium text-xs text-gray-500">
+              <p className="font-medium text-sm text-gray-500">
                 Auto-generated SaveFi wallet
               </p>
 
@@ -113,11 +113,11 @@ export default function ProfileOverview() {
                 </svg>
               </div>
 
-              <p className="p-1 rounded-xl text-[11px] text-gray-500 bg-gray max-w-[105px]">
+              <p className="p-2 rounded-xl text-gray-500 bg-gray w-fit">
                 TRC-20 / ERC-20
               </p>
 
-              <button className="text-blue text-xs font-medium flex items-center gap-1">
+              <button className="text-blue text-base font-medium flex items-center gap-1">
                 Manage connected wallets <ChevronRight className="w-4 h-4" />
               </button>
             </motion.div>
@@ -127,9 +127,9 @@ export default function ProfileOverview() {
               initial={{ x: 30, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-3 "
+              className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-3"
             >
-              <p className="font-medium text-xs text-gray-500">
+              <p className="font-medium text-sm text-gray-500">
                 SaveFi point balance
               </p>
               <div className="flex items-center gap-1">
@@ -178,6 +178,7 @@ export default function ProfileOverview() {
                       strokeLinejoin="round"
                     />
                   </g>
+
                   <defs>
                     <clipPath id="clip0_527_5088">
                       <rect width="32" height="32" fill="white" />
@@ -188,21 +189,11 @@ export default function ProfileOverview() {
                 <p className="text-xl font-semibold">1.0 SFP</p>
               </div>
 
-              <p className="text-xs text-gray-500 gap-1 flex items-center ">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-blue dark:text-blue-300"
-                >
-                  {/* icon kept same */}
-                </svg>
+              <p className="text-sm text-gray-500 gap-1 flex items-center">
                 ~3.01 USDT
               </p>
 
-              <button className="text-blue font-medium text-xs flex items-center gap-1">
+              <button className="text-blue font-medium text-base flex items-center gap-1">
                 View referral rewards <ChevronRight className="w-4 h-4" />
               </button>
             </motion.div>
@@ -215,22 +206,22 @@ export default function ProfileOverview() {
             transition={{ duration: 0.5 }}
             className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-2"
           >
-            <p className="text-xs font-medium">
+            <p className="text-sm font-medium">
               KYC status:{' '}
-              <span className="text-[11px] text-yellow-600 py-0.5 px-1.5 bg-[#FFE6CB] rounded-3xl">
+              <span className="text-sm text-yellow-600 py-0.5 px-1.5 bg-[#FFE6CB] rounded-3xl">
                 KYC: Unverified
               </span>
             </p>
 
             <div className="flex justify-between items-center">
-              <p className="text-xs text-gray-500 dark:text-gray-300 max-w-[65%]">
+              <p className="text-sm text-gray-500 dark:text-gray-300 max-w-[65%]">
                 Verify your identity for full access
               </p>
               <Link to="kyc">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="text-xs font-medium px-3 py-1 bg-black text-white rounded-xl dark:bg-gray-600"
+                  className="text-base font-medium px-3 py-1 bg-black text-white rounded-xl dark:bg-gray-600"
                 >
                   Verify
                 </motion.button>
@@ -255,7 +246,7 @@ export default function ProfileOverview() {
                   Total saved:
                 </p>
                 <p className="text-xl font-semibold">35.72 USDT</p>
-                <p className="text-xs text-gray-500">~₦45,570.00</p>
+                <p className="text-sm text-gray-500">~₦45,570.00</p>
               </div>
 
               <div>
