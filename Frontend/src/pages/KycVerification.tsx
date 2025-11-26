@@ -34,7 +34,7 @@ export default function KycVerification() {
   }, [modalState]);
 
   return (
-    <div className="relative">
+    <div className="">
       <div className="px-2 flex items-center gap-1 font-medium text-sm">
         Profile <span className="text-blue-500">› KYC verification</span>
       </div>
