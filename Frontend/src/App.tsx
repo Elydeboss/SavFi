@@ -22,13 +22,16 @@ import Profile from "./pages/Profile";
 import ProfileOverview from "./pages/ProfileOverview";
 import Settings from "./pages/Settings";
 import Preferences from "./pages/Preferences";
+import PlanDetails from "./pages/PlanDetails";
+import NairaWithdrawal from "./pages/NairaWithdrawal";
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
 
-      <Route path="/usdt-withdrawal" element={<UsdtWithdrawPage />} />
+      <Route path="/withdrawal/usdt" element={<UsdtWithdrawPage />} />
+      <Route path="/withdrawal/naira" element={<NairaWithdrawal />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
 
@@ -38,6 +41,7 @@ const App: React.FC = () => {
         <Route path="/savings/new" element={<StartNewPlan />} />
         <Route path="/referrals" element={<Referrals />} />
         <Route path="/savings/swiftfi" element={<SwiftFiPlan />} />
+        <Route path="/savings/plan/:id" element={<PlanDetails />} />
         <Route path="/savings/vaultfi/create" element={<VaultFiPlan />} />
         <Route path="/savings/growfi/create" element={<GrowFiPlan />} />
         <Route path="/savings/flexfi/create" element={<FlexiFiPlan />} />

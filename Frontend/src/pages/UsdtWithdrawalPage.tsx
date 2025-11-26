@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import WithdrawalNavbar from "../components/dashboard/WithdrawalNavbar";
 
 const UsdtWithdrawPage: React.FC = () => {
+  const navigate = useNavigate();
   // States for wallet summary
   const [totalBalance] = useState(120.54);
   const [availableBalance] = useState(120.54);
@@ -66,9 +68,14 @@ const UsdtWithdrawPage: React.FC = () => {
 
       {/* MAIN CONTENT */}
       <div className="pt-[70px] md:pt-[95px] bg-neutral-200 dark:bg-gray-600 dark:text-white">
-        <div className="mt-6 max-w-4xl mx-auto flex text-[#67686B] dark:text-white  items-center gap-3 font-medium text-sm">
-          <ChevronLeft size={22} />
-          <span>Back</span>
+        <div className="max-w-4xl mx-auto">
+          <button
+            className="mt-6 cursor-pointer  flex text-[#67686B] dark:text-white  items-center gap-3 font-medium text-sm"
+            onClick={() => navigate(-1)}
+          >
+            <ChevronLeft size={22} />
+            <span>Back</span>
+          </button>
         </div>
         <div className="max-w-4xl mt-8 mx-auto flex space-x-6">
           {/* Left Side: Wallet Summary */}
