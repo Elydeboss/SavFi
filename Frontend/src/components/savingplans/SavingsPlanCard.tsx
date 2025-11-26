@@ -80,7 +80,6 @@ const SavingsPlanCard = ({ plan, delay = 0 }: SavingsPlanCardProps) => {
   const statusLabel = statusConfig[plan.status];
   const config = planTypeConfig[plan.planType];
 
-  // Use orange progress bar for all completed states (100% progress)
   // CHANGE: Completed plans (100% progress) should have neutral styling
   const isCompleted = plan.progress === 100;
   const progressColor = isCompleted ? "warning" : config.progressColor;
@@ -89,7 +88,7 @@ const SavingsPlanCard = ({ plan, delay = 0 }: SavingsPlanCardProps) => {
 
   const handleViewDetails = () => {
     console.log("View details for plan:", plan.id);
-    navigate(`/plan/${plan.id}`);
+    navigate(`/savings/plan/${plan.id}`);
   };
 
   const handleWithdraw = () => {
@@ -209,7 +208,7 @@ const SavingsPlanCard = ({ plan, delay = 0 }: SavingsPlanCardProps) => {
       {plan.status === "awaiting_withdrawal" ? (
         <button
           onClick={handleWithdraw}
-          className="w-full py-2 mt-auto rounded-full border border-[#7146e8] cursor-pointer font-semibold bg-[#7146E8] hover:bg-[#7146E8]/90 hover:border-[#7146e8]/90 text-white"
+          className="w-full py-2 mt-auto hidden rounded-full border border-[#7146e8] cursor-pointer font-semibold bg-[#7146E8] hover:bg-[#7146E8]/90 hover:border-[#7146e8]/90 text-white"
         >
           Withdraw
         </button>

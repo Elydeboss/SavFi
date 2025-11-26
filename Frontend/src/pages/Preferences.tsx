@@ -7,14 +7,25 @@ import savingsIcon from "../assets/preferences/savings.svg";
 import systemIcon from "../assets/preferences/systemalerts.svg";
 import securityIcon from "../assets/preferences/securityalerts.svg";
 import referralIcon from "../assets/preferences/referral.svg";
+import useTheme from "../hooks/useTheme";
 
 export default function Preferences() {
   const [transactionAlerts, setTransactionAlerts] = useState(true);
   const [savingsAlerts, setSavingsAlerts] = useState(true);
   const [referralAlerts, setReferralAlerts] = useState(true);
-  const [systemAlerts, setSystemAlerts] = useState(true);
-  const [securityAlerts, setSecurityAlerts] = useState(true);
-  const [theme, setTheme] = useState<"light" | "dark" | "system">("light");
+
+  const { theme, setTheme } = useTheme();
+
+  // This adds apply theme
+  const applySystemTheme = () => {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    document.documentElement.setAttribute(
+      "data-theme",
+      prefersDark ? "dark" : "light"
+    );
+  };
 
   return (
     <div className="bg-neutral-200 dark:bg-gray-600 dark:text-white  min-h-screen">
@@ -130,7 +141,8 @@ export default function Preferences() {
                     </div>
 
                     {/* System Alerts */}
-                    <div className="flex items-center justify-between py-4">
+
+                    <div className="flex items-center justify-between py-4 opacity-50 pointer-events-none">
                       <div className="flex items-center gap-3">
                         <img src={systemIcon} className="" />
                         <div>
@@ -140,24 +152,17 @@ export default function Preferences() {
                           </p>
                         </div>
                       </div>
+
+                      {/* Disabled toggle – does not respond to clicks */}
                       <button
-                        onClick={() => setSystemAlerts(!systemAlerts)}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                          systemAlerts
-                            ? "bg-blue"
-                            : "bg-[#b9b9ba] dark:bg-[#b9b9ba]/30"
-                        }`}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-blue/60`}
                       >
-                        <span
-                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                            systemAlerts ? "translate-x-6" : "translate-x-1"
-                          }`}
-                        />
+                        <span className="inline-block h-4 w-4 transform rounded-full bg-white/70 translate-x-6" />
                       </button>
                     </div>
 
                     {/* Security Alerts */}
-                    <div className="flex items-center justify-between py-4">
+                    <div className="flex items-center justify-between py-4 opacity-50 pointer-events-none">
                       <div className="flex items-center gap-3">
                         <img src={securityIcon} className="" />
                         <div>
@@ -168,19 +173,12 @@ export default function Preferences() {
                           </p>
                         </div>
                       </div>
+
+                      {/* Disabled toggle – does not respond to clicks */}
                       <button
-                        onClick={() => setSecurityAlerts(!securityAlerts)}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                          securityAlerts
-                            ? "bg-blue"
-                            : "bg-[#b9b9ba] dark:bg-[#b9b9ba]/30"
-                        }`}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-blue/60`}
                       >
-                        <span
-                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                            securityAlerts ? "translate-x-6" : "translate-x-1"
-                          }`}
-                        />
+                        <span className="inline-block h-4 w-4 transform rounded-full bg-white/70 translate-x-6" />
                       </button>
                     </div>
 
@@ -199,42 +197,49 @@ export default function Preferences() {
                   <div>
                     <h3 className="text-sm font-medium mb-3">Theme</h3>
                     <div className="flex gap-3 flex-wrap">
+                      {/* Light */}
                       <button
                         onClick={() => setTheme("light")}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                           theme === "light"
-                            ? "bg-primary text-primary-foreground border-primary"
-                            : "bg-card border-border hover:bg-muted"
+                            ? "bg-blue text-white "
+                            : "bg-neutral-200 dark:bg-gray-600 hover:bg-muted"
                         }`}
                       >
                         <Sun className="w-4 h-4" />
                         <span className="text-sm">Light</span>
                       </button>
 
+                      {/* Dark */}
                       <button
                         onClick={() => setTheme("dark")}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                           theme === "dark"
-                            ? "bg-primary text-primary-foreground border-primary"
-                            : "bg-card border-border hover:bg-muted"
+                            ? "bg-blue text-white "
+                            : "bg-neutral-200 dark:bg-gray-600 hover:bg-muted"
                         }`}
                       >
                         <Moon className="w-4 h-4" />
-                        <span className="text-sm">Light</span>
+                        <span className="text-sm">Dark</span>
                       </button>
 
+                      {/* System */}
                       <button
-                        onClick={() => setTheme("system")}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-                          theme === "system"
-                            ? "bg-primary text-primary-foreground border-primary"
-                            : "bg-card border-border hover:bg-muted"
+                        onClick={() => {
+                          localStorage.removeItem("theme"); // make theme follow system
+                          applySystemTheme(); // apply correct mode immediately
+                        }}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                          !localStorage.getItem("theme") // system mode = no stored theme
+                            ? "bg-blue text-white "
+                            : "bg-neutral-200 dark:bg-gray-600 hover:bg-muted"
                         }`}
                       >
                         <Monitor className="w-4 h-4" />
                         <span className="text-sm">System</span>
                       </button>
                     </div>
+                    {/*  */}
                   </div>
                 </div>
 

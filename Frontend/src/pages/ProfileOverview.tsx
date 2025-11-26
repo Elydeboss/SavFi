@@ -1,6 +1,6 @@
-import { ChevronRight, Copy, PlusCircle } from 'lucide-react';
-import profileImg from '../assets/menu/profileImg.png';
-import { motion } from 'framer-motion';
+import { ChevronRight, Copy, PlusCircle } from "lucide-react";
+import profileImg from "../assets/menu/profileImg.png";
+import { motion } from "framer-motion";
 
 export default function ProfileOverview() {
   return (
@@ -127,7 +127,7 @@ export default function ProfileOverview() {
             className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-2"
           >
             <p className="text-xs font-medium">
-              KYC status:{' '}
+              KYC status:{" "}
               <span className="text-yellow-600 text-xs py-0.5 px-1.5 bg-[#FFE6CB] rounded-3xl">
                 KYC: Unverified
               </span>
