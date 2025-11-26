@@ -79,7 +79,7 @@ const AddBankModal = ({ onClose, onAdd, onError }: AddBankModalProps) => {
         className="bg-neutral-50 rounded-2xl max-w-md w-full shadow-xl animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6">
+        <div className="p-6 dark:text-white">
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 className="text-xl font-bold text-foreground mb-1">
