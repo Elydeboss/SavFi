@@ -50,7 +50,8 @@ export function ProfileSidebar() {
             <item.icon className="w-5 h-5" />
             <span className="hidden md:flex-1 md:flex">{item.title}</span>
           </ProfileNavLink>
-        ))}
+        ))}{" "}
+        *
       </nav>
     </aside>
   );
