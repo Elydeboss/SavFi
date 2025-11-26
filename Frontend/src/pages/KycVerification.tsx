@@ -1,11 +1,40 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Lock } from 'lucide-react';
 
-export default function KYCVerification() {
-  const isVerified = false; // false → show Unverified only
+import { Modal } from '../components/completekyc/Modal';
+import { KycForm } from '../components/completekyc/KycForm';
+import { LoadingState } from '../components/completekyc/LoadingState';
+import { SuccessState } from '../components/completekyc/SuccessState';
+import { FailedState } from '../components/completekyc/FailedState';
+
+export default function KycVerification() {
+  const isVerified = false;
+
+  const [modalState, setModalState] = useState<
+    'none' | 'form' | 'loading' | 'success' | 'failed'
+  >('none');
+
+  const startVerification = () => {
+    setModalState('loading');
+
+    setTimeout(() => {
+      const passed = Math.random() > 0.5;
+      setModalState(passed ? 'success' : 'failed');
+    }, 2000);
+  };
+
+  // Prevent background scroll
+  useEffect(() => {
+    if (modalState !== 'none') {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [modalState]);
 
   return (
-    <div>
+    <div className="relative">
       <div className="px-2 flex items-center gap-1 font-medium text-sm">
         Profile <span className="text-blue-500">› KYC verification</span>
       </div>
@@ -17,10 +46,10 @@ export default function KYCVerification() {
         transition={{ duration: 0.4 }}
       >
         <div className="w-full flex justify-center mt-4">
-          <div className="w-full max-w-md space-y-6">
-            {/* ===========================
-                UNVERIFIED BLOCK
-            ============================ */}
+          <div className="w-full max-w-3xl space-y-6">
+            {/* =====================================
+                UNVERIFIED KYC BLOCK
+            ====================================== */}
             {!isVerified && (
               <motion.div
                 className="bg-white dark:bg-gray-700 shadow rounded-2xl p-6 relative"
@@ -36,7 +65,7 @@ export default function KYCVerification() {
                   KYC: Unverified
                 </span>
 
-                <p className="text-sm text-gray-500 dark:text-gray-300 mt-4 leading-relaxed">
+                <p className="text-sm text-black-text dark:text-gray-300 mt-4 leading-relaxed">
                   You have not completed your identity verification. Use your
                   NIN to complete KYC to unlock withdrawals and higher deposit
                   limits.
@@ -46,15 +75,16 @@ export default function KYCVerification() {
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
                   className="mt-5 px-5 py-2 text-sm bg-black text-white dark:bg-gray-600 rounded-full font-medium"
+                  onClick={() => setModalState('form')}
                 >
-                  Complete KYC
+                  Verify KYC
                 </motion.button>
               </motion.div>
             )}
 
-            {/* ===========================
-                VERIFIED SECTION
-            ============================ */}
+            {/* =====================================
+                VERIFIED BLOCK (STATIC)
+            ====================================== */}
             {isVerified && (
               <motion.div
                 className="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 space-y-4"
@@ -62,7 +92,6 @@ export default function KYCVerification() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.45 }}
               >
-                {/* Top status */}
                 <div>
                   <p className="font-semibold text-lg">Verification status</p>
                   <span className="text-xs font-medium bg-green-100 text-green-700 px-3 py-1 rounded-full">
@@ -70,13 +99,11 @@ export default function KYCVerification() {
                   </span>
                 </div>
 
-                {/* Summary */}
                 <p className="font-semibold text-base pt-2">
                   Verification summary
                 </p>
 
                 <div className="space-y-4">
-                  {/* Name */}
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500 dark:text-gray-300">
                       Full Name
@@ -86,7 +113,6 @@ export default function KYCVerification() {
                     </span>
                   </div>
 
-                  {/* NIN */}
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500 dark:text-gray-300">
                       NIN
@@ -94,7 +120,6 @@ export default function KYCVerification() {
                     <span>234******89</span>
                   </div>
 
-                  {/* Verification date */}
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500 dark:text-gray-300">
                       Verification date
@@ -102,7 +127,6 @@ export default function KYCVerification() {
                     <span>18 November, 2025</span>
                   </div>
 
-                  {/* Method */}
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500 dark:text-gray-300">
                       Verification method
@@ -124,6 +148,36 @@ export default function KYCVerification() {
           </div>
         </div>
       </motion.div>
+
+      {/* ===========================================
+          MODALS FOR KYC FLOW (STAY ON PAGE)
+      ============================================ */}
+
+      {/* FORM MODAL */}
+      <Modal open={modalState === 'form'} onClose={() => setModalState('none')}>
+        <KycForm onVerify={startVerification} />
+      </Modal>
+
+      {/* LOADING MODAL */}
+      <Modal open={modalState === 'loading'} onClose={() => {}}>
+        <LoadingState />
+      </Modal>
+
+      {/* SUCCESS MODAL */}
+      <Modal
+        open={modalState === 'success'}
+        onClose={() => setModalState('none')}
+      >
+        <SuccessState onClose={() => setModalState('none')} />
+      </Modal>
+
+      {/* FAILED MODAL */}
+      <Modal
+        open={modalState === 'failed'}
+        onClose={() => setModalState('none')}
+      >
+        <FailedState onRetry={startVerification} />
+      </Modal>
     </div>
   );
 }

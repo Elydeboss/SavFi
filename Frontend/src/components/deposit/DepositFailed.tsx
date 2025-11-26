@@ -1,5 +1,3 @@
-// DepositFailed.tsx
-import React from 'react';
 import DepositModalWrapper from './DepositModalWrapper';
 
 type Props = {

@@ -1,29 +1,29 @@
-import { NavLink } from "./Navlink";
-import { Menu, X } from "lucide-react";
-import widget from "../../assets/menu/widget.png";
-import logo from "../../assets/SavFi-logo.png";
-import wallet from "../../assets/menu/cube.png";
-import receipt from "../../assets/menu/receipt-2.png";
-import userGroup from "../../assets/menu/Users Group Rounded.png";
-import bot from "../../assets/menu/fluent_bot-16-regular.png";
-import cn from "../../lib/utils";
-import { useState } from "react";
-import { FiGift } from "react-icons/fi";
+import { NavLink } from './Navlink';
+import { Menu, X } from 'lucide-react';
+import widget from '../../assets/menu/widget.png';
+import logo from '../../assets/SavFi-logo.png';
+import wallet from '../../assets/menu/cube.png';
+import receipt from '../../assets/menu/receipt-2.png';
+import userGroup from '../../assets/menu/Users Group Rounded.png';
+import bot from '../../assets/menu/fluent_bot-16-regular.png';
+import cn from '../../lib/utils';
+import { useState } from 'react';
+import { FiGift } from 'react-icons/fi';
 
 const menuItems = [
-  { title: "Dashboard", icon: widget, path: "/dashboard" },
+  { title: 'Dashboard', icon: widget, path: '/dashboard' },
   {
-    title: "Savings plan",
+    title: 'Savings plan',
     icon: wallet,
-    path: "/savings",
+    path: '/savings',
     badge: true,
   },
-  { title: "Transactions", icon: receipt, path: "/transactions" },
-  { title: "Referrals", icon: userGroup, path: "/referrals" },
+  { title: 'Transactions', icon: receipt, path: '/transactions' },
+  { title: 'Referrals', icon: userGroup, path: '/referrals' },
   {
-    title: "SaveBot",
+    title: 'SaveBot',
     icon: bot,
-    path: "/savebot",
+    path: '/savebot',
     disabled: false,
   },
 ];
@@ -52,8 +52,8 @@ export default function MainSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed md:sticky top-0 left-0 z-42 h-screen  w-64 md:w-75 bg-neutral-50 dark:bg-gray-700 text-black-text dark:text-white transition-transform duration-300",
-          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+          'fixed md:sticky top-0 left-0 z-42 h-screen  w-64 md:w-75 bg-neutral-50 dark:bg-gray-700 text-black-text dark:text-white transition-transform duration-300',
+          isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         )}
       >
         {/* Logo */}
@@ -78,10 +78,10 @@ export default function MainSidebar() {
                     key={item.path}
                     to={item.path}
                     className={cn(
-                      "relative flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm md:text-base font-medium transition-colors",
-                      "hover:bg-[#e8e8e9]/50 dark:hover:bg-gray-600 text-sidebar-foreground",
+                      'relative flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm md:text-base font-medium transition-colors',
+                      'hover:bg-[#e8e8e9]/50 dark:hover:bg-gray-600 text-sidebar-foreground',
                       item.disabled &&
-                        "opacity-50 cursor-not-allowed pointer-events-none"
+                        'opacity-50 cursor-not-allowed pointer-events-none'
                     )}
                     activeClassName="bg-gray-200 dark:bg-gray-600 text-primary before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-8 before:bg-blue before:rounded-r-full"
                     onClick={() => setIsOpen(false)}
