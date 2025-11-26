@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 //import Dashboard from "./pages/Dashboard";
 
@@ -29,6 +29,7 @@ import Preferences from './pages/Preferences';
 import PlanDetails from './pages/PlanDetails';
 import NairaWithdrawal from './pages/NairaWithdrawal';
 import KycVerification from './pages/KycVerification';
+import KycFlow from './components/completekyc/KycFlow';
 import ProfileEditForm from './pages/ProfileEditFrom';
 
 const App: React.FC = () => {
@@ -61,6 +62,7 @@ const App: React.FC = () => {
         <Route path="settings" element={<Settings />} />
         <Route path="preferences" element={<Preferences />} />
         <Route path="kyc" element={<KycVerification />} />
+        <Route path="/profile/kyc/complete" element={<KycFlow />} />
         <Route path="edit" element={<ProfileEditForm />} />
       </Route>
 

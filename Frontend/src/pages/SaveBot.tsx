@@ -31,7 +31,7 @@ function ChatBot() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar title="SaveBot" />
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 dark:bg-gray-600 dark:text-blue-600">
         <div className="w-full max-w-md bg-white rounded shadow-lg p-4 flex flex-col">
           <div className="flex-1 overflow-auto mb-4">
