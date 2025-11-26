@@ -24,7 +24,7 @@ const TwoFactorModal = ({ onClose, onConfirm }: TwoFactorModalProps) => {
         className="bg-neutral-50/95  rounded-2xl max-w-md w-full shadow-xl animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6">
+        <div className="p-6 dark:text-white">
           <h3 className="text-xl font-bold text-foreground mb-2">
             Enter your 2-FA code
           </h3>
@@ -81,7 +81,7 @@ const TwoFactorModal = ({ onClose, onConfirm }: TwoFactorModalProps) => {
           <div className="flex gap-3">
             <button
               onClick={onClose}
-              className="flex-1 py-3 bg-neutral-200 text-gray-800 font-semibold cursor-pointer rounded-full transition-colors"
+              className="flex-1 py-3 text-muted-foreground font-semibold cursor-pointer rounded-full transition-colors"
             >
               Cancel
             </button>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from "react";
 
 type ProfileFormValues = {
   firstName: string;
@@ -16,12 +16,12 @@ type Props = {
 };
 
 const DEFAULT_VALUES: ProfileFormValues = {
-  firstName: 'Jolly',
-  lastName: 'Akeju',
-  email: 'Jollyakeju@gmail.com',
-  phone: '+234',
-  country: 'Nigeria',
-  state: 'Lagos',
+  firstName: "Jolly",
+  lastName: "Akeju",
+  email: "Jollyakeju@gmail.com",
+  phone: "+234",
+  country: "Nigeria",
+  state: "Lagos",
 };
 
 export default function ProfileEditForm({
@@ -33,19 +33,19 @@ export default function ProfileEditForm({
   const [saving, setSaving] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [message, setMessage] = useState<{
-    type: 'success' | 'error';
+    type: "success" | "error";
     text: string;
   } | null>(null);
 
   // Simple validation
   const errors = useMemo(() => {
     const e: Partial<Record<keyof ProfileFormValues, string>> = {};
-    if (!values.firstName.trim()) e.firstName = 'First name is required';
-    if (!values.lastName.trim()) e.lastName = 'Last name is required';
-    if (!values.country.trim()) e.country = 'Country is required';
-    if (!values.state.trim()) e.state = 'State is required';
+    if (!values.firstName.trim()) e.firstName = "First name is required";
+    if (!values.lastName.trim()) e.lastName = "Last name is required";
+    if (!values.country.trim()) e.country = "Country is required";
+    if (!values.state.trim()) e.state = "State is required";
     if (values.phone && !/^\+?\d{1,15}$/.test(values.phone.trim())) {
-      e.phone = 'Enter a valid international number (e.g., +234...)';
+      e.phone = "Enter a valid international number (e.g., +234...)";
     }
     return e;
   }, [values]);
@@ -85,8 +85,8 @@ export default function ProfileEditForm({
 
     if (!isValid) {
       setMessage({
-        type: 'error',
-        text: 'Please fix the errors before saving.',
+        type: "error",
+        text: "Please fix the errors before saving.",
       });
       return;
     }
@@ -94,12 +94,12 @@ export default function ProfileEditForm({
     try {
       setSaving(true);
       await Promise.resolve(onSave?.(values));
-      setMessage({ type: 'success', text: 'Profile updated successfully.' });
+      setMessage({ type: "success", text: "Profile updated successfully." });
     } catch (err) {
       console.error(err); // log the error
       setMessage({
-        type: 'error',
-        text: 'Failed to save changes. Please try again.',
+        type: "error",
+        text: "Failed to save changes. Please try again.",
       });
     } finally {
       setSaving(false);
@@ -114,7 +114,7 @@ export default function ProfileEditForm({
         <div className="rounded-2xl bg-white shadow-sm border border-neutral-200 p-4 sm:p-6 dark:bg-gray-700 dark:text-white">
           {/* Title */}
           <h2 className="text-lg sm:text-xl font-semibold">Edit profile</h2>
-          <p className="text-sm text-neutral-600 mt-1 dark:text-neutral-200">
+          <p className="text-sm text-muted-foreground mt-1 ">
             Update your personal details, contact information, and address.
           </p>
 
@@ -122,9 +122,9 @@ export default function ProfileEditForm({
           {message && (
             <div
               className={`mt-4 rounded-lg px-3 py-2 text-sm ${
-                message.type === 'success'
-                  ? 'bg-green-50 text-green-700 border border-green-200 dark:bg-green-700 dark:text-green-100 dark:border-green-600'
-                  : 'bg-red-50 text-red-700 border border-red-200 dark:bg-red-700 dark:text-red-100 dark:border-red-600'
+                message.type === "success"
+                  ? "bg-green-50 text-green-700 border border-green-200 dark:bg-green-700 dark:text-green-100 dark:border-green-600"
+                  : "bg-red-50 text-red-700 border border-red-200 dark:bg-red-700 dark:text-red-100 dark:border-red-600"
               }`}
             >
               {message.text}
@@ -149,8 +149,8 @@ export default function ProfileEditForm({
                     id="firstName"
                     type="text"
                     value={values.firstName}
-                    onChange={(e) => handleChange('firstName', e.target.value)}
-                    onBlur={() => handleBlur('firstName')}
+                    onChange={(e) => handleChange("firstName", e.target.value)}
+                    onBlur={() => handleBlur("firstName")}
                     className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700  dark:text-white dark:border-neutral-500"
                     placeholder="Jolly"
                   />
@@ -173,8 +173,8 @@ export default function ProfileEditForm({
                     id="lastName"
                     type="text"
                     value={values.lastName}
-                    onChange={(e) => handleChange('lastName', e.target.value)}
-                    onBlur={() => handleBlur('lastName')}
+                    onChange={(e) => handleChange("lastName", e.target.value)}
+                    onBlur={() => handleBlur("lastName")}
                     className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700  dark:text-white dark:border-neutral-500"
                     placeholder="Akeju"
                   />
@@ -201,9 +201,9 @@ export default function ProfileEditForm({
                     type="email"
                     value={values.email}
                     disabled
-                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm bg-neutral-100 text-neutral-700 cursor-not-allowed dark:bg-gray-700 dark:text-neutral-200 dark:border-neutral-500"
+                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm bg-neutral-100 text-muted-foreground cursor-not-allowed dark:bg-gray-700  dark:border-neutral-500"
                   />
-                  <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-200">
+                  <p className="mt-1 text-xs text-muted-foreground">
                     Email is locked. Contact support to change.
                   </p>
                 </div>
@@ -216,9 +216,9 @@ export default function ProfileEditForm({
                   <input
                     id="phone"
                     type="tel"
-                    value={values.phone ?? ''}
-                    onChange={(e) => handleChange('phone', e.target.value)}
-                    onBlur={() => handleBlur('phone')}
+                    value={values.phone ?? ""}
+                    onChange={(e) => handleChange("phone", e.target.value)}
+                    onBlur={() => handleBlur("phone")}
                     className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700  dark:text-white dark:border-neutral-500"
                     placeholder="+234"
                   />
@@ -246,8 +246,8 @@ export default function ProfileEditForm({
                   <select
                     id="country"
                     value={values.country}
-                    onChange={(e) => handleChange('country', e.target.value)}
-                    onBlur={() => handleBlur('country')}
+                    onChange={(e) => handleChange("country", e.target.value)}
+                    onBlur={() => handleBlur("country")}
                     className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700  dark:text-white dark:border-neutral-500"
                   >
                     <option value="Nigeria">Nigeria</option>
@@ -270,8 +270,8 @@ export default function ProfileEditForm({
                   <select
                     id="state"
                     value={values.state}
-                    onChange={(e) => handleChange('state', e.target.value)}
-                    onBlur={() => handleBlur('state')}
+                    onChange={(e) => handleChange("state", e.target.value)}
+                    onBlur={() => handleBlur("state")}
                     className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700  dark:text-white dark:border-neutral-500"
                   >
                     {/* Example Nigerian states */}
@@ -299,13 +299,13 @@ export default function ProfileEditForm({
               disabled={saving || !isDirty}
               className={`inline-flex items-center justify-center rounded-full px-4 py-1 text-sm font-medium transition ${
                 saving
-                  ? 'bg-blue-300 text-white cursor-wait'
+                  ? "bg-blue-300 text-white cursor-wait"
                   : isDirty
-                  ? 'bg-blue text-white hover:bg-blue-700'
-                  : 'bg-blue  text-white cursor-not-allowed'
+                  ? "bg-blue text-white hover:bg-blue-700"
+                  : "bg-blue  text-white cursor-not-allowed"
               }`}
             >
-              {saving ? 'Saving…' : 'Save changes'}
+              {saving ? "Saving…" : "Save changes"}
             </button>
 
             <button

@@ -30,6 +30,8 @@ import PlanDetails from "./pages/PlanDetails";
 import NairaWithdrawal from "./pages/NairaWithdrawal";
 import KYCVerification from "./pages/KYCVerification.tsx";
 import ProfileEditForm from "./pages/ProfileEditFrom.tsx";
+import Security from "./pages/Security.tsx";
+import Wallets from "./pages/Wallets.tsx";
 
 const App: React.FC = () => {
   return (
@@ -39,6 +41,7 @@ const App: React.FC = () => {
       <Route path="/withdrawal/usdt" element={<UsdtWithdrawPage />} />
       <Route path="/withdrawal/naira" element={<NairaWithdrawal />} />
       <Route path="/about" element={<About />} />
+
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
 
@@ -59,6 +62,8 @@ const App: React.FC = () => {
         <Route index element={<ProfileOverview />} />
         <Route path="help" element={<HelpSupport />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="security" element={<Security />} />
+        <Route path="wallets" element={<Wallets />} />
         <Route path="preferences" element={<Preferences />} />
         <Route path="kyc" element={<KYCVerification />} />
         <Route path="edit" element={<ProfileEditForm />} />

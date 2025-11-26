@@ -186,7 +186,7 @@ const NairaWithdrawal = () => {
                   </p>
                   <button
                     onClick={() => setShowAddBankModal(true)}
-                    className="flex items-center justify-center gap-2 px-6 py-2.5 border-2 border-blue text-blue hover:bg-[#E9F4FD] hover:text-blue rounded-full semibold transition-colors"
+                    className="flex items-center justify-center gap-2 px-6 py-2.5 border-2 border-blue text-blue hover:bg-[#E9F4FD] hover:text-blue  dark:hover:bg-none rounded-full semibold transition-colors"
                   >
                     <Plus className="w-5 h-5" />
                     Add bank account
@@ -205,7 +205,7 @@ const NairaWithdrawal = () => {
 
                   <button
                     onClick={() => setShowAddBankModal(true)}
-                    className=" mx-auto flex items-center justify-center gap-2 px-6 py-2.5 border-2 border-blue text-blue hover:bg-[#E9F4FD] hover:text-blue rounded-full semibold transition-colors mt-4"
+                    className=" mx-auto flex items-center justify-center gap-2 px-6 py-2.5 border-2 border-blue text-blue hover:bg-[#E9F4FD] hover:text-blue dark:hover:bg-none rounded-full semibold transition-colors mt-4"
                   >
                     <Plus className="w-5 h-5" />
                     Add bank account
