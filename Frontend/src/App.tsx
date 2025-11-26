@@ -26,26 +26,19 @@ import Profile from "./pages/Profile";
 import ProfileOverview from "./pages/ProfileOverview";
 import Settings from "./pages/Settings";
 import Preferences from "./pages/Preferences";
-<<<<<<< HEAD
 import PlanDetails from "./pages/PlanDetails";
 import NairaWithdrawal from "./pages/NairaWithdrawal";
-=======
 import KYCVerification from "./pages/KYCVerification.tsx";
 import ProfileEditForm from "./pages/ProfileEditFrom.tsx";
->>>>>>> 91aa36ffbe5071a14be17561b6259721bc996961
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
 
-<<<<<<< HEAD
       <Route path="/withdrawal/usdt" element={<UsdtWithdrawPage />} />
       <Route path="/withdrawal/naira" element={<NairaWithdrawal />} />
-=======
       <Route path="/about" element={<About />} />
-      <Route path="/usdt-withdrawal" element={<UsdtWithdrawPage />} />
->>>>>>> 91aa36ffbe5071a14be17561b6259721bc996961
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
 
