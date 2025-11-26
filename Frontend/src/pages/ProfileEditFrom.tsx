@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion'; // ADDED
 
 type ProfileFormValues = {
   firstName: string;
@@ -110,8 +111,13 @@ export default function ProfileEditForm({
     <div className="w-full">
       {/* Container */}
       <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Card */}
-        <div className="rounded-2xl bg-white shadow-sm border border-neutral-200 p-4 sm:p-6 dark:bg-gray-700 dark:text-white">
+        {/* Card animated */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: 'easeOut' }}
+          className="rounded-2xl bg-white shadow-sm border border-neutral-200 p-4 sm:p-6 dark:bg-gray-700 dark:text-white"
+        >
           {/* Title */}
           <h2 className="text-lg sm:text-xl font-semibold">Edit profile</h2>
           <p className="text-sm text-neutral-600 mt-1 dark:text-neutral-200">
@@ -119,17 +125,24 @@ export default function ProfileEditForm({
           </p>
 
           {/* Feedback message */}
-          {message && (
-            <div
-              className={`mt-4 rounded-lg px-3 py-2 text-sm ${
-                message.type === 'success'
-                  ? 'bg-green-50 text-green-700 border border-green-200 dark:bg-green-700 dark:text-green-100 dark:border-green-600'
-                  : 'bg-red-50 text-red-700 border border-red-200 dark:bg-red-700 dark:text-red-100 dark:border-red-600'
-              }`}
-            >
-              {message.text}
-            </div>
-          )}
+          <AnimatePresence mode="wait">
+            {message && (
+              <motion.div
+                key={message.text}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+                className={`mt-4 rounded-lg px-3 py-2 text-sm ${
+                  message.type === 'success'
+                    ? 'bg-green-50 text-green-700 border border-green-200 dark:bg-green-700 dark:text-green-100 dark:border-green-600'
+                    : 'bg-red-50 text-red-700 border border-red-200 dark:bg-red-700 dark:text-red-100 dark:border-red-600'
+                }`}
+              >
+                {message.text}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Sections */}
           <div className="mt-6 space-y-8">
@@ -151,7 +164,7 @@ export default function ProfileEditForm({
                     value={values.firstName}
                     onChange={(e) => handleChange('firstName', e.target.value)}
                     onBlur={() => handleBlur('firstName')}
-                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700  dark:text-white dark:border-neutral-500"
+                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm bg-gray  dark:bg-gray-800  focus:outline-none focus:ring-2 focus:ring-blue-500   dark:text-white dark:border-neutral-500"
                     placeholder="Jolly"
                   />
                   {touched.firstName && errors.firstName && (
@@ -175,7 +188,7 @@ export default function ProfileEditForm({
                     value={values.lastName}
                     onChange={(e) => handleChange('lastName', e.target.value)}
                     onBlur={() => handleBlur('lastName')}
-                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700  dark:text-white dark:border-neutral-500"
+                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray  dark:bg-gray-800 dark:text-white dark:border-neutral-500"
                     placeholder="Akeju"
                   />
                   {touched.lastName && errors.lastName && (
@@ -201,7 +214,7 @@ export default function ProfileEditForm({
                     type="email"
                     value={values.email}
                     disabled
-                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm bg-neutral-100 text-neutral-700 cursor-not-allowed dark:bg-gray-700 dark:text-neutral-200 dark:border-neutral-500"
+                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm bg-neutral-100 text-neutral-700 cursor-not-allowed bg-gray  dark:bg-gray-800 dark:text-neutral-200 dark:border-neutral-500"
                   />
                   <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-200">
                     Email is locked. Contact support to change.
@@ -219,7 +232,7 @@ export default function ProfileEditForm({
                     value={values.phone ?? ''}
                     onChange={(e) => handleChange('phone', e.target.value)}
                     onBlur={() => handleBlur('phone')}
-                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700  dark:text-white dark:border-neutral-500"
+                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray  dark:bg-gray-800 dark:text-white dark:border-neutral-500"
                     placeholder="+234"
                   />
                   {touched.phone && errors.phone && (
@@ -248,7 +261,7 @@ export default function ProfileEditForm({
                     value={values.country}
                     onChange={(e) => handleChange('country', e.target.value)}
                     onBlur={() => handleBlur('country')}
-                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700  dark:text-white dark:border-neutral-500"
+                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray  dark:bg-gray-800 dark:text-white dark:border-neutral-500"
                   >
                     <option value="Nigeria">Nigeria</option>
                     <option value="Ghana">Ghana</option>
@@ -272,9 +285,8 @@ export default function ProfileEditForm({
                     value={values.state}
                     onChange={(e) => handleChange('state', e.target.value)}
                     onBlur={() => handleBlur('state')}
-                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700  dark:text-white dark:border-neutral-500"
+                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray  dark:bg-gray-800   dark:text-white dark:border-neutral-500"
                   >
-                    {/* Example Nigerian states */}
                     <option value="Lagos">Lagos</option>
                     <option value="Abuja (FCT)">Abuja (FCT)</option>
                     <option value="Ogun">Ogun</option>
@@ -316,7 +328,7 @@ export default function ProfileEditForm({
               Cancel
             </button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

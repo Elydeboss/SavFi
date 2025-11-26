@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-export default function KYCVerification() {
+export default function KycVerification() {
   const isVerified = false; // false → show Unverified only
 
   return (
@@ -47,7 +48,7 @@ export default function KYCVerification() {
                   whileTap={{ scale: 0.96 }}
                   className="mt-5 px-5 py-2 text-sm bg-black text-white dark:bg-gray-600 rounded-full font-medium"
                 >
-                  Complete KYC
+                  <Link to="">Complete KYC</Link>
                 </motion.button>
               </motion.div>
             )}
