@@ -1,4 +1,5 @@
 import Breadcrumb from "../components/Breadcrumb";
+import Toast from "../components/withdraw/Toast";
 
 import { useState } from "react";
 
@@ -8,6 +9,11 @@ export default function Settings() {
   const [language, setLanguage] = useState("english");
   const [timezone, setTimezone] = useState("gmt");
   const [currency, setCurrency] = useState("usdt");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
   return (
     <div className="bg-neutral-200 dark:bg-gray-600 dark:text-white  min-h-screen">
@@ -172,7 +178,10 @@ export default function Settings() {
                         Permanently delete your SaveFi account
                       </p>
                     </div>
-                    <button className="w-35 px-2 py-2 bg-[#e8362c] text-white rounded-full font-semibold hover:bg-[#e8362c]/90 transition-colors cursor-pointer text-sm">
+                    <button
+                      onClick={() => setShowDeleteModal(true)}
+                      className="w-35 px-2 py-2 bg-[#e8362c] text-white rounded-full font-semibold hover:bg-[#e8362c]/90 transition-colors cursor-pointer text-sm"
+                    >
                       Delete account
                     </button>
                   </div>
@@ -182,6 +191,50 @@ export default function Settings() {
           </div>
         </div>
       </div>
+
+      {/* NEW: Delete account modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+          <div className="bg-neutral-50 rounded-lg max-w-md w-full p-6 border border-border">
+            <h2 className="text-xl font-semibold mb-2">Delete your account</h2>
+            <p className="text-sm text-muted-foreground mb-4">
+              Deleting your account will permanently remove your profile, linked
+              wallets, saved plans, transaction history, and all associated
+              data.
+            </p>
+            <p className="text-sm font-medium mb-4">
+              This action cannot be undone.
+            </p>
+            <p className="text-sm text-muted-foreground mb-6">
+              If you still have funds in your SaveFi balance or active plans
+              you'll need to withdraw them before deleting your account.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setToast({
+                    message: "Your account has been deleted",
+                    type: "error",
+                  });
+                  setTimeout(() => setToast(null), 3000);
+                }}
+                className="flex-1 px-4 py-2 text-red-600  font-semibold text-sm cursor-pointer"
+              >
+                Delete account
+              </button>
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="flex-1 px-4 py-2 text-muted-foreground  font-semibold text-sm cursor-pointer"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {toast && <Toast message={toast.message} type={toast.type} />}
     </div>
   );
 }

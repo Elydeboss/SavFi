@@ -63,7 +63,7 @@ export const savingsPlans: SavingsPlan[] = [
     id: "5",
     name: "Scho...",
     planType: "GrowFi",
-    status: "awaiting_withdrawal",
+    status: "completed",
     principalAmount: 75,
     interestEarned: 10.23,
     totalPayout: 85.23,

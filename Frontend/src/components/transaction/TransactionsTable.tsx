@@ -104,10 +104,10 @@ export default function TransactionsTable({
       </div>
 
       {/* DESKTOP TABLE */}
-      <div className="hidden md:block w-full rounded-lg overflow-hidden dark:bg-gray-700">
+      <div className="hidden md:block w-full rounded-lg  dark:bg-gray-700">
         <table className="w-full table-auto">
           <thead className="bg-gray dark:bg-gray-800">
-            <tr className="text-left text-sm text-slate-600 dark:text-white">
+            <tr className="text-left text-base text-slate-600 dark:text-white">
               <th className="py-3 px-4">Date</th>
               <th className="py-3 px-4">Type</th>
               <th className="py-3 px-4">Amount</th>
@@ -121,7 +121,7 @@ export default function TransactionsTable({
               {transactions.map((tx, i) => (
                 <motion.tr
                   key={tx.id}
-                  className="text-sm hover:bg-blue-hover cursor-pointer dark:hover:bg-gray-600"
+                  className="text-base hover:bg-blue-hover cursor-pointer dark:hover:bg-gray-600"
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -5 }}

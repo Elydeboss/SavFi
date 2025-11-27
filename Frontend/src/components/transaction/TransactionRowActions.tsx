@@ -16,7 +16,7 @@ export default function TransactionRowActions({
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Close when clicking outside
+  // Close on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -38,17 +38,20 @@ export default function TransactionRowActions({
 
   return (
     <div className="relative" ref={menuRef}>
+      {/* Three-dots button */}
       <button
         onClick={(e) => {
-          e.stopPropagation(); // Prevent table row click
+          e.stopPropagation(); // prevents row click
           setOpen((s) => !s);
         }}
         className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-gray-600"
-        aria-label="actions"
+        aria-haspopup="menu"
+        aria-expanded={open}
       >
         ⋮
       </button>
 
+      {/* Dropdown menu */}
       {open && (
         <div
           className="
@@ -57,32 +60,36 @@ export default function TransactionRowActions({
             max-w-[90vw]
             bg-white dark:bg-gray-700
             rounded-lg shadow-lg border dark:border-gray-600
-            z-20 animate-fadeIn
+            z-50
+            origin-top-right
+            animate-scaleFade
           "
         >
-          <ul className="py-2 text-sm">
+          <ul className="py-2 text-sm dark:text-white">
             <li>
               <button
                 onClick={() => {
                   setOpen(false);
                   onView();
                 }}
-                className="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-600 dark:text-white"
+                className="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-600"
               >
                 View details
               </button>
             </li>
+
             <li>
               <button
                 onClick={() => {
                   setOpen(false);
                   onDownload();
                 }}
-                className="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-600 dark:text-white"
+                className="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-600"
               >
                 Download receipt
               </button>
             </li>
+
             <li>
               <button
                 onClick={() => {
@@ -94,13 +101,14 @@ export default function TransactionRowActions({
                 Delete transaction
               </button>
             </li>
+
             <li>
               <button
                 onClick={() => {
                   setOpen(false);
                   onReport();
                 }}
-                className="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-600 dark:text-white"
+                className="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-600"
               >
                 Report issue
               </button>

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 //import Dashboard from "./pages/Dashboard";
 
@@ -9,10 +9,6 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/notfound";
 import Login from "./components/login";
 import About from "./pages/Aboutus";
-
-import Flexfi from "./pages/Flexfi.tsx";
-import Vaultfi from "./pages/vaultfi.tsx";
-import Growfi from "./pages/Growfi.tsx";
 
 import TransactionPage from "./pages/TransactionPage";
 
@@ -30,16 +26,23 @@ import Profile from "./pages/Profile";
 import ProfileOverview from "./pages/ProfileOverview";
 import Settings from "./pages/Settings";
 import Preferences from "./pages/Preferences";
-import KYCVerification from "./pages/KYCVerification.tsx";
-import ProfileEditForm from "./pages/ProfileEditFrom.tsx";
+import PlanDetails from "./pages/PlanDetails";
+import NairaWithdrawal from "./pages/NairaWithdrawal";
+import KycVerification from "./pages/KycVerification.tsx";
+import ProfileEditForm from "./pages/ProfileEditForm.tsx";
+import Security from "./pages/Security.tsx";
+import Wallets from "./pages/Wallets.tsx";
+import { KycFlow } from "./components/completekyc/verificationManager.tsx";
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
 
+      <Route path="/withdrawal/usdt" element={<UsdtWithdrawPage />} />
+      <Route path="/withdrawal/naira" element={<NairaWithdrawal />} />
       <Route path="/about" element={<About />} />
-      <Route path="/usdt-withdrawal" element={<UsdtWithdrawPage />} />
+
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
 
@@ -53,6 +56,7 @@ const App: React.FC = () => {
         <Route path="/savings/new" element={<StartNewPlan />} />
         <Route path="/referrals" element={<Referrals />} />
         <Route path="/savings/swiftfi" element={<SwiftFiPlan />} />
+        <Route path="/savings/plan/:id" element={<PlanDetails />} />
         <Route path="/savings/vaultfi/create" element={<VaultFiPlan />} />
         <Route path="/savings/growfi/create" element={<GrowFiPlan />} />
         <Route path="/savings/flexfi/create" element={<FlexiFiPlan />} />
@@ -63,8 +67,11 @@ const App: React.FC = () => {
         <Route index element={<ProfileOverview />} />
         <Route path="help" element={<HelpSupport />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="security" element={<Security />} />
+        <Route path="wallets" element={<Wallets />} />
         <Route path="preferences" element={<Preferences />} />
-        <Route path="kyc" element={<KYCVerification />} />
+        <Route path="kyc" element={<KycVerification />} />
+        <Route path="/profile/kyc/complete" element={<KycFlow />} />
         <Route path="edit" element={<ProfileEditForm />} />
       </Route>
 
