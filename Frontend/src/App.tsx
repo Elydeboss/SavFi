@@ -1,5 +1,9 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 
+//import Swiftfi from "./pages/sw";
+import Vaultfi from "./pages/vaultfi.tsx";
+import Growfi from "./pages/Growfi.tsx";
+import Flexifi from "./pages/Flexfi.tsx";
 //import Dashboard from "./pages/Dashboard";
 
 import Home from "./pages/Home";
@@ -46,7 +50,7 @@ const App: React.FC = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
 
-      <Route path="/flexfi" element={<Flexfi />} />
+      <Route path="/flexfi" element={<Flexifi />} />
       <Route path="/vaultfi" element={<Vaultfi />} />
       <Route path="/Growfi" element={<Growfi />} />
 

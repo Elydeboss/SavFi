@@ -1,18 +1,76 @@
+import { useState } from "react";
 import Navbar from "../components/Landpage-header";
 import Image from "../assets/img/Frame 1686563515.png";
 
+const API_URL = "/accounts/register/"; // API endpoint constant
+
 export default function LandingPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleRegistration = async () => {
+    // form Validation
+    if (!email || !password || !confirmPassword) {
+      alert("All fields are required.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    //  disable button after submission
+    setIsSubmitting(true);
+
+    const requestData = {
+      email: email,
+      password: password, // Includes the password for registration
+    };
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Success Handling
+        console.log(" Registration successful!", result);
+      } else {
+        // Error Handling (API responded, but with an error status like 400)
+        console.error(" Registration failed:", result);
+        alert(
+          `Registration Failed: ${result.detail || JSON.stringify(result)}`
+        );
+        throw new Error(result.detail || "API registration failed.");
+      }
+    } catch (error) {
+      // Network/Fetch Error Handling (e.g., connection lost)
+      console.error("An error occurred during the fetch operation:", error);
+      alert("An unexpected network error occurred.");
+    } finally {
+      // Re-enable button regardless of success or failure
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Navbar />
 
       {/* Main Section */}
       <div className="flex flex-col md:flex-row items-center justify-center gap-12 px-6 md:px-20 py-14 flex-1">
-        {/* LEFT IMAGE BLOCK */}
+        {/* LEFT IMAGE BLOCK (unchanged) */}
         <div className="w-full md:w-1/2 flex justify-center">
-          {/* IMAGE PLACEHOLDER (REPLACE THIS WITH YOUR IMAGE) */}
           <div className="w-full max-w-md h-[420px] bg-gray-200 rounded-xl flex items-center justify-center text-gray-500">
-            {/* 👉 Replace this div with your <img src="..." /> */}
             <img src={Image} alt="" />
           </div>
         </div>
@@ -23,7 +81,6 @@ export default function LandingPage() {
             <h2 className="text-3xl mb-6 font-semibold text-gray-800">
               Jump right in
             </h2>
-
             <p className="text-gray-500 mb-12">
               Sign Up / Login to access SaveFi benefits
             </p>
@@ -36,7 +93,36 @@ export default function LandingPage() {
               type="email"
               placeholder="Enter email address"
               className="border px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
+
+            {/* Password Input */}
+            <input
+              type="password"
+              placeholder="Enter password"
+              className="border px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            {/* Confirm Password Input */}
+            <input
+              type="password"
+              placeholder="Confirm password"
+              className="border px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+
+            {/* Registration Button */}
+            <button
+              className="bg-blue-600 text-white py-3 rounded-full font-medium hover:bg-blue-700 disabled:opacity-50"
+              onClick={handleRegistration}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Registering..." : "Create Account"}
+            </button>
 
             {/* Divider */}
             <div className="flex items-center gap-3">
@@ -57,7 +143,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Footer (unchanged) */}
       <footer className="w-full text-center py-4 text-gray-600 text-sm flex flex-col md:flex-row items-center justify-center gap-4">
         <span>© 2025 SaveFi</span>
         <span className="hidden md:inline">•</span>
