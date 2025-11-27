@@ -10,6 +10,10 @@ import NotFound from "./pages/notfound";
 import Login from "./components/login";
 import About from "./pages/Aboutus";
 
+import Flexfi from "./pages/Flexfi.tsx";
+import Vaultfi from "./pages/vaultfi.tsx";
+import Growfi from "./pages/Growfi.tsx";
+
 import TransactionPage from "./pages/TransactionPage";
 
 import StartNewPlan from "./pages/StartNewPlan";
@@ -38,6 +42,10 @@ const App: React.FC = () => {
       <Route path="/usdt-withdrawal" element={<UsdtWithdrawPage />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
+
+      <Route path="/flexfi" element={<Flexfi />} />
+      <Route path="/vaultfi" element={<Vaultfi />} />
+      <Route path="/Growfi" element={<Growfi />} />
 
       <Route element={<MainDashboard />}>
         <Route path="/dashboard" element={<DashboardHome />} />

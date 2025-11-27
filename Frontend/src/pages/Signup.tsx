@@ -1,5 +1,4 @@
-import React from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Landpage-header";
 import Image from "../assets/img/Frame 1686563515.png";
 
 export default function LandingPage() {
@@ -11,7 +10,7 @@ export default function LandingPage() {
       <div className="flex flex-col md:flex-row items-center justify-center gap-12 px-6 md:px-20 py-14 flex-1">
         {/* LEFT IMAGE BLOCK */}
         <div className="w-full md:w-1/2 flex justify-center">
-          {/* 🔵 IMAGE PLACEHOLDER (REPLACE THIS WITH YOUR IMAGE) */}
+          {/* IMAGE PLACEHOLDER (REPLACE THIS WITH YOUR IMAGE) */}
           <div className="w-full max-w-md h-[420px] bg-gray-200 rounded-xl flex items-center justify-center text-gray-500">
             {/* 👉 Replace this div with your <img src="..." /> */}
             <img src={Image} alt="" />
@@ -20,25 +19,18 @@ export default function LandingPage() {
 
         {/* RIGHT LOGIN BLOCK */}
         <div className="w-full md:w-1/2 max-w-md flex flex-col text-center md:text-left">
-          <h2 className="text-3xl font-semibold text-gray-800">
-            Jump right in
-          </h2>
+          <div className="flex flex-col justify-center items-center mb-24">
+            <h2 className="text-3xl mb-6 font-semibold text-gray-800">
+              Jump right in
+            </h2>
 
-          <p className="text-gray-500 mt-1 mb-6">
-            Sign Up / Login to access SaveFi benefits
-          </p>
+            <p className="text-gray-500 mb-12">
+              Sign Up / Login to access SaveFi benefits
+            </p>
+          </div>
 
           {/* Card */}
-          <div className="w-full bg-[#E5E8EB] shadow-md rounded-xl p-6 pb-12 flex flex-col gap-4">
-            {/* Google Button */}
-            <button className="bg-blue-600 text-white py-3 rounded-full mt-24 font-medium hover:bg-blue-700 flex items-center justify-center gap-2">
-              <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                className="w-5"
-              />
-              Continue with Google
-            </button>
-
+          <div className="w-full bg-[#E5E8EB] shadow-md rounded-xl px-6 py-20 flex flex-col gap-4">
             {/* Email Input */}
             <input
               type="email"

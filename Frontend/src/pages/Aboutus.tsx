@@ -22,6 +22,8 @@ import Team6 from "../assets/img/Ellipse 9.png";
 import Team7 from "../assets/img/Ellipse 10.png";
 import Team8 from "../assets/img/Ellipse 11.png";
 
+import Header from "../components/Landpage-header";
+
 const SavFiAbout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -103,54 +105,7 @@ const SavFiAbout = () => {
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800">
       {/* --- Navigation --- */}
-      <nav className="flex justify-between items-center px-6 py-8 max-w-7xl mx-auto">
-        <div className="text-2xl font-bold text-blue-500 cursor-pointer">
-          SavFi
-        </div>
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex space-x-8 text-gray-600 font-medium">
-          <a href="#" className="hover:text-blue-500">
-            Home
-          </a>
-          <a href="#" className="hover:text-blue-500">
-            Products
-          </a>
-          <a href="#" className="text-blue-500 font-bold">
-            About Us
-          </a>
-          <a href="#" className="hover:text-blue-500">
-            Contact
-          </a>
-        </div>
-
-        <button className="hidden md:block px-6 py-2 bg-blue-500 text-white rounded-full font-semibold hover:bg-blue-600 transition">
-          Sign In
-        </button>
-
-        {/* Mobile Menu Toggle */}
-        <button onClick={toggleMenu} className="md:hidden text-gray-600">
-          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </nav>
-
-      {/* Mobile Menu Dropdown */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg p-4 flex flex-col space-y-4 absolute w-full z-50">
-          <a href="#" className="text-gray-600 hover:text-blue-500">
-            Home
-          </a>
-          <a href="#" className="text-gray-600 hover:text-blue-500">
-            Products
-          </a>
-          <a href="#" className="text-blue-500 font-bold">
-            About Us
-          </a>
-          <button className="px-6 py-2 bg-blue-500 text-white rounded-full font-semibold w-full">
-            Sign In
-          </button>
-        </div>
-      )}
+      <Header />
 
       {/* --- Hero Section --- */}
       <header className="px-6 py-12 md:py-20 max-w-7xl mx-auto text-center">
