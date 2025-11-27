@@ -25,7 +25,7 @@ export default function SearchActions({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search plans, type, amount, status e.t.c."
-          className="w-full h-11 rounded-full bg-gray-200 dark:bg-gray-800 dark:text-white pl-4 pr-12 text-sm placeholder:text-black dark:placeholder:text-gray-300 focus:outline-none"
+          className="w-full h-11 rounded-full bg-gray-200 dark:bg-gray-800 dark:text-white pl-4 pr-12 text-base placeholder:text-black dark:placeholder:text-gray-300 focus:outline-none"
         />
         <button
           title="Search"
@@ -55,13 +55,13 @@ export default function SearchActions({
       <div className="flex items-center gap-3">
         <button
           onClick={onExportCSV}
-          className="px-4 py-2 rounded-full bg-black text-white text-sm flex items-center gap-2 shadow-sm dark:bg-gray-800 dark:text-white hover:scale-105 transition-transform"
+          className="px-4 py-2 rounded-full bg-black text-white text-base flex items-center gap-2 shadow-sm dark:bg-gray-800 dark:text-white hover:scale-105 transition-transform"
         >
           Export CSV ↗
         </button>
         <button
           onClick={onExportPDF}
-          className="px-4 py-2 rounded-full bg-blue text-white text-sm flex items-center gap-2 shadow-sm dark:bg-blue-600 dark:text-white hover:scale-105 transition-transform"
+          className="px-4 py-2 rounded-full bg-blue text-white text-base flex items-center gap-2 shadow-sm dark:bg-blue-600 dark:text-white hover:scale-105 transition-transform"
         >
           Export PDF
         </button>

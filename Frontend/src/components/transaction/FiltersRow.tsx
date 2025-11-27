@@ -12,7 +12,7 @@ export default function FiltersRow({
   setDateRange,
 }: Props) {
   return (
-    <div className="flex flex-col md:flex-row md:items-center gap-4 text-sm my-4  dark:text-white">
+    <div className="flex flex-col md:flex-row md:items-center gap-4 text-base my-4  dark:text-white">
       {/* Transaction Type */}
       <div className="flex items-center gap-2">
         <span className="font-medium text-slate-700 dark:text-white">
