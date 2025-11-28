@@ -1,66 +1,66 @@
-import { useState } from "react";
-import Navbar from "../components/Landpage-header";
-import Image from "../assets/img/Frame 1686563515.png";
+import { useState, useCallback } from 'react';
+import Navbar from '../components/Landpage-header';
+import Image from '../assets/img/Frame 1686563515.png';
+import { api } from '../lib/api'; // your axios client
 
-const API_URL = "/accounts/register/"; // API endpoint constant
+const API_URL = '/accounts/register/';
 
 export default function LandingPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [serverError, setServerError] = useState('');
+  const [success, setSuccess] = useState(false);
 
-  const handleRegistration = async () => {
-    // form Validation
+  const resetForm = () => {
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+  };
+
+  const handleRegistration = useCallback(async () => {
+    setServerError('');
+    setSuccess(false);
+
     if (!email || !password || !confirmPassword) {
-      alert("All fields are required.");
+      setServerError('All fields are required.');
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      setServerError('Passwords do not match!');
       return;
     }
 
-    //  disable button after submission
     setIsSubmitting(true);
 
-    const requestData = {
-      email: email,
-      password: password, // Includes the password for registration
-    };
-
     try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
+      // Optionally create a username from email
+      const username = email.split('@')[0];
+
+      const response = await api.post(API_URL, {
+        username,
+        email,
+        password,
       });
 
-      const result = await response.json();
+      console.log('Registration successful!', response.data);
+      setSuccess(true);
+      resetForm();
+    } catch (err: any) {
+      const backendError =
+        err.response?.data?.detail ||
+        Object.values(err.response?.data || {}).join(', ') ||
+        err.message ||
+        'Registration failed';
 
-      if (response.ok) {
-        // Success Handling
-        console.log(" Registration successful!", result);
-      } else {
-        // Error Handling (API responded, but with an error status like 400)
-        console.error(" Registration failed:", result);
-        alert(
-          `Registration Failed: ${result.detail || JSON.stringify(result)}`
-        );
-        throw new Error(result.detail || "API registration failed.");
-      }
-    } catch (error) {
-      // Network/Fetch Error Handling (e.g., connection lost)
-      console.error("An error occurred during the fetch operation:", error);
-      alert("An unexpected network error occurred.");
+      console.error('Registration failed:', backendError);
+      setServerError(backendError);
     } finally {
-      // Re-enable button regardless of success or failure
       setIsSubmitting(false);
     }
-  };
+  }, [email, password, confirmPassword]);
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -68,14 +68,14 @@ export default function LandingPage() {
 
       {/* Main Section */}
       <div className="flex flex-col md:flex-row items-center justify-center gap-12 px-6 md:px-20 py-14 flex-1">
-        {/* LEFT IMAGE BLOCK (unchanged) */}
+        {/* LEFT IMAGE BLOCK */}
         <div className="w-full md:w-1/2 flex justify-center">
           <div className="w-full max-w-md h-[420px] bg-gray-200 rounded-xl flex items-center justify-center text-gray-500">
-            <img src={Image} alt="" />
+            <img src={Image} alt="Landing" />
           </div>
         </div>
 
-        {/* RIGHT LOGIN BLOCK */}
+        {/* RIGHT REGISTER BLOCK */}
         <div className="w-full md:w-1/2 max-w-md flex flex-col text-center md:text-left">
           <div className="flex flex-col justify-center items-center mb-24">
             <h2 className="text-3xl mb-6 font-semibold text-gray-800">
@@ -88,6 +88,18 @@ export default function LandingPage() {
 
           {/* Card */}
           <div className="w-full bg-[#E5E8EB] shadow-md rounded-xl px-6 py-20 flex flex-col gap-4">
+            {serverError && (
+              <div className="mb-4 rounded border border-red-300 bg-red-50 p-3 text-sm text-red-700">
+                {serverError}
+              </div>
+            )}
+
+            {success && (
+              <div className="mb-4 rounded border border-green-300 bg-green-50 p-3 text-sm text-green-700">
+                Registration successful. You can now log in.
+              </div>
+            )}
+
             {/* Email Input */}
             <input
               type="email"
@@ -95,6 +107,7 @@ export default function LandingPage() {
               className="border px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting}
             />
 
             {/* Password Input */}
@@ -104,6 +117,7 @@ export default function LandingPage() {
               className="border px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={isSubmitting}
             />
 
             {/* Confirm Password Input */}
@@ -113,6 +127,7 @@ export default function LandingPage() {
               className="border px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              disabled={isSubmitting}
             />
 
             {/* Registration Button */}
@@ -121,7 +136,7 @@ export default function LandingPage() {
               onClick={handleRegistration}
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Registering..." : "Create Account"}
+              {isSubmitting ? 'Registering...' : 'Create Account'}
             </button>
 
             {/* Divider */}
@@ -136,6 +151,7 @@ export default function LandingPage() {
               <img
                 src="https://cdn.worldvectorlogo.com/logos/metamask.svg"
                 className="w-5"
+                alt="Metamask logo"
               />
               Continue with Metamask
             </button>
@@ -143,7 +159,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Footer (unchanged) */}
+      {/* Footer */}
       <footer className="w-full text-center py-4 text-gray-600 text-sm flex flex-col md:flex-row items-center justify-center gap-4">
         <span>© 2025 SaveFi</span>
         <span className="hidden md:inline">•</span>

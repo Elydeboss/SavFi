@@ -1,47 +1,49 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 //import Swiftfi from "./pages/sw";
-import Vaultfi from "./pages/vaultfi.tsx";
-import Growfi from "./pages/Growfi.tsx";
-import Flexifi from "./pages/Flexfi.tsx";
+import Vaultfi from './pages/vaultfi.tsx';
+import Growfi from './pages/Growfi.tsx';
+import Flexifi from './pages/Flexfi.tsx';
 //import Dashboard from "./pages/Dashboard";
 
-import Home from "./pages/Home";
-import UsdtWithdrawPage from "./pages/UsdtWithdrawalPage";
-import Savebot from "./pages/SaveBot";
-import Signup from "./pages/Signup";
-import NotFound from "./pages/notfound";
-import Login from "./components/login";
-import About from "./pages/Aboutus";
+import Home from './pages/Home';
+import UsdtWithdrawPage from './pages/UsdtWithdrawalPage';
+import Savebot from './pages/SaveBot';
+import Signup from './pages/Signup';
+import NotFound from './pages/notfound';
+import Login from './components/login';
+import About from './pages/Aboutus';
 
-import TransactionPage from "./pages/TransactionPage";
+import TransactionPage from './pages/TransactionPage';
 
-import StartNewPlan from "./pages/StartNewPlan";
-import SwiftFiPlan from "./pages/SwiftFiPlan";
-import VaultFiPlan from "./pages/VaultFiPlan";
-import GrowFiPlan from "./pages/GrowFiPlan";
-import FlexiFiPlan from "./pages/FlexiFiPlan";
-import HelpSupport from "./pages/HelpSupport";
-import MainDashboard from "./pages/MainDashboard";
-import DashboardHome from "./pages/DashboardHome";
-import Referrals from "./pages/Referrals";
-import SavingsPlan from "./pages/SavingsPlan";
-import Profile from "./pages/Profile";
-import ProfileOverview from "./pages/ProfileOverview";
-import Settings from "./pages/Settings";
-import Preferences from "./pages/Preferences";
-import PlanDetails from "./pages/PlanDetails";
-import NairaWithdrawal from "./pages/NairaWithdrawal";
-import KycVerification from "./pages/KycVerification.tsx";
-import ProfileEditForm from "./pages/ProfileEditForm.tsx";
-import Security from "./pages/Security.tsx";
-import Wallets from "./pages/Wallets.tsx";
-import { KycFlow } from "./components/completekyc/verificationManager.tsx";
+import StartNewPlan from './pages/StartNewPlan';
+import SwiftFiPlan from './pages/SwiftFiPlan';
+import VaultFiPlan from './pages/VaultFiPlan';
+import GrowFiPlan from './pages/GrowFiPlan';
+import FlexiFiPlan from './pages/FlexiFiPlan';
+import HelpSupport from './pages/HelpSupport';
+import MainDashboard from './pages/MainDashboard';
+import DashboardHome from './pages/DashboardHome';
+import Referrals from './pages/Referrals';
+import SavingsPlan from './pages/SavingsPlan';
+import Profile from './pages/Profile';
+import ProfileOverview from './pages/ProfileOverview';
+import Settings from './pages/Settings';
+import Preferences from './pages/Preferences';
+import PlanDetails from './pages/PlanDetails';
+import NairaWithdrawal from './pages/NairaWithdrawal';
+import KycVerification from './pages/KycVerification.tsx';
+import ProfileEditForm from './pages/ProfileEditForm.tsx';
+import Security from './pages/Security.tsx';
+import Wallets from './pages/Wallets.tsx';
+import { KycFlow } from './components/completekyc/verificationManager.tsx';
+import RegisterForm from './features/auth/RegisterForm.tsx';
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/register" element={<RegisterForm />} />
 
       <Route path="/withdrawal/usdt" element={<UsdtWithdrawPage />} />
       <Route path="/withdrawal/naira" element={<NairaWithdrawal />} />
