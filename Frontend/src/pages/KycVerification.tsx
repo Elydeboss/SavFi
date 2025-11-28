@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Lock } from 'lucide-react';
+import Breadcrumb from '../components/Breadcrumb';
 
 import { Modal } from '../components/completekyc/Modal';
 import { KycForm } from '../components/completekyc/KycForm';
@@ -35,8 +36,14 @@ export default function KycVerification() {
 
   return (
     <div className="">
-      <div className="px-2 flex items-center gap-1 font-medium text-sm">
-        Profile <span className="text-blue-500">› KYC verification</span>
+      {/* Breadcrumb */}
+      <div className="px-4 flex items-center gap-1 text-sm sm:text-base font-medium">
+        <Breadcrumb
+          items={[
+            { label: 'Profile', href: '/profile' },
+            { label: 'KYC Verification' },
+          ]}
+        />
       </div>
 
       <motion.div

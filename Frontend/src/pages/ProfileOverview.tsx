@@ -2,6 +2,7 @@ import { ChevronRight, PlusCircle } from 'lucide-react';
 import profileImg from '../assets/menu/profileImg.png';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Breadcrumb from '../components/Breadcrumb';
 
 export default function ProfileOverview() {
   return (
@@ -13,8 +14,12 @@ export default function ProfileOverview() {
     >
       {/* Breadcrumb */}
       <div className="px-4 flex items-center gap-1 text-sm sm:text-base font-medium">
-        Profile <ChevronRight className="w-4 h-4" />
-        <span className="text-blue font-medium">Overview</span>
+        <Breadcrumb
+          items={[
+            { label: 'Profile', href: '/profile' },
+            { label: 'Overview' },
+          ]}
+        />
       </div>
 
       {/* Outer container */}
