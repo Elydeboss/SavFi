@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
+    "axios": "^1.13.2",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.24",
     "jspdf": "^3.0.4",
@@ -22,7 +23,8 @@
     "react-router-dom": "^7.9.6",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",
-    "thirdweb": "^5.112.4"
+    "thirdweb": "^5.112.4",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
