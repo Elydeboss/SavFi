@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Breadcrumb from '../components/Breadcrumb';
 
 type ProfileFormValues = {
   firstName: string;
@@ -109,9 +110,20 @@ export default function ProfileEditForm({
 
   return (
     <div className="w-full">
+      {/* Breadcrumb */}
+      <div className="px-4 flex items-center gap-1 text-sm sm:text-base font-medium">
+        <Breadcrumb
+          items={[
+            { label: 'Profile', href: '/profile' },
+            { label: 'Edit profile' },
+          ]}
+        />
+      </div>
+
       {/* Container */}
       <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Card animated */}
+
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
