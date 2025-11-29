@@ -11,7 +11,9 @@ import UsdtWithdrawPage from "./pages/UsdtWithdrawalPage";
 import Savebot from "./pages/SaveBot";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/notfound";
-import Login from "./components/login";
+//import Llogin from "./components/llogin.tsx";
+import Login from "./pages/login.tsx";
+import Otp from "./Modal/otp.tsx";
 import About from "./pages/Aboutus";
 
 import TransactionPage from "./pages/TransactionPage";
@@ -48,6 +50,7 @@ const App: React.FC = () => {
       <Route path="/about" element={<About />} />
 
       <Route path="/signup" element={<Signup />} />
+      <Route path="/otp" element={<Otp />} />
       <Route path="/login" element={<Login />} />
 
       <Route path="/flexfi" element={<Flexifi />} />
