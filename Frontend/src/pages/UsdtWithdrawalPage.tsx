@@ -62,12 +62,12 @@ const UsdtWithdrawPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-200 pb-10">
+    <div className="min-h-screen bg-neutral-200 dark:bg-gray-600 pb-10">
       {/* HEADER */}
       <WithdrawalNavbar title="Withdraw USDT" />
 
       {/* MAIN CONTENT */}
-      <div className="pt-[70px] md:pt-[95px] bg-neutral-200 dark:bg-gray-600 dark:text-white">
+      <div className="pt-[70px] px-4 md:pt-[95px] bg-neutral-200 dark:bg-gray-600 dark:text-white">
         <div className="max-w-4xl mx-auto">
           <button
             className="mt-6 cursor-pointer  flex text-[#67686B] dark:text-white  items-center gap-3 font-medium text-sm"
@@ -77,9 +77,9 @@ const UsdtWithdrawPage: React.FC = () => {
             <span>Back</span>
           </button>
         </div>
-        <div className="max-w-4xl mt-8 mx-auto flex space-x-6">
+        <div className="max-w-4xl mt-8 mx-auto grid gap-5  md:grid-cols-3 pb-15">
           {/* Left Side: Wallet Summary */}
-          <div className="w-1/3 h-fit bg-neutral-50 dark:bg-gray-700 dark:text-white p-6 rounded-xl space-y-6">
+          <div className="md:col-span-1 h-fit bg-neutral-50 dark:bg-gray-700 dark:text-white p-6 rounded-xl space-y-6">
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
               Wallet Summary
             </h2>
@@ -186,7 +186,7 @@ const UsdtWithdrawPage: React.FC = () => {
           </div>
 
           {/* Right Side: Withdraw USDT */}
-          <div className="w-2/3 bg-neutral-50 dark:bg-gray-700 p-6 rounded-xl space-y-4">
+          <div className="md:col-span-2 bg-neutral-50 dark:bg-gray-700 p-6 rounded-xl space-y-4">
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
               Withdraw USDT
             </h2>

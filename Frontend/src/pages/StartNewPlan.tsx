@@ -76,7 +76,7 @@ export default function StartNewPlan() {
       <div className="">
         <Navbar title="Start new plan" />
 
-        <div className="p-4">
+        <div className="p-4 mt-18 md:mt-0">
           <Breadcrumb
             items={[
               { label: "Savings plan", href: "/savings" },

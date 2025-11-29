@@ -38,12 +38,27 @@ import KycVerification from "./pages/KycVerification.tsx";
 import ProfileEditForm from "./pages/ProfileEditForm.tsx";
 import Security from "./pages/Security.tsx";
 import Wallets from "./pages/Wallets.tsx";
+import HomePage from "./pages/HomePage.tsx";
+import ProductPage from "./pages/ProductPage.tsx";
+import AboutPage from "./pages/AboutPage.tsx";
+import Support from "./pages/Support.tsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
+import TermsOfService from "./pages/TermsOfService.tsx";
+import SecurityPage from "./pages/SecurityPage.tsx";
 import { KycFlow } from "./components/completekyc/verificationManager.tsx";
 import RegisterForm from "./features/auth/RegisterForm.tsx";
 
 const App: React.FC = () => {
   return (
     <Routes>
+      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/products" element={<ProductPage />} />
+      <Route path="/about-us" element={<AboutPage />} />
+      <Route path="/support-page" element={<Support />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
+      <Route path="/security-page" element={<SecurityPage />} />
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<RegisterForm />} />
 

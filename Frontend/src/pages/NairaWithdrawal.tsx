@@ -82,7 +82,7 @@ const NairaWithdrawal = () => {
       <WithdrawalNavbar title="Withdraw NGN" />
 
       {/* Main Content */}
-      <main className="pt-[70px]  max-w-5xl mx-auto md:pt-[95px] bg-neutral-200 dark:bg-gray-600 dark:text-white">
+      <main className="pt-[70px] px-4  max-w-5xl mx-auto md:pt-[95px] bg-neutral-200 dark:bg-gray-600 dark:text-white">
         <div className="max-w-6xl mx-auto">
           <button
             className="mt-6 cursor-pointer  flex text-[#67686B] dark:text-white  items-center gap-3 font-medium text-sm"
@@ -186,7 +186,7 @@ const NairaWithdrawal = () => {
                   </p>
                   <button
                     onClick={() => setShowAddBankModal(true)}
-                    className="flex items-center justify-center gap-2 px-6 py-2.5 border-2 border-blue text-blue hover:bg-[#E9F4FD] hover:text-blue  dark:hover:bg-none rounded-full semibold transition-colors"
+                    className="flex items-center justify-center gap-2 px-6 py-2.5 border-2 border-blue text-blue  hover:text-blue cursor-pointer dark:hover:bg-none rounded-full semibold transition-colors"
                   >
                     <Plus className="w-5 h-5" />
                     Add bank account
@@ -205,7 +205,7 @@ const NairaWithdrawal = () => {
 
                   <button
                     onClick={() => setShowAddBankModal(true)}
-                    className=" mx-auto flex items-center justify-center gap-2 px-6 py-2.5 border-2 border-blue text-blue hover:bg-[#E9F4FD] hover:text-blue dark:hover:bg-none rounded-full semibold transition-colors mt-4"
+                    className=" mx-auto flex items-center justify-center gap-2 px-6 py-2.5 border-2 border-blue text-blue cursor-pointer hover:text-blue dark:hover:bg-none rounded-full semibold transition-colors mt-4"
                   >
                     <Plus className="w-5 h-5" />
                     Add bank account

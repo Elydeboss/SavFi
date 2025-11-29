@@ -30,7 +30,7 @@ const SavingsPlan = () => {
   return (
     <div className="min-h-screen dark:bg-gray-600 dark:text-white">
       <Navbar title="Savings plan" />
-      <div className="p-4">
+      <div className="p-4 mt-18 md:mt-0">
         {/* Header */}
         <div className="flex justify-end mt-3 mb-6">
           <button

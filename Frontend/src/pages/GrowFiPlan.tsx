@@ -41,7 +41,7 @@ export default function GrowFiPlan() {
     <div className="bg-neutral-200 min-h-screen dark:bg-gray-600 dark:text-white">
       <div className="">
         <Navbar title="Create GrowFi plan" />
-        <div className="p-4">
+        <div className="p-4 mt-18 md:mt-0">
           <Breadcrumb
             items={[
               { label: "Savings plan", href: "/savings" },
@@ -51,7 +51,7 @@ export default function GrowFiPlan() {
           />
         </div>
 
-        <div className="max-w-3xl mx-auto pb-12">
+        <div className="max-w-3xl mx-auto px-4 md:px-0 pb-12">
           {/* Plan Header */}
           <div className="bg-neutral-50 dark:bg-gray-700 rounded-2xl p-6 mb-6">
             <div className="flex items-start gap-4 mb-6">
