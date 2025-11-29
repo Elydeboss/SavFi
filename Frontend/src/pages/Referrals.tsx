@@ -87,7 +87,7 @@ const Referrals = () => {
     <div className="min-h-screen  dark:bg-gray-600 dark:text-white">
       <Navbar title="Referrals" />
       {/* MAIN */}
-      <div className="space-y-6 p-4">
+      <div className="space-y-6 mt-18 md:mt-0 p-4">
         {/* Top grid */}
         <div className="grid gap-4 lg:grid-cols-2">
           {/* Invite card */}
@@ -287,7 +287,7 @@ const Referrals = () => {
                 Convert to USDT
               </button>
               <button
-                className="inline-flex flex-1 items-center justify-center rounded-full border border-[#98CDF5] cursor-pointer  px-2 py-2.5 text-[15px] font-semibold text-[#98CDF5] hover:bg-white"
+                className="inline-flex flex-1 items-center justify-center rounded-full border border-[#98CDF5] cursor-pointer  px-2 py-2.5 text-[15px] font-semibold text-[#98CDF5] "
                 onClick={() => alert("Withdraw to wallet clicked")}
               >
                 Withdraw to wallet

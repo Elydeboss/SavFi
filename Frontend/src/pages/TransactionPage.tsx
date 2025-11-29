@@ -1,84 +1,84 @@
-import { useMemo, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-import SearchActions from '../components/transaction/SearchActions';
-import FiltersRow from '../components/transaction/FiltersRow';
-import TransactionsTable from '../components/transaction/TransactionsTable';
-import DetailsPanel from '../components/transaction/DetailsPanel';
-import Pagination from '../components/transaction/Pagination';
-import type { Transaction } from '../interfaces/transaction';
-import Navbar from '../components/dashboard/Navbar';
+import SearchActions from "../components/transaction/SearchActions";
+import FiltersRow from "../components/transaction/FiltersRow";
+import TransactionsTable from "../components/transaction/TransactionsTable";
+import DetailsPanel from "../components/transaction/DetailsPanel";
+import Pagination from "../components/transaction/Pagination";
+import type { Transaction } from "../interfaces/transaction";
+import Navbar from "../components/dashboard/Navbar";
 
 const demoTransactions: Transaction[] = [
   {
-    id: '1',
-    date: 'Nov 15, 2025',
-    type: 'Deposit',
-    amount: '+₦50,000',
-    status: 'Success',
-    source: 'Naira',
+    id: "1",
+    date: "Nov 15, 2025",
+    type: "Deposit",
+    amount: "+₦50,000",
+    status: "Success",
+    source: "Naira",
     details: {},
   },
   {
-    id: '2',
-    date: 'Nov 15, 2025',
-    type: 'Interest',
-    amount: '+86 USDT',
-    status: 'Pending',
-    source: 'Interest',
+    id: "2",
+    date: "Nov 15, 2025",
+    type: "Interest",
+    amount: "+86 USDT",
+    status: "Pending",
+    source: "Interest",
     details: {},
   },
   {
-    id: '3',
-    date: 'Nov 15, 2025',
-    type: 'Conversion',
-    amount: '₦100,000',
-    status: 'Failed',
-    source: 'Crypto',
+    id: "3",
+    date: "Nov 15, 2025",
+    type: "Conversion",
+    amount: "₦100,000",
+    status: "Failed",
+    source: "Crypto",
     details: {},
   },
   {
-    id: '4',
-    date: 'Nov 15, 2025',
-    type: 'Referral bonus',
-    amount: '+86 USDT',
-    status: 'Success',
-    source: 'Referral',
+    id: "4",
+    date: "Nov 15, 2025",
+    type: "Referral bonus",
+    amount: "+86 USDT",
+    status: "Success",
+    source: "Referral",
     details: {},
   },
   {
-    id: '5',
-    date: 'Nov 15, 2025',
-    type: 'Deposit',
-    amount: '+86 USDT',
-    status: 'Success',
-    source: 'Crypto',
+    id: "5",
+    date: "Nov 15, 2025",
+    type: "Deposit",
+    amount: "+86 USDT",
+    status: "Success",
+    source: "Crypto",
     details: {},
   },
   {
-    id: '6',
-    date: 'Nov 15, 2025',
-    type: 'Withdrawal',
-    amount: '-₦100,000',
-    status: 'Success',
-    source: 'Naira',
+    id: "6",
+    date: "Nov 15, 2025",
+    type: "Withdrawal",
+    amount: "-₦100,000",
+    status: "Success",
+    source: "Naira",
     details: {},
   },
   {
-    id: '7',
-    date: 'Nov 15, 2025',
-    type: 'System adjustment',
-    amount: '-0.1 USDT',
-    status: 'Success',
-    source: 'System',
+    id: "7",
+    date: "Nov 15, 2025",
+    type: "System adjustment",
+    amount: "-0.1 USDT",
+    status: "Success",
+    source: "System",
     details: {},
   },
 ];
 
 export default function TransactionsPage() {
-  const [query, setQuery] = useState('');
-  const [transactionType, setTransactionType] = useState('All');
-  const [dateRange, setDateRange] = useState('Recent');
+  const [query, setQuery] = useState("");
+  const [transactionType, setTransactionType] = useState("All");
+  const [dateRange, setDateRange] = useState("Recent");
   const [page, setPage] = useState(1);
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
@@ -86,7 +86,7 @@ export default function TransactionsPage() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return demoTransactions.filter((t) => {
-      if (transactionType !== 'All' && t.type !== transactionType) return false;
+      if (transactionType !== "All" && t.type !== transactionType) return false;
       if (
         q &&
         !(
@@ -110,7 +110,7 @@ export default function TransactionsPage() {
       <div className="flex-1 flex flex-col">
         <Navbar title="Transaction" />
 
-        <div className="flex flex-1 flex-col p-4">
+        <div className="flex flex-1 flex-col mt-18 md:mt-0 p-4">
           <motion.div
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -120,8 +120,8 @@ export default function TransactionsPage() {
             <SearchActions
               query={query}
               setQuery={setQuery}
-              onExportCSV={() => alert('export csv')}
-              onExportPDF={() => alert('export pdf')}
+              onExportCSV={() => alert("export csv")}
+              onExportPDF={() => alert("export pdf")}
             />
             <FiltersRow
               transactionType={transactionType}
@@ -151,11 +151,11 @@ export default function TransactionsPage() {
                       </span>
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          tx.status === 'Success'
-                            ? 'bg-green-100 text-green-600 dark:bg-green-700 dark:text-green-300'
-                            : tx.status === 'Pending'
-                            ? 'bg-yellow-100 text-yellow-600 dark:bg-yellow-700 dark:text-yellow-300'
-                            : 'bg-red-100 text-red-600 dark:bg-red-700 dark:text-red-300'
+                          tx.status === "Success"
+                            ? "bg-green-100 text-green-600 dark:bg-green-700 dark:text-green-300"
+                            : tx.status === "Pending"
+                            ? "bg-yellow-100 text-yellow-600 dark:bg-yellow-700 dark:text-yellow-300"
+                            : "bg-red-100 text-red-600 dark:bg-red-700 dark:text-red-300"
                         }`}
                       >
                         {tx.status}
@@ -168,11 +168,11 @@ export default function TransactionsPage() {
                       </span>
                       <span
                         className={`font-semibold ${
-                          tx.amount.startsWith('+₦')
-                            ? 'text-black dark:text-white'
-                            : tx.amount.startsWith('-')
-                            ? 'text-red-600 dark:text-red-400'
-                            : 'text-green-600 dark:text-green-400'
+                          tx.amount.startsWith("+₦")
+                            ? "text-black dark:text-white"
+                            : tx.amount.startsWith("-")
+                            ? "text-red-600 dark:text-red-400"
+                            : "text-green-600 dark:text-green-400"
                         }`}
                       >
                         {tx.amount}
@@ -182,15 +182,15 @@ export default function TransactionsPage() {
                     <div className="flex justify-between items-center">
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          tx.source === 'Naira'
-                            ? 'bg-orange-100 text-orange-600 dark:bg-orange-700 dark:text-orange-300'
-                            : tx.source === 'Interest'
-                            ? 'bg-purple-100 text-purple-600 dark:bg-purple-700 dark:text-purple-300'
-                            : tx.source === 'Crypto'
-                            ? 'bg-blue-100 text-blue-600 dark:bg-blue-700 dark:text-blue-300'
-                            : tx.source === 'Referral'
-                            ? 'bg-green-100 text-green-600 dark:bg-green-700 dark:text-green-300'
-                            : 'bg-gray text-black dark:bg-gray-600 dark:text-white'
+                          tx.source === "Naira"
+                            ? "bg-orange-100 text-orange-600 dark:bg-orange-700 dark:text-orange-300"
+                            : tx.source === "Interest"
+                            ? "bg-purple-100 text-purple-600 dark:bg-purple-700 dark:text-purple-300"
+                            : tx.source === "Crypto"
+                            ? "bg-blue-100 text-blue-600 dark:bg-blue-700 dark:text-blue-300"
+                            : tx.source === "Referral"
+                            ? "bg-green-100 text-green-600 dark:bg-green-700 dark:text-green-300"
+                            : "bg-gray text-black dark:bg-gray-600 dark:text-white"
                         }`}
                       >
                         {tx.source}
@@ -207,9 +207,9 @@ export default function TransactionsPage() {
                 transactions={filtered}
                 onRowClick={onRowClick}
                 onView={setSelectedTx}
-                onDownload={(tx) => alert('Download: ' + tx.id)}
-                onDelete={(tx) => alert('Delete: ' + tx.id)}
-                onReport={(tx) => alert('Report issue: ' + tx.id)}
+                onDownload={(tx) => alert("Download: " + tx.id)}
+                onDelete={(tx) => alert("Delete: " + tx.id)}
+                onReport={(tx) => alert("Report issue: " + tx.id)}
               />
             </div>
           </div>
@@ -244,9 +244,9 @@ export default function TransactionsPage() {
         <AnimatePresence>
           {detailsOpen && (
             <motion.div
-              initial={{ x: '100%' }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
+              exit={{ x: "100%" }}
               transition={{ duration: 0.35 }}
               className="fixed inset-0 z-50 md:hidden"
             >

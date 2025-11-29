@@ -26,7 +26,7 @@ const Profile = () => {
 
       <div className="flex flex-col flex-1">
         <Navbar title={pageTitle} />
-        <div className="flex flex-1 p-4">
+        <div className="flex flex-1 p-4 mt-18 md:mt-0">
           <ProfileSidebar />
           <div className="flex-1">
             <Outlet />

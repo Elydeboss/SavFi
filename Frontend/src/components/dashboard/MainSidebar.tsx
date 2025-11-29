@@ -52,7 +52,7 @@ export default function MainSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed md:sticky top-0 left-0 z-42 h-screen  w-64 md:w-75 bg-neutral-50 dark:bg-gray-700 text-black-text dark:text-white transition-transform duration-300",
+          "fixed md:sticky top-0 left-0 z-50 h-screen  w-64 md:w-75 bg-neutral-50 dark:bg-gray-700 text-black-text dark:text-white transition-transform duration-300",
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
       >

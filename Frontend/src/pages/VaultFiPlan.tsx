@@ -31,7 +31,7 @@ export default function VaultFiPlan() {
       <div className="">
         <Navbar title="Create VaultFi plan" />
 
-        <div className="p-4">
+        <div className="p-4 mt-18 md:mt-0">
           <Breadcrumb
             items={[
               { label: "Savings plan", href: "/savings" },

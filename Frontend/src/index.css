@@ -21,10 +21,40 @@
   --color-muted-foreground: #67686b;
   --font-dm-sans: DM Sans, "sans-serif";
   --font-instrument-sans: "Instrument Sans", sans-serif;
+  --color-foreground: #23272f;
+  --color-card: #ffffff;
+  --color-card-foreground: #23272f;
+
+  --color-primary: #2092e9;
+  --color-primary-foreground: #ffffff;
+  --color-primary-light: #58c3ff;
+  --color-primary-dark: #007ac2;
+
+  --color-secondary: #f0f4f8;
+  --color-secondary-foreground: #23272f;
+
+  --color-muted: #f2f6f9;
+  --color-muted-foreground: #6e737b;
+
+  --color-accent: #ffc928;
+  --color-accent-foreground: #23272f;
+
+  --color-success: #33b86b;
+  --color-success-foreground: #ffffff;
+
+  --color-destructive: #e53935;
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #e3e8ed;
+  --color-input: #e3e8ed;
+  --color-ring: #1ba8ff;
+
+  --color-radius: 0.75rem;
 
   /* Dark Mode Overrides */
   --color-muted-foreground-dark: #ffffffcc;
-  --color-neutral-50-dark: #1a1e33;
+  --color-foreground-dark: #ffffff;
+  --color-neutral-50-dark: #374151;
   --color-neutral-200-dark: #2d2d2d;
 }
 
@@ -34,6 +64,77 @@ body {
 
 [data-theme="dark"] {
   --color-muted-foreground: var(--color-muted-foreground-dark);
+  --color-foreground: var(--color-foreground-dark);
   --color-neutral-50: var(--color-neutral-50-dark);
   --color-neutral-200: var(--color-neutral-200-dark);
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@utility animate-accordion-down {
+  animation: accordion-down 0.2s ease-out;
+}
+
+@utility animate-accordion-up {
+  animation: accordion-up 0.2s ease-out;
+}
+
+@utility animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+@utility animate-slide-up {
+  animation: slide-up 0.6s ease-out;
+}
+
+@utility animate-float {
+  animation: float 3s ease-in-out infinite;
 }

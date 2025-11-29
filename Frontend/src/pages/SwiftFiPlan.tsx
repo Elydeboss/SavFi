@@ -49,7 +49,7 @@ export default function SwiftFiPlan() {
       <div className="">
         <Navbar title="SwiftFi plan" />
 
-        <div className=" p-4 pb-12">
+        <div className=" mt-18 md:mt-0 p-4 pb-12">
           <Breadcrumb
             items={[
               { label: "Savings plan", href: "/savings" },
