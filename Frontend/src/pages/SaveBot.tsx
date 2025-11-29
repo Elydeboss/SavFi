@@ -30,44 +30,47 @@ function ChatBot() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 dark:bg-gray-600 dark:text-blue-600">
-      <div className="w-full max-w-md bg-white rounded shadow-lg p-4 flex flex-col">
-        <div className="flex-1 overflow-auto mb-4">
-          {messages.map((m, idx) => (
-            <div
-              key={idx}
-              className={`mb-2 flex ${
-                m.from === 'bot' ? 'justify-start' : 'justify-end'
-              }`}
-            >
+    <div>
+      <Navbar title="SaveBot" />
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 dark:bg-gray-600 dark:text-blue-600">
+        <div className="w-full max-w-md bg-white rounded shadow-lg p-4 flex flex-col">
+          <div className="flex-1 overflow-auto mb-4">
+            {messages.map((m, idx) => (
               <div
-                className={`px-4 py-2 rounded ${
-                  m.from === 'bot'
-                    ? 'bg-blue-100 text-blue-900'
-                    : 'bg-green-100 text-green-900'
+                key={idx}
+                className={`mb-2 flex ${
+                  m.from === 'bot' ? 'justify-start' : 'justify-end'
                 }`}
               >
-                {m.text}
+                <div
+                  className={`px-4 py-2 rounded ${
+                    m.from === 'bot'
+                      ? 'bg-blue-100 text-blue-900'
+                      : 'bg-green-100 text-green-900'
+                  }`}
+                >
+                  {m.text}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="flex">
-          <input
-            className="flex-1 border border-gray-300 dark:border-gray-500 rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Type your question..."
-          />
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500"
-            onClick={handleSend}
-          >
-            Send
-          </button>
+          <div className="flex">
+            <input
+              className="flex-1 border border-gray-300 dark:border-gray-500 rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Type your question..."
+            />
+            <button
+              className="bg-blue text-white px-4 py-2 rounded-r hover:bg-blue-300 dark:bg-blue dark:hover:bg-blue-300"
+              onClick={handleSend}
+            >
+              Send
+            </button>
+          </div>
         </div>
       </div>
     </div>

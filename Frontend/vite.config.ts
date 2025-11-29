@@ -12,4 +12,19 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
+
+  // ADDING THE 'server' BLOCK WITH THE 'proxy' CONFIGURATION
+  server: {
+    proxy: {
+      //  Define the proxy path prefix. Frontend requests starting with '/api'
+
+      "/api": {
+        target: "https://wallet-api-55mt.onrender.com", // The actual API server address
+        changeOrigin: true, // Necessary for routing virtual hosts
+        // Remove '/api' from the path before sending the request to the target.
+        //    e.g., '/api/accounts/register/' becomes '/accounts/register/'
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });
