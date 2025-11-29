@@ -1,34 +1,71 @@
-// DepositEnterAmount.tsx
-// Reference screenshot (for visual match): /mnt/data/Screenshot 2025-11-24 141531.png
-
 import React, { useState, useMemo } from 'react';
 
-type Props = {
-  initialAmount?: number; // NGN
-  onCancel?: () => void;
-  onContinue?: (amountNgn: number, amountUsdt: number) => void;
-  minAmount?: number; // NGN
-};
+// --------------------
+// Helpers
+// --------------------
+function parseNumber(value: string) {
+  const cleaned = value.replace(/[^0-9.]/g, '');
+  const num = parseFloat(cleaned || '0');
+  if (Number.isNaN(num)) return 0;
+  return num;
+}
+function formatNumber(n: number) {
+  return n.toLocaleString('en-NG', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0,
+  });
+}
+function formatUSDT(n: number) {
+  return n === 0 ? '0' : n.toString();
+}
+function normalizeInput(raw: string) {
+  return raw.replace(/[^0-9.,]/g, '');
+}
 
+// --------------------
+// Modal Wrapper
+// --------------------
+function DepositModalWrapper({
+  isOpen,
+  children,
+}: {
+  isOpen: boolean;
+  children: React.ReactNode;
+}) {
+  if (!isOpen) return null;
+  return (
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div className="bg-white w-full max-w-md rounded-2xl shadow-xl p-6 animate-fadeIn">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+// --------------------
+// DepositEnterAmount
+// --------------------
 export default function DepositEnterAmount({
   initialAmount = 124500,
   onCancel,
   onContinue,
   minAmount = 1000,
-}: Props) {
-  // UI state
+}: {
+  initialAmount?: number;
+  onCancel?: () => void;
+  onContinue?: (amountNgn: number, amountUsdt: number) => void;
+  minAmount?: number;
+}) {
   const [amount, setAmount] = useState<string>(() =>
     formatNumber(initialAmount)
   );
   const [touched, setTouched] = useState(false);
 
-  // Mock conversion rate -- in real app this would come from an API
-  const NGN_TO_USDT = 1400; // example: 1 USDT = 1400 NGN
-
+  const NGN_TO_USDT = 1400;
   const amountNumeric = useMemo(() => parseNumber(amount), [amount]);
   const amountUsdt = useMemo(() => {
     if (amountNumeric <= 0) return 0;
-    return Math.round((amountNumeric / NGN_TO_USDT) * 100000) / 100000; // 5dp
+    return Math.round((amountNumeric / NGN_TO_USDT) * 100000) / 100000;
   }, [amountNumeric]);
 
   const isValid = amountNumeric >= minAmount;
@@ -42,40 +79,24 @@ export default function DepositEnterAmount({
   }
 
   return (
-    <div className="w-full min-h-[60vh] flex items-start md:items-center justify-center p-6 md:p-12 bg-slate-50">
+    <div className="w-full min-h-[60vh] flex justify-center p-6 md:p-12 bg-neutral-50 dark:bg-gray-900">
       <div className="w-full max-w-md">
-        {/* Back link */}
-        <button
-          className="text-slate-600 text-sm mb-4 flex items-center gap-2"
-          onClick={() => window.history.back()}
-          aria-label="Back"
-        >
-          <span aria-hidden>←</span>
-          <span>Back</span>
-        </button>
-
         <form
           onSubmit={handleContinue}
-          className="bg-white rounded-2xl shadow-sm p-6 md:p-8 border border-slate-100"
-          aria-labelledby="deposit-title"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 md:p-8 border border-border"
         >
-          <h1
-            id="deposit-title"
-            className="text-lg font-semibold text-slate-900 mb-2"
-          >
+          <h1 className="text-lg font-semibold text-foreground mb-2">
             Enter amount to deposit
           </h1>
-          <p className="text-sm text-slate-500 mb-6">
+          <p className="text-sm text-muted-foreground mb-6">
             Funds will be converted to USDT and added to your total balance.
           </p>
-
-          <label className="block text-sm font-medium text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Amount
           </label>
-
           <div>
             <div className="relative">
-              <span className="absolute inset-y-0 left-3 flex items-center text-slate-500">
+              <span className="absolute inset-y-0 left-3 flex items-center text-muted-foreground">
                 ₦
               </span>
               <input
@@ -84,99 +105,120 @@ export default function DepositEnterAmount({
                 value={amount}
                 onChange={(e) => setAmount(normalizeInput(e.target.value))}
                 onBlur={() => setTouched(true)}
-                aria-invalid={!isValid}
-                aria-describedby={showError ? 'amount-error' : 'amount-helper'}
                 className={`w-full pr-4 pl-10 h-12 rounded-md border ${
-                  showError ? 'border-red-400' : 'border-slate-200'
-                } focus:outline-none focus:ring-2 focus:ring-blue-300 bg-slate-50`}
+                  showError ? 'border-red-400' : 'border-border'
+                } focus:outline-none focus:ring-2 focus:ring-blue-300 bg-neutral-50 dark:bg-gray-900 text-foreground` }
               />
             </div>
-            <p id="amount-helper" className="text-xs text-slate-400 mt-2">
+            <p className="text-xs text-muted-foreground mt-2">
               You’ll receive{' '}
-              <span className="font-medium text-slate-800">
+              <span className="font-medium text-foreground">
                 {formatUSDT(amountUsdt)} USDT
               </span>
             </p>
-
             {showError && (
-              <p
-                id="amount-error"
-                role="alert"
-                className="text-xs text-red-600 mt-2"
-              >
+              <p className="text-xs text-red-600 mt-2">
                 Minimum deposit is ₦{formatNumber(minAmount)}.
               </p>
             )}
           </div>
-
-          <p className="text-xs text-slate-400 mt-4">
-            Conversion rate is pulled directly from our liquidity partners.
-          </p>
-
           <div className="mt-6">
             <button
               type="submit"
-              className="w-full inline-flex items-center justify-center h-11 rounded-full bg-blue-600 text-white font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full h-11 rounded-full bg-blue text-white font-semibold disabled:opacity-60"
               disabled={!isValid}
             >
               Continue →
             </button>
-
             <div className="mt-3 text-center">
               <button
                 type="button"
                 onClick={() => onCancel?.()}
-                className="text-sm text-slate-500 underline"
+                className="text-sm text-muted-foreground underline"
               >
-                Cancel &amp; return to dashboard
+                Cancel & return to dashboard
               </button>
             </div>
           </div>
         </form>
-
-        {/* Optional reference screenshot for visual QA - hidden on larger screens */}
-        <div className="mt-6 md:hidden">
-          <p className="text-xs text-slate-500 mb-2">
-            Reference (mobile preview)
-          </p>
-          <img
-            src="/mnt/data/Screenshot 2025-11-24 141531.png"
-            alt="reference"
-            className="w-full rounded-md border"
-          />
-        </div>
       </div>
     </div>
   );
 }
 
 // --------------------
-// Helpers
+// DepositBankDetails
 // --------------------
-
-function parseNumber(value: string) {
-  // Remove commas and non-digit characters except dot
-  const cleaned = value.replace(/[^0-9.]/g, '');
-  const num = parseFloat(cleaned || '0');
-  if (Number.isNaN(num)) return 0;
-  return num;
-}
-
-function formatNumber(n: number) {
-  return n.toLocaleString('en-NG', {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 0,
-  });
-}
-
-function formatUSDT(n: number) {
-  // Show up to 5 decimals but trim trailing zeros
-  return n === 0 ? '0' : n.toString();
-}
-
-function normalizeInput(raw: string) {
-  // Allow digits, commas, dot. Convert multiple dots to single.
-  const cleaned = raw.replace(/[^0-9.,]/g, '');
-  // Replace commas if user types them; we will format on blur only (simple approach)
-  return cleaned;
+export function DepositBankDetails({
+  accountNumber = '8123456789',
+  bankName = 'Providus',
+  accountName = 'Paystack check',
+  amountToPay,
+  onContinue,
+  onCancel,
+}: {
+  accountNumber?: string;
+  bankName?: string;
+  accountName?: string;
+  amountToPay: number;
+  onContinue?: () => void;
+  onCancel?: () => void;
+}) {
+  return (
+    <div className="w-full min-h-[60vh] flex justify-center p-6 md:p-12 bg-neutral-50 dark:bg-gray-900">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8 border">
+          <h1 className="text-lg font-semibold text-foreground mb-2">
+            Send NGN to this Account Details
+          </h1>
+          <div className="bg-slate-50 border rounded-xl p-5 mb-4">
+            <div className="mb-4">
+              <label className="text-xs text-slate-500">
+                Virtual Account Number
+              </label>
+              <div className="flex items-center justify-between mt-1">
+                <span className="text-blue font-semibold text-lg">
+                  {accountNumber}
+                </span>
+                <button
+                  onClick={() => navigator.clipboard.writeText(accountNumber)}
+                  className="w-6 h-6 rounded-md bg-slate-200 hover:bg-slate-300 flex items-center justify-center text-xs"
+                >
+                  ⧉
+                </button>
+              </div>
+            </div>
+            <div className="mb-3">
+              <label className="text-xs text-slate-500">Bank Name</label>
+              <p className="text-slate-800 font-medium mt-1">{bankName}</p>
+            </div>
+            <div className="mb-3">
+              <label className="text-xs text-slate-500">Account Name</label>
+              <p className="text-slate-800 font-medium mt-1">{accountName}</p>
+            </div>
+            <div>
+              <label className="text-xs text-slate-500">Amount to pay</label>
+              <p className="text-slate-800 font-medium mt-1">
+                ₦{amountToPay.toLocaleString()}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => onContinue?.()}
+            className="w-full h-11 rounded-full bg-blue text-white font-semibold"
+          >
+            I have made the transfer
+          </button>
+          <div className="mt-3 text-center">
+            <button
+              onClick={() => onCancel?.()}
+              className="text-sm text-slate-500 underline"
+            >
+              Cancel & return to dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

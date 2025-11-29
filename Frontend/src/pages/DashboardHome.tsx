@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   Eye,
   EyeOff,
@@ -9,16 +9,16 @@ import {
   ShieldCheck,
   CirclePlus,
   ChevronDown,
-} from "lucide-react";
-import WelcomeModal from "../components/dashboard-home/WelcomeModal";
-import SavingPlanCard from "../components/dashboard-home/SavingPlanCard";
-import TransactionsTable from "../components/dashboard-home/TransactionsTable";
-import DepositModal from "../components/dashboard-home/DepositModal";
-import WithdrawModal from "../components/dashboard-home/WithdrawModal";
-import Navbar from "../components/dashboard/Navbar";
-import Toast from "../components/withdraw/Toast";
-import Piggy from "../assets/public/fluent_savings-32-filled.svg";
-import Tree from "../assets/public/tabler_growth.svg";
+} from 'lucide-react';
+import WelcomeModal from '../components/dashboard-home/WelcomeModal';
+import SavingPlanCard from '../components/dashboard-home/SavingPlanCard';
+import TransactionsTable from '../components/dashboard-home/TransactionsTable';
+import DepositModal from '../components/dashboard-home/DepositModal';
+import WithdrawModal from '../components/dashboard-home/WithdrawModal';
+import Navbar from '../components/dashboard/Navbar';
+import Toast from '../components/withdraw/Toast';
+import Piggy from '../assets/public/fluent_savings-32-filled.svg';
+import Tree from '../assets/public/tabler_growth.svg';
 
 const DashboardHome = () => {
   const navigate = useNavigate();
@@ -26,76 +26,76 @@ const DashboardHome = () => {
   const [showBalance, setShowBalance] = useState(true);
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
-  const [currency, setCurrency] = useState<"USDT" | "USDC">("USDT");
+  const [currency, setCurrency] = useState<'USDT' | 'USDC'>('USDT');
   const [openDropdown, setOpenDropdown] = useState(false);
   const [toast, setToast] = useState<{
     message: string;
-    type: "success" | "error";
+    type: 'success' | 'error';
   } | null>(null);
 
   useEffect(() => {
-    const hasSeenWelcome = localStorage.getItem("hasSeenWelcome");
+    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
     if (!hasSeenWelcome) {
       setShowWelcome(true);
     }
   }, []);
 
   const handleWelcomeComplete = () => {
-    localStorage.setItem("hasSeenWelcome", "true");
+    localStorage.setItem('hasSeenWelcome', 'true');
     setShowWelcome(false);
   };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
 
-    setToast({ message: "Copied to clipboard!", type: "success" });
+    setToast({ message: 'Copied to clipboard!', type: 'success' });
     setTimeout(() => setToast(null), 3000);
   };
 
   const savingsPlans = [
     {
-      name: "FlexFi",
-      interest: "3% interest",
-      color: "blue",
+      name: 'FlexFi',
+      interest: '3% interest',
+      color: 'blue',
       progress: 45,
       available: 75,
       principal: 70.51,
       interestAmount: 4.49,
-      maturity: "Nov. 25, 2025",
-      status: "running",
+      maturity: 'Nov. 25, 2025',
+      status: 'running',
     },
     {
-      name: "GrowFi",
-      interest: "7% interest",
-      color: "green",
+      name: 'GrowFi',
+      interest: '7% interest',
+      color: 'green',
       progress: 75,
       available: 75,
       principal: 70.51,
       interestAmount: 4.49,
-      maturity: "Nov. 25, 2025",
-      status: "running",
+      maturity: 'Nov. 25, 2025',
+      status: 'running',
     },
     {
-      name: "VaultFi",
-      interest: "3% interest",
-      color: "purple",
+      name: 'VaultFi',
+      interest: '3% interest',
+      color: 'purple',
       progress: 0,
       available: 0,
       principal: 0,
       interestAmount: 0,
-      maturity: "Not started",
-      status: "not-started",
+      maturity: 'Not started',
+      status: 'not-started',
     },
     {
-      name: "SwiftFi",
-      interest: "0% interest",
-      color: "orange",
+      name: 'SwiftFi',
+      interest: '0% interest',
+      color: 'orange',
       progress: 0,
       available: 75,
       principal: 70.51,
       interestAmount: 0,
-      maturity: "Withdraw anytime",
-      status: "available",
+      maturity: 'Withdraw anytime',
+      status: 'available',
     },
   ] as const;
 
@@ -127,9 +127,11 @@ const DashboardHome = () => {
               </p>
             </div>
           </div>
-          <button className="px-6 py-2 bg-foreground text-light dark:text-black-text rounded-lg text-sm font-medium hover:bg-foreground/90 transition-colors">
-            Complete KYC
-          </button>
+          <Link to="/profile/kyc">
+            <button className="px-6 py-2 bg-foreground text-light dark:text-black-text rounded-lg text-sm font-medium hover:bg-foreground/90 transition-colors">
+              Complete KYC
+            </button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
@@ -155,7 +157,7 @@ const DashboardHome = () => {
 
               <div className="mb-2 text-light">
                 <div className="text-4xl font-bold flex gap-1 items-center mb-1">
-                  {showBalance ? "120.54" : "****"} {/* Currency Button */}
+                  {showBalance ? '120.54' : '****'} {/* Currency Button */}
                   <div className="relative">
                     <button
                       onClick={() => setOpenDropdown((prev) => !prev)}
@@ -170,7 +172,7 @@ const DashboardHome = () => {
                         <button
                           className="w-full text-sm text-left px-3 py-0.5 hover:bg-neutral-200"
                           onClick={() => {
-                            setCurrency("USDT");
+                            setCurrency('USDT');
                             setOpenDropdown(false);
                           }}
                         >
@@ -179,7 +181,7 @@ const DashboardHome = () => {
                         <button
                           className="w-full text-sm text-left px-3 py-0.5 hover:bg-neutral-200"
                           onClick={() => {
-                            setCurrency("USDC");
+                            setCurrency('USDC');
                             setOpenDropdown(false);
                           }}
                         >
@@ -195,7 +197,7 @@ const DashboardHome = () => {
                   <div className="flex items-center gap-2">
                     <span className="text-xs ">0x1A2b...c4D0</span>
                     <button
-                      onClick={() => copyToClipboard("0x1A2b...c4D0")}
+                      onClick={() => copyToClipboard('0x1A2b...c4D0')}
                       className="p-1 hover:bg-light/20 cursor-pointer rounded transition-colors"
                     >
                       <Copy className="w-4 h-4" />
@@ -235,7 +237,7 @@ const DashboardHome = () => {
             Deposit
           </button>
           <button
-            onClick={() => navigate("/savings/new")}
+            onClick={() => navigate('/savings/new')}
             className="flex-1 px-6 py-3 border-2 font-semibold border-blue text-blue rounded-full transition-colors cursor-pointer  flex items-center justify-center gap-2"
           >
             <CirclePlus className="w-5 h-5" />
@@ -256,7 +258,7 @@ const DashboardHome = () => {
               Saving Plans
             </h3>
             <button
-              onClick={() => navigate("/transactions")}
+              onClick={() => navigate('/transactions')}
               className="text-sm cursor-pointer font-medium text-blue flex items-center gap-1"
             >
               See all

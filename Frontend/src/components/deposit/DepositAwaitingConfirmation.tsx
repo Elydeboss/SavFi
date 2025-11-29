@@ -13,9 +13,6 @@ type DepositModalWrapperProps = {
   children: React.ReactNode;
 };
 
-// --- Helper Component: DepositModalWrapper ---
-// This component simulates the external modal wrapper required by the user's component.
-// It is included here to make the DepositAwaitingConfirmation component runnable in isolation.
 const DepositModalWrapper: React.FC<DepositModalWrapperProps> = ({
   isOpen,
   children,
@@ -25,7 +22,7 @@ const DepositModalWrapper: React.FC<DepositModalWrapperProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4  bg-opacity-40 transition-opacity">
       <div
-        className="bg-white rounded-xl shadow-2xl max-w-sm w-full transform transition-all overflow-hidden"
+        className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-sm w-full transform transition-all overflow-hidden"
         role="dialog"
         aria-modal="true"
       >
@@ -46,11 +43,11 @@ export default function DepositAwaitingConfirmation({
     <DepositModalWrapper isOpen={isOpen}>
       <div className="flex flex-col items-center text-center py-6 px-4">
         {/* Icon */}
-        <div className="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center mb-4">
+        <div className="w-12 h-12 rounded-full bg-yellow-100 dark:bg-yellow-900/20 flex items-center justify-center mb-4">
           {/* Using a simple clock SVG icon for consistency */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 text-yellow-600"
+            className="w-6 h-6 text-yellow-600 dark:text-yellow-400"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -64,12 +61,12 @@ export default function DepositAwaitingConfirmation({
         </div>
 
         {/* Title */}
-        <h2 className="text-lg font-semibold text-slate-900 mb-2">
+        <h2 className="text-lg font-semibold text-foreground mb-2">
           Awaiting Confirmation
         </h2>
 
         {/* Message */}
-        <p className="text-sm text-slate-600 mb-6">
+        <p className="text-sm text-muted-foreground mb-6">
           We haven’t received confirmation from your bank yet. This can take a
           little longer depending on your bank.
         </p>
@@ -78,13 +75,13 @@ export default function DepositAwaitingConfirmation({
         <div className="flex flex-col gap-3 w-full">
           <button
             onClick={onRefresh}
-            className="w-full h-11 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold transition duration-150 shadow-md"
+            className="w-full h-11 rounded-full bg-blue hover:bg-blue-300 text-white font-semibold transition duration-150 shadow-md"
           >
             Refresh status
           </button>
           <button
             onClick={onReturn}
-            className="w-full h-11 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold transition duration-150 border border-slate-300"
+            className="w-full h-11 rounded-full bg-neutral-200 dark:bg-gray-700 hover:bg-neutral-300 dark:hover:bg-gray-600 text-foreground font-semibold transition duration-150 border border-border"
           >
             Return to dashboard
           </button>
@@ -93,7 +90,7 @@ export default function DepositAwaitingConfirmation({
         {/* Support Link */}
         <button
           onClick={onSupport}
-          className="mt-4 text-sm text-slate-500 underline hover:text-slate-600 transition duration-150"
+          className="mt-4 text-sm text-muted-foreground underline hover:text-foreground transition duration-150"
         >
           Contact support
         </button>

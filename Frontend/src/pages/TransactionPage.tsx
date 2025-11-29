@@ -81,7 +81,6 @@ export default function TransactionsPage() {
   const [dateRange, setDateRange] = useState("Recent");
   const [page, setPage] = useState(1);
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
-  const [detailsOpen, setDetailsOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -102,7 +101,6 @@ export default function TransactionsPage() {
 
   const onRowClick = (tx: Transaction) => {
     setSelectedTx(tx);
-    setDetailsOpen(true);
   };
 
   return (
@@ -218,47 +216,13 @@ export default function TransactionsPage() {
 
       <div className="mt-auto p-4">
         <Pagination page={page} setPage={setPage} totalPages={6} />
-
-        {/* DESKTOP DETAILS PANEL */}
-        <AnimatePresence>
-          {selectedTx && (
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 40 }}
-              transition={{ duration: 0.35 }}
-              className="hidden md:block w-[360px] h-[75vh] overflow-y-auto"
-            >
-              <div className="sticky top-20">
-                <DetailsPanel
-                  tx={selectedTx}
-                  open={true}
-                  onClose={() => setSelectedTx(null)}
-                />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* MOBILE SLIDE-OVER PANEL */}
-        <AnimatePresence>
-          {detailsOpen && (
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.35 }}
-              className="fixed inset-0 z-50 md:hidden"
-            >
-              <DetailsPanel
-                tx={selectedTx ?? undefined}
-                open={detailsOpen}
-                onClose={() => setDetailsOpen(false)}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
+
+      <DetailsPanel
+        tx={selectedTx}
+        open={!!selectedTx}
+        onClose={() => setSelectedTx(null)}
+      />
     </div>
   );
 }

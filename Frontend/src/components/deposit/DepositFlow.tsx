@@ -1,14 +1,17 @@
-// DepositFlow.tsx
-// Controls the entire deposit process flow
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import DepositEnterAmount from './DepositEnterAmount';
 import DepositBankDetails from './DepositBankDetails';
 import DepositVerifyingTransfer from './DepositVerifyingTransfer';
 import DepositAwaitingConfirmation from './DepositAwaitingConfirmation';
 import DepositSuccess from './DepositSuccess';
 
-export default function DepositFlow() {
+export default function DepositFlow({
+  onBack,
+  onClose,
+}: {
+  onBack?: () => void;
+  onClose?: () => void;
+}) {
   const [step, setStep] = useState<'enter' | 'bank'>('enter');
   const [amountNgn, setAmountNgn] = useState<number>(0);
   const [amountUsdt, setAmountUsdt] = useState<number>(0);
@@ -37,7 +40,7 @@ export default function DepositFlow() {
             setAmountUsdt(usdt);
             setStep('bank');
           }}
-          onCancel={() => console.log('Cancel pressed')}
+          onCancel={() => onBack?.()}
         />
       )}
 
@@ -57,6 +60,7 @@ export default function DepositFlow() {
         onClose={() => {
           setModal('none');
           setStep('enter');
+          onClose?.();
         }}
       />
     </div>
