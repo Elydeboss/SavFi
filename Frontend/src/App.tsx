@@ -39,11 +39,13 @@ import ProfileEditForm from "./pages/ProfileEditForm.tsx";
 import Security from "./pages/Security.tsx";
 import Wallets from "./pages/Wallets.tsx";
 import { KycFlow } from "./components/completekyc/verificationManager.tsx";
+import RegisterForm from "./features/auth/RegisterForm.tsx";
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/register" element={<RegisterForm />} />
 
       <Route path="/withdrawal/usdt" element={<UsdtWithdrawPage />} />
       <Route path="/withdrawal/naira" element={<NairaWithdrawal />} />

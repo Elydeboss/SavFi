@@ -1,5 +1,6 @@
 # 🟢 SavFi
 
+npm i axios zod
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![React](https://img.shields.io/badge/react-18-blue)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/typescript-5-blue)](https://www.typescriptlang.org/)
