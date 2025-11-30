@@ -1,14 +1,12 @@
 import { useState } from "react";
 import Navbar from "../components/Landpage-header";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // You will need to confirm the correct path from your API documentation.
 const VERIFY_API_URL = "/api/accounts/verify-otp/";
 
 export default function OTPPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-
   // State to hold the 6-digit OTP code entered by the user
   const [otpCode, setOtpCode] = useState("");
 
@@ -16,11 +14,6 @@ export default function OTPPage() {
   const [isVerifying, setIsVerifying] = useState(false);
   // State to hold and display any error messages
   const [error, setError] = useState("");
-
-  const { userEmail, userName } = location.state || {
-    userEmail: "unknown",
-    userName: "",
-  };
 
   const handleOTPVerification = async () => {
     // 1. Client-Side Validation
@@ -32,13 +25,14 @@ export default function OTPPage() {
 
     // This is a placeholder for the user's email or ID, which the API needs
     // In a real app, this would be retrieved from local storage or passed as a prop
+    const userIdentifier = "user@example.com";
 
     setIsVerifying(true);
     setError("");
 
     // 2. Prepare Data for API
     const requestData = {
-      email: userEmail,
+      email: userIdentifier,
       otp_code: otpCode, // Send the user-entered code
     };
 
