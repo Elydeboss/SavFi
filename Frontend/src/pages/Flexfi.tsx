@@ -124,7 +124,7 @@ const FlexFi = () => {
             </div>
 
             {/* Piggy Bank Illustration (SVG for scalability and crispness) */}
-            <div className="w-full lg:w-96 flex-shrink-0 pt-8 lg:pt-0">
+            <div className="w-full lg:w-96 shrink-0 pt-8 lg:pt-0">
               <svg
                 viewBox="0 0 200 200"
                 xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +215,7 @@ const FlexFi = () => {
           <div className=" space-y-8">
             {/* Step 1 */}
             <div className="flex items-start">
-              <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
+              <div className="shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
                 1
               </div>
               <div className="ml-4 flex-1">
@@ -232,7 +232,7 @@ const FlexFi = () => {
 
             {/* Step 2 */}
             <div className="flex items-start">
-              <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
+              <div className="shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
                 2
               </div>
               <div className="ml-4 flex-1">
@@ -248,7 +248,7 @@ const FlexFi = () => {
 
             {/* Step 3 */}
             <div className="flex items-start">
-              <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
+              <div className="shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
                 3
               </div>
               <div className="ml-4 flex-1">
@@ -264,7 +264,7 @@ const FlexFi = () => {
 
             {/* Step 4 */}
             <div className="flex items-start">
-              <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
+              <div className="shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
                 4
               </div>
               <div className="ml-4 flex-1">
@@ -281,7 +281,7 @@ const FlexFi = () => {
 
             {/* Step 5 */}
             <div className="flex items-start">
-              <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
+              <div className="shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
                 5
               </div>
               <div className="ml-4 flex-1">
@@ -299,7 +299,7 @@ const FlexFi = () => {
         </section>
 
         {/* --- FAQ Section --- */}
-        <section className="bg-white p-6 md:p-10 rounded-xl p-6 md:p-12 border border-blue-100">
+        <section className="bg-white rounded-xl p-6 md:p-12 border border-blue-100">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12">
             Frequently Asked Questions
           </h2>
@@ -328,7 +328,7 @@ const FlexFi = () => {
               <input
                 type="email"
                 placeholder="Email Address"
-                className="bg-transparent border-none text-white placeholder-blue-100 px-4 py-2 outline-none flex-grow w-full md:w-64"
+                className="bg-transparent border-none text-white placeholder-blue-100 px-4 py-2 outline-none grow w-full md:w-64"
               />
               <button className="bg-white text-blue-600 px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition">
                 Sign Up
