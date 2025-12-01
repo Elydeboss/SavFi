@@ -13,6 +13,8 @@
 ### Dashboard (Dark Mode)
 <img src="https://github.com/Elydeboss/SavFi/blob/c719a0e218a6dc39cb868650ecc692fb2ef70541/Frontend/public/DashBoardDarkmode.png" alt="Dashboard Dark Mode Screenshot" width="1000"/>
 
+---
+
 
 # Savfi – Hybrid Web2 + Web3 Savings Infrastructure
 
