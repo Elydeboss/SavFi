@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 // --------------------
 // Helpers
@@ -79,7 +80,13 @@ export default function DepositEnterAmount({
   }
 
   return (
-    <div className="w-full min-h-[60vh] flex justify-center p-6 md:p-12 bg-neutral-50 dark:bg-gray-900">
+    <div className="w-full min-h-[60vh] flex flex-col justify-center p-6 md:p-12 md:pt-2 bg-neutral-50 dark:bg-gray-900">
+      <button
+        className="text-muted-foreground text-sm mb-7 flex items-center -ml-7 cursor-pointer"
+        onClick={() => onCancel?.()}
+      >
+        <ChevronLeft /> Back
+      </button>
       <div className="w-full max-w-md">
         <form
           onSubmit={handleContinue}
@@ -107,11 +114,11 @@ export default function DepositEnterAmount({
                 onBlur={() => setTouched(true)}
                 className={`w-full pr-4 pl-10 h-12 rounded-md border ${
                   showError ? 'border-red-400' : 'border-border'
-                } focus:outline-none focus:ring-2 focus:ring-blue-300 bg-neutral-50 dark:bg-gray-900 text-foreground` }
+                } focus:outline-none focus:ring-2 focus:ring-blue-300 bg-neutral-50 dark:bg-gray-900 text-foreground`}
               />
             </div>
             <p className="text-xs text-muted-foreground mt-2">
-              You’ll receive{' '}
+              You'll receive{' '}
               <span className="font-medium text-foreground">
                 {formatUSDT(amountUsdt)} USDT
               </span>
@@ -125,10 +132,10 @@ export default function DepositEnterAmount({
           <div className="mt-6">
             <button
               type="submit"
-              className="w-full h-11 rounded-full bg-blue text-white font-semibold disabled:opacity-60"
+              className="w-full h-11 rounded-full bg-blue text-white font-semibold disabled:opacity-60 cursor-pointer"
               disabled={!isValid}
             >
-              Continue →
+              Continue <ChevronRight className="inline-block ml-2" />
             </button>
             <div className="mt-3 text-center">
               <button
