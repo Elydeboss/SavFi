@@ -1,10 +1,10 @@
 ## 📸 Home Page Screenshot
-![App Screenshot]( Frontend/public
+![App Screenshot](Frontend/public
 /Homepage.png)  
 
 ## 📸 DashBoard Screenshot
-![App Screenshot](Frontend/src/assets/public
-/dashboard2.svg)  
+![App Screenshot](Frontend/public
+/Dashborad.png)  
 
 ## 📸 DashBoard Dark Mode Screenshot
 ![App Screenshot](Frontend/public
