@@ -1,11 +1,13 @@
-## 📸 Home Page Screenshot
-![Home Page Screenshot](https://github.com/Elydeboss/SavFi/blob/c719a0e218a6dc39cb868650ecc692fb2ef70541/Frontend/public/Homepage.png)
+## 📸 Screenshots
 
-## 📸 Dashboard Screenshot
-![Dashboard Screenshot](https://github.com/Elydeboss/SavFi/blob/c719a0e218a6dc39cb868650ecc692fb2ef70541/Frontend/public/Dashborad.png)
+### Home Page
+<img src="https://github.com/Elydeboss/SavFi/blob/c719a0e218a6dc39cb868650ecc692fb2ef70541/Frontend/public/Homepage.png" alt="Home Page Screenshot" width="600"/>
 
-## 📸 Dashboard Dark Mode Screenshot
-![Dashboard Dark Mode Screenshot](https://github.com/Elydeboss/SavFi/blob/c719a0e218a6dc39cb868650ecc692fb2ef70541/Frontend/public/DashBoardDarkmode.png)
+### Dashboard (Light Mode)
+<img src="https://github.com/Elydeboss/SavFi/blob/c719a0e218a6dc39cb868650ecc692fb2ef70541/Frontend/public/Dashboard.png" alt="Dashboard Screenshot" width="600"/>
+
+### Dashboard (Dark Mode)
+<img src="https://github.com/Elydeboss/SavFi/blob/c719a0e218a6dc39cb868650ecc692fb2ef70541/Frontend/public/DashBoardDarkmode.png" alt="Dashboard Dark Mode Screenshot" width="600"/>
 
 
 # Savfi – Hybrid Web2 + Web3 Savings Infrastructure
