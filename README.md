@@ -1,7 +1,14 @@
-## 📸 Screenshot
+## 📸 Home Page Screenshot
+![App Screenshot]( Frontend/public
+/Homepage.png)  
+
+## 📸 DashBoard Screenshot
 ![App Screenshot](Frontend/src/assets/public
 /dashboard2.svg)  
 
+## 📸 DashBoard Dark Mode Screenshot
+![App Screenshot](Frontend/public
+/DashBoardDarkmode.png)  
 
 # Savfi – Hybrid Web2 + Web3 Savings Infrastructure
 
@@ -30,7 +37,7 @@ Savfi is built for transparency, security, and programmable finance.
 ---
 
 ## ✨ Features
-
+-Light and Dark Mode
 - 🔐 Secure registration & authentication
 - 💰 Automated deposits & savings workflow
 - 🌐 Web3-powered backend actions
