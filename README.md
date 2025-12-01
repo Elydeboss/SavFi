@@ -1,5 +1,6 @@
 ## 📸 Screenshot
-![App Screenshot](assets//public/dashboard2.svg)  
+![App Screenshot](Frontend/src/assets/public
+/dashboard2.svg)  
 
 
 # Savfi – Hybrid Web2 + Web3 Savings Infrastructure
