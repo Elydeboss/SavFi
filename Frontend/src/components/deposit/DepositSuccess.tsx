@@ -1,10 +1,10 @@
 import React from 'react';
+import success from '../../assets/menu/Container.png';
 
-// --- Type Definitions ---
 type DepositSuccessProps = {
   isOpen: boolean;
-  onClose: () => void; // Used for the primary action (Return to dashboard)
-  onViewDetails?: () => void; // Added for the secondary action (View transaction details)
+  onClose: () => void;
+  onViewDetails?: () => void;
 };
 
 type DepositModalWrapperProps = {
@@ -12,8 +12,6 @@ type DepositModalWrapperProps = {
   children: React.ReactNode;
 };
 
-// --- Helper Component: DepositModalWrapper ---
-// This component simulates the external modal wrapper required by the DepositSuccess component.
 const DepositModalWrapper: React.FC<DepositModalWrapperProps> = ({
   isOpen,
   children,
@@ -33,7 +31,6 @@ const DepositModalWrapper: React.FC<DepositModalWrapperProps> = ({
   );
 };
 
-// --- Component: DepositSuccess (Replicated from visual design) ---
 export default function DepositSuccess({
   isOpen,
   onClose,
@@ -43,22 +40,9 @@ export default function DepositSuccess({
     <DepositModalWrapper isOpen={isOpen}>
       <div className="flex flex-col items-center text-center py-8 px-6">
         {/* Icon */}
-        <div className="w-14 h-14 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center mb-6">
-          {/* Using a Checkmark SVG for better styling matching the image */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-8 h-8 text-green-500 dark:text-green-400"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
+        <div className="flex justify-center mb-4">
+          <img src={success} alt="success icon" className="h-12 w-" />
         </div>
-
         {/* Title */}
         <h2 className="text-xl font-bold text-foreground mb-2">
           Deposit successful

@@ -1,4 +1,5 @@
 import React from 'react';
+import awaiting from '../../assets/menu/awaiting.png';
 
 // --- Type Definitions ---
 type DepositAwaitingConfirmationProps = {
@@ -43,21 +44,8 @@ export default function DepositAwaitingConfirmation({
     <DepositModalWrapper isOpen={isOpen}>
       <div className="flex flex-col items-center text-center py-6 px-4">
         {/* Icon */}
-        <div className="w-12 h-12 rounded-full bg-yellow-100 dark:bg-yellow-900/20 flex items-center justify-center mb-4">
-          {/* Using a simple clock SVG icon for consistency */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 text-yellow-600 dark:text-yellow-400"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
+        <div className="flex justify-center mb-4">
+          <img src={awaiting} alt="success icon" className="h-12 w-" />
         </div>
 
         {/* Title */}
