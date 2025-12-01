@@ -1,14 +1,12 @@
 ## 📸 Home Page Screenshot
-![App Screenshot](Frontend/public
-/Homepage.png)  
+![Home Page Screenshot](https://github.com/Elydeboss/SavFi/blob/c719a0e218a6dc39cb868650ecc692fb2ef70541/Frontend/public/Homepage.png)
 
-## 📸 DashBoard Screenshot
-![App Screenshot](Frontend/public
-/Dashborad.png)  
+## 📸 Dashboard Screenshot
+![Dashboard Screenshot](https://github.com/Elydeboss/SavFi/blob/c719a0e218a6dc39cb868650ecc692fb2ef70541/Frontend/public/Dashborad.png)
 
-## 📸 DashBoard Dark Mode Screenshot
-![App Screenshot](Frontend/public
-/DashBoardDarkmode.png)  
+## 📸 Dashboard Dark Mode Screenshot
+![Dashboard Dark Mode Screenshot](https://github.com/Elydeboss/SavFi/blob/c719a0e218a6dc39cb868650ecc692fb2ef70541/Frontend/public/DashBoardDarkmode.png)
+
 
 # Savfi – Hybrid Web2 + Web3 Savings Infrastructure
 
