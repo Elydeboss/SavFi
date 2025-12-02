@@ -12,24 +12,25 @@ import type { NavbarProps } from "../../interfaces";
 import { NotificationPanel } from "./NotificationPanel";
 import type { Notification } from "./NotificationPanel";
 import { HelpCircle, LogOut } from "lucide-react";
+import { toast } from "sonner";
 
-const WithdrawalNavbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
+const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [avatarUrl, setAvatarUrl] = useState<string>("");
 
   const [searchActive, setSearchActive] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  //  State for notification panel
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-
-  //  State for user dropdown
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const userDropdownRef = useRef<HTMLDivElement>(null);
 
+  const userDropdownRef = useRef<HTMLDivElement>(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  //  Sample notifications data with read/unread status
+  // Notifications
   const [notifications, setNotifications] = useState<Notification[]>([
     {
       id: "1",
@@ -92,22 +93,68 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
     },
   ]);
 
-  //  Calculate unread notification count
+  // FETCH USER PROFILE (FIXED)
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
+  const fetchUserProfile = async () => {
+    try {
+      const authToken = localStorage.getItem("authToken");
+      if (!authToken) return;
+
+      const response = await fetch("/api/accounts/profile/", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const displayName =
+          data.first_name ||
+          data.username ||
+          localStorage.getItem("username") ||
+          "User";
+        setUserName(displayName);
+        setUserEmail(data.email || "");
+        setAvatarUrl(data.avatar || "");
+
+        if (data.email) {
+          localStorage.setItem("email", data.email);
+        }
+      } else {
+        setUserName(localStorage.getItem("username") || "User");
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      setUserName(localStorage.getItem("username") || "User");
+      setUserEmail(localStorage.getItem("email") || "");
+    }
+  };
+
+  const getInitials = () => {
+    if (!userName) return "U";
+    return userName.charAt(0).toUpperCase();
+  };
+
+  // NOTIFICATION COUNT
   const unreadCount = notifications.filter((n) => !n.read).length;
 
-  //  Mark all notifications as read
   const handleMarkAllAsRead = () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
   };
 
-  //  Mark single notification as read
   const handleMarkAsRead = (id: string) => {
     setNotifications((prev) =>
       prev.map((n) => (n.id === id ? { ...n, read: true } : n))
     );
   };
 
-  //  Close user dropdown when clicking outside
+  // Close dropdown on outside click
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -117,7 +164,6 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
         setIsUserDropdownOpen(false);
       }
     }
-
     if (isUserDropdownOpen) {
       document.addEventListener("mousedown", handleClickOutside);
       return () =>
@@ -138,17 +184,27 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
     })
     .replace(",", "");
 
+  // SEARCH helpers (restored exactly)
   const toggleSearch = () => setSearchActive((prev) => !prev);
   const handleSearch = () => console.log("Search for:", searchValue);
 
-  // handle logout
   const handleLogout = () => {
+    // Clear all localStorage data
     localStorage.removeItem("authToken");
-    navigate("/login");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("email");
+    localStorage.removeItem("fullName");
+    localStorage.removeItem("profileCompleted");
+    localStorage.removeItem("isNewUser");
+
+    toast.info("Logged out successfully. See you soon!");
+
+    navigate("/signup2", { replace: true });
   };
 
   return (
-    <header className="fixed top-0 right-0 left-0   md:h-[88px]  flex flex-col md:flex-row items-start md:items-center justify-between px-10 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-gray-700 dark:text-white z-40">
+    <header className=" fixed  md:sticky top-0 right-0 left-0 h-18  md:left-65 md:h-18 lg:left-75 flex flex-col md:flex-row items-start md:items-center justify-between px-3.5 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-gray-700 dark:text-white z-40 ">
       <div className="flex items-center w-full md:w-auto justify-between md:justify-start gap-2 md:gap-6">
         <h1
           className={`text-2xl md:text-3xl font-semibold ml-15 md:ml-0 text-gray-800 transition-all duration-300 dark:text-white ${
@@ -276,14 +332,17 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
               className="flex items-center space-x-2 cursor-pointer"
               onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
             >
-              <img
-                src={
-                  profileImage ||
-                  "https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff&size=32"
-                }
-                alt="User Avatar"
-                className="w-8 h-8 md:w-9 md:h-9 rounded-full"
-              />
+              {avatarUrl ? (
+                <img
+                  src={avatarUrl}
+                  alt="User Avatar"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-blue-700 flex items-center justify-center text-white font-bold text-lg">
+                  {getInitials()}
+                </div>
+              )}
               <FiChevronDown
                 className={`transition-transform duration-300 ${
                   isUserDropdownOpen ? "rotate-180" : "rotate-0"
@@ -298,25 +357,26 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
                   className="fixed inset-0 z-30"
                   onClick={() => setIsUserDropdownOpen(false)}
                 />
-                <div className="absolute right-0 top-full mt-7 w-80 bg-neutral-50  rounded-2xl shadow-2xl z-40 p-6">
+                <div className="absolute right-0 top-full mt-6 w-80 bg-neutral-50  rounded-2xl shadow-2xl z-40 p-6">
                   {/*  User profile section */}
                   <div className="flex flex-col items-center mb-6">
-                    <div className="w-18 h-18 rounded-full bg-linear-to-br from-primary to-info flex items-center justify-center mb-4">
-                      <img
-                        src={
-                          profileImage ||
-                          "https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff&size=32"
-                        }
-                        alt="User Avatar"
-                        className="w-full h-full object-fit rounded-full"
-                      />
+                    <div className="w-18 h-18 rounded-full bg-linear-to-br from-primary to-blue-700 flex items-center justify-center mb-4">
+                      {avatarUrl ? (
+                        <img
+                          src={avatarUrl}
+                          alt="User Avatar"
+                          className="w-16 h-16 rounded-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-white font-bold text-2xl">
+                          {getInitials()}
+                        </span>
+                      )}
                     </div>
                     <h3 className="text-xl font-bold text-foreground mb-1">
-                      Jolly Akeju
+                      {userName}
                     </h3>
-                    <p className="text-muted-foreground mb-4">
-                      jollyakeju@gmail.com
-                    </p>
+                    <p className="text-muted-foreground mb-4">{userEmail}</p>
 
                     {/*  Status badges */}
                     <div className="flex items-center gap-3">
@@ -349,7 +409,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title, profileImage }) => {
                         setIsUserDropdownOpen(false);
                         setShowLogoutModal(true);
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-50 transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-4 py-3 cursor-pointer rounded-lg hover:bg-red-50 transition-colors text-left"
                     >
                       <LogOut className="w-5 h-5 text-red-600" />
                       <span className="text-red-600 font-medium">Logout</span>
