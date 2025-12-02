@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
+import WalletConnector from "../Modal/Metamask";
 
 const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -11,6 +12,8 @@ const loginSchema = z.object({
 });
 
 export default function Login() {
+  const [contract, setContract] = useState(null);
+  const [address, setAddress] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -204,15 +207,12 @@ export default function Login() {
             </div>
 
             {/* MetaMask */}
-            <button
-              onClick={handleMetaMaskLogin}
-              className=" w-full cursor-pointer border-2 border-blue text-blue py-3 rounded-full font-medium hover:bg-blue-50 flex items-center justify-center gap-2"
-            >
+            <button className=" w-full cursor-pointer border-2 border-blue text-blue py-3 rounded-full font-medium hover:bg-blue-50 flex items-center justify-center gap-2">
               <img
                 src="https://cdn.worldvectorlogo.com/logos/metamask.svg"
                 className="w-5"
               />
-              Continue with Metamask
+              <WalletConnector />
             </button>
           </form>
 
