@@ -4,27 +4,23 @@ import success from '../../assets/menu/Container.png';
 type DepositSuccessProps = {
   isOpen: boolean;
   onClose: () => void;
-  onViewDetails?: () => void;
+  onViewDetails: () => void;
+  amountUsdt: number;
 };
 
-type DepositModalWrapperProps = {
+const DepositModalWrapper: React.FC<{
   isOpen: boolean;
   children: React.ReactNode;
-};
-
-const DepositModalWrapper: React.FC<DepositModalWrapperProps> = ({
-  isOpen,
-  children,
-}) => {
+}> = ({ isOpen, children }) => {
   if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-opacity-40 transition-opacity">
-      <div
-        className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-sm w-full transform transition-all overflow-hidden"
-        role="dialog"
-        aria-modal="true"
-      >
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="deposit-success-title"
+    >
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-sm w-full transform overflow-hidden">
         {children}
       </div>
     </div>
@@ -35,39 +31,36 @@ export default function DepositSuccess({
   isOpen,
   onClose,
   onViewDetails,
+  amountUsdt,
 }: DepositSuccessProps) {
   return (
     <DepositModalWrapper isOpen={isOpen}>
       <div className="flex flex-col items-center text-center py-8 px-6">
-        {/* Icon */}
-        <div className="flex justify-center mb-4">
-          <img src={success} alt="success icon" className="h-12 w-" />
-        </div>
-        {/* Title */}
-        <h2 className="text-xl font-bold text-foreground mb-2">
+        <img
+          src={success}
+          alt="success icon"
+          className="h-16 w-16 object-contain mb-4"
+        />
+        <h2
+          id="deposit-success-title"
+          className="text-xl font-bold text-foreground mb-2"
+        >
           Deposit successful
         </h2>
-
-        {/* Message (Adapted from visual design) */}
         <p className="text-base text-muted-foreground mb-8">
-          Your account has been credited with 500.00 USDT. Funds are now
-          available in your total balance.
+          Your account has been credited with{' '}
+          <span className="font-semibold">{amountUsdt.toFixed(2)} USDT</span>.
         </p>
-
-        {/* Action Buttons */}
         <div className="flex flex-col gap-3 w-full">
-          {/* Primary Button: Return to dashboard (using the onClose prop) */}
           <button
             onClick={onClose}
-            className="w-full h-12 rounded-xl bg-blue hover:bg-blue hover:opacity-80 text-white font-semibold transition duration-150 shadow-md"
+            className="w-full h-12 rounded-xl bg-blue text-white font-semibold hover:bg-blue/90 shadow-md transition"
           >
             Return to dashboard
           </button>
-
-          {/* Secondary Button: View transaction details */}
           <button
             onClick={onViewDetails}
-            className="w-full h-12 rounded-xl bg-white dark:bg-gray-700 hover:bg-neutral-50 dark:hover:bg-gray-600 text-blue font-semibold transition duration-150 border border-blue"
+            className="w-full h-12 rounded-xl bg-white dark:bg-gray-700 text-blue font-semibold border border-blue hover:bg-neutral-50 dark:hover:bg-gray-600 transition"
           >
             View transaction details
           </button>
