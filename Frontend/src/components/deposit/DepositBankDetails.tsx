@@ -4,6 +4,7 @@ type Props = {
   bankName?: string;
   accountName?: string;
   amountToPay: number;
+  amountUsdt: number; // ➕
   onContinue?: () => void;
   onCancel?: () => void;
 };
@@ -13,6 +14,7 @@ export default function DepositBankDetails({
   bankName = 'Providus',
   accountName = 'Paystack check',
   amountToPay,
+  amountUsdt,
   onContinue,
   onCancel,
 }: Props) {
@@ -88,12 +90,23 @@ export default function DepositBankDetails({
           </div>
 
           {/* Amount */}
+          {/* Amount */}
           <div>
             <label className="text-xs text-muted-foreground">
               Amount to pay
             </label>
             <p className="text-foreground font-medium mt-1">
               ₦{amountToPay.toLocaleString()}
+            </p>
+          </div>
+
+          {/* USDT Equivalent */}
+          <div className="mt-3">
+            <label className="text-xs text-muted-foreground">
+              You will receive
+            </label>
+            <p className="text-foreground font-medium mt-1">
+              {amountUsdt} USDT
             </p>
           </div>
         </div>

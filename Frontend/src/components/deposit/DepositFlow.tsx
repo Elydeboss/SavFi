@@ -33,26 +33,32 @@ export default function DepositFlow({
 
   return (
     <div className="w-full">
-      {step === 'enter' && (
-        <DepositEnterAmount
-          onContinue={(ngn, usdt) => {
-            setAmountNgn(ngn);
-            setAmountUsdt(usdt);
-            setStep('bank');
-          }}
-          onCancel={() => onBack?.()}
-        />
+      {/* Show MAIN FLOW only when no modal is active */}
+      {modal === 'none' && (
+        <>
+          {step === 'enter' && (
+            <DepositEnterAmount
+              onContinue={(ngn, usdt) => {
+                setAmountNgn(ngn);
+                setAmountUsdt(usdt);
+                setStep('bank');
+              }}
+              onCancel={() => onBack?.()}
+            />
+          )}
+
+          {step === 'bank' && (
+            <DepositBankDetails
+              amountToPay={amountNgn}
+              amountUsdt={amountUsdt}
+              onContinue={handleBankContinue}
+              onCancel={() => setStep('enter')}
+            />
+          )}
+        </>
       )}
 
-      {step === 'bank' && (
-        <DepositBankDetails
-          amountToPay={amountNgn}
-          onContinue={handleBankContinue}
-          onCancel={() => setStep('enter')}
-        />
-      )}
-
-      {/* Modals */}
+      {/* Modals (appear alone, full screen) */}
       <DepositVerifyingTransfer isOpen={modal === 'verifying'} />
       <DepositAwaitingConfirmation isOpen={modal === 'awaiting'} />
       <DepositSuccess
