@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Eye,
   EyeOff,
@@ -9,95 +9,213 @@ import {
   ShieldCheck,
   CirclePlus,
   ChevronDown,
-} from 'lucide-react';
-import WelcomeModal from '../components/dashboard-home/WelcomeModal';
-import SavingPlanCard from '../components/dashboard-home/SavingPlanCard';
-import TransactionsTable from '../components/dashboard-home/TransactionsTable';
-import DepositModal from '../components/dashboard-home/DepositModal';
-import WithdrawModal from '../components/dashboard-home/WithdrawModal';
-import Navbar from '../components/dashboard/Navbar';
-import Toast from '../components/withdraw/Toast';
-import Piggy from '../assets/public/fluent_savings-32-filled.svg';
-import Tree from '../assets/public/tabler_growth.svg';
+} from "lucide-react";
+import WelcomeModal from "../components/dashboard-home/WelcomeModal";
+import SavingPlanCard from "../components/dashboard-home/SavingPlanCard";
+import TransactionsTable from "../components/dashboard-home/TransactionsTable";
+import DepositModal from "../components/dashboard-home/DepositModal";
+import WithdrawModal from "../components/dashboard-home/WithdrawModal";
+import Navbar from "../components/dashboard/Navbar";
+import Toast from "../components/withdraw/Toast";
+import Piggy from "../assets/public/fluent_savings-32-filled.svg";
+import Tree from "../assets/public/tabler_growth.svg";
+
+type PlanType = "FlexFi" | "GrowFi" | "VaultFi" | "SwiftFi";
+
+interface DisplayPlan {
+  type: PlanType;
+  duration?: string;
+  interest: string;
+  balance: number;
+  principal?: number;
+  interestEarned?: number;
+  maturityDate?: string;
+  progress?: number;
+  isActive: boolean;
+  status?: "Active" | "Emergency only";
+}
+
+const PLAN_CONFIGS = {
+  FlexFi: { duration: "4 months plan", interestDisplay: "+3% interest" },
+  GrowFi: { duration: "6 months plan", interestDisplay: "+7% interest" },
+  VaultFi: { duration: "1 year plan", interestDisplay: "+8% interest" },
+  SwiftFi: { duration: "", interestDisplay: "+0% interest" },
+};
+
+const COLOR_BY_PLAN: Record<PlanType, "blue" | "green" | "purple" | "orange"> =
+  {
+    FlexFi: "blue",
+    GrowFi: "green",
+    VaultFi: "purple",
+    SwiftFi: "orange",
+  };
+
+function mapStatusToCardStatus(
+  p: DisplayPlan
+): "running" | "not-started" | "available" {
+  // Example logic:
+  // - if there is any balance → running
+  // - SwiftFi with 0 balance → available (can add funds anytime)
+  // - otherwise → not-started
+  if ((p.balance ?? 0) > 0) return "running";
+  if (p.type === "SwiftFi") return "available";
+  return "not-started";
+}
+
+function toSavingPlanCardProps(p: DisplayPlan) {
+  return {
+    name: p.type, // "FlexFi" etc.
+    interest: p.interest, // e.g. "+3% interest"
+    color: COLOR_BY_PLAN[p.type], // required by card
+    progress: p.progress ?? 0, // default to 0
+    available: p.balance ?? 0, // card shows "Available balance"
+    principal: p.principal ?? 0,
+    interestAmount: p.interestEarned ?? 0, // rename field
+    maturity: p.maturityDate ?? "—", // rename field
+    status: mapStatusToCardStatus(p), // normalize status enum
+  } as const;
+}
 
 const DashboardHome = () => {
   const navigate = useNavigate();
-  const [showWelcome, setShowWelcome] = useState(true);
+
   const [showBalance, setShowBalance] = useState(true);
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
-  const [currency, setCurrency] = useState<'USDT' | 'USDC'>('USDT');
+  const [currency, setCurrency] = useState<"USDT" | "USDC">("USDT");
   const [openDropdown, setOpenDropdown] = useState(false);
   const [toast, setToast] = useState<{
     message: string;
-    type: 'success' | 'error';
+    type: "success" | "error";
   } | null>(null);
 
+  const [userName, setUserName] = useState<string>("User");
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [displayPlans, setDisplayPlans] = useState<DisplayPlan[]>([]);
+  const [totalBalance, setTotalBalance] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+
   useEffect(() => {
-    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
-    if (!hasSeenWelcome) {
-      setShowWelcome(true);
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
+      navigate("/login", { replace: true });
+      return;
     }
-  }, []);
+
+    // Only show welcome modal for newly registered users
+    const isNewUser = localStorage.getItem("isNewUser");
+    const profileCompleted = localStorage.getItem("profileCompleted");
+
+    if (isNewUser === "true" && !profileCompleted) {
+      setShowWelcomeModal(true);
+    }
+
+    fetchUserProfile();
+  }, [navigate]);
+
+  const fetchUserProfile = async () => {
+    try {
+      setIsLoading(true);
+      const authToken = localStorage.getItem("authToken");
+
+      // Try to fetch profile from API
+      const response = await fetch("/api/accounts/profile/", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Fetched profile data:", data);
+        const displayName =
+          data.first_name ||
+          data.username ||
+          localStorage.getItem("username") ||
+          "User";
+        setUserName(displayName);
+        setUserEmail(data.email || "");
+
+        // If profile exists in backend, mark as completed
+        if (data.first_name) {
+          localStorage.setItem("profileCompleted", "true");
+          localStorage.setItem("firstName", data.first_name);
+          localStorage.setItem("secondName", data.second_name || "");
+          setShowWelcomeModal(false);
+        }
+      } else {
+        // Fallback to localStorage
+        setUserName(localStorage.getItem("username") || "User");
+        setUserEmail(localStorage.getItem("email") || "");
+      }
+
+      // Initialize display plans with all 4 cards in 0% state
+      initializeDisplayPlans();
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      setUserName(localStorage.getItem("username") || "User");
+      setUserEmail(localStorage.getItem("email") || "");
+      initializeDisplayPlans();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const initializeDisplayPlans = () => {
+    // For now, show all 4 plans in 0% state (fresh account)
+    const plans: DisplayPlan[] = [
+      {
+        type: "FlexFi",
+        duration: PLAN_CONFIGS.FlexFi.duration,
+        interest: PLAN_CONFIGS.FlexFi.interestDisplay,
+        balance: 0,
+        isActive: false,
+      },
+      {
+        type: "GrowFi",
+        duration: PLAN_CONFIGS.GrowFi.duration,
+        interest: PLAN_CONFIGS.GrowFi.interestDisplay,
+        balance: 0,
+        isActive: false,
+      },
+      {
+        type: "VaultFi",
+        duration: PLAN_CONFIGS.VaultFi.duration,
+        interest: PLAN_CONFIGS.VaultFi.interestDisplay,
+        balance: 0,
+        isActive: false,
+      },
+      {
+        type: "SwiftFi",
+        interest: PLAN_CONFIGS.SwiftFi.interestDisplay,
+        balance: 0,
+        isActive: false,
+      },
+    ];
+
+    setDisplayPlans(plans);
+    setTotalBalance(0);
+  };
 
   const handleWelcomeComplete = () => {
-    localStorage.setItem('hasSeenWelcome', 'true');
-    setShowWelcome(false);
+    setShowWelcomeModal(false);
+    fetchUserProfile(); // Refresh to get updated profile
   };
+
+  /* const handleWelcomeComplete = () => {
+    localStorage.setItem("hasSeenWelcome", "true");
+    setShowWelcome(false);
+  }; */
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
 
-    setToast({ message: 'Copied to clipboard!', type: 'success' });
+    setToast({ message: "Copied to clipboard!", type: "success" });
     setTimeout(() => setToast(null), 3000);
   };
-
-  const savingsPlans = [
-    {
-      name: 'FlexFi',
-      interest: '3% interest',
-      color: 'blue',
-      progress: 45,
-      available: 75,
-      principal: 70.51,
-      interestAmount: 4.49,
-      maturity: 'Nov. 25, 2025',
-      status: 'running',
-    },
-    {
-      name: 'GrowFi',
-      interest: '7% interest',
-      color: 'green',
-      progress: 75,
-      available: 75,
-      principal: 70.51,
-      interestAmount: 4.49,
-      maturity: 'Nov. 25, 2025',
-      status: 'running',
-    },
-    {
-      name: 'VaultFi',
-      interest: '3% interest',
-      color: 'purple',
-      progress: 0,
-      available: 0,
-      principal: 0,
-      interestAmount: 0,
-      maturity: 'Not started',
-      status: 'not-started',
-    },
-    {
-      name: 'SwiftFi',
-      interest: '0% interest',
-      color: 'orange',
-      progress: 0,
-      available: 75,
-      principal: 70.51,
-      interestAmount: 0,
-      maturity: 'Withdraw anytime',
-      status: 'available',
-    },
-  ] as const;
 
   return (
     <div className="min-h-screen  dark:bg-gray-600 dark:text-white">
@@ -106,11 +224,14 @@ const DashboardHome = () => {
       <div className="space-y-6 mt-18 md:mt-0 p-4">
         <div className="mb-6">
           <h2 className="text-2xl font-semibold text-foreground mb-1 flex items-center gap-2">
-            Welcome Jolly 👋
+            Welcome {userName} 👋
             <span className="text-sm font-normal text-muted-foreground">
               Lock in. Level up.
             </span>
           </h2>
+          {userEmail && (
+            <p className="text-sm text-muted-foreground">{userEmail}</p>
+          )}
         </div>
 
         <div className="mb-6 p-4 bg-[#FFF7EE] border border-[#FFAE58] dark:bg-gray-700 rounded-xl flex items-center justify-between flex-wrap">
@@ -157,7 +278,8 @@ const DashboardHome = () => {
 
               <div className="mb-2 text-light">
                 <div className="text-4xl font-bold flex gap-1 items-center mb-1">
-                  {showBalance ? '120.54' : '****'} {/* Currency Button */}
+                  {showBalance ? `${totalBalance.toFixed(2)}` : "****"}{" "}
+                  {/* Currency Button */}
                   <div className="relative">
                     <button
                       onClick={() => setOpenDropdown((prev) => !prev)}
@@ -172,7 +294,7 @@ const DashboardHome = () => {
                         <button
                           className="w-full text-sm text-left px-3 py-0.5 hover:bg-neutral-200"
                           onClick={() => {
-                            setCurrency('USDT');
+                            setCurrency("USDT");
                             setOpenDropdown(false);
                           }}
                         >
@@ -181,7 +303,7 @@ const DashboardHome = () => {
                         <button
                           className="w-full text-sm text-left px-3 py-0.5 hover:bg-neutral-200"
                           onClick={() => {
-                            setCurrency('USDC');
+                            setCurrency("USDC");
                             setOpenDropdown(false);
                           }}
                         >
@@ -192,12 +314,14 @@ const DashboardHome = () => {
                   </div>
                 </div>
                 <div className="mt-3 flex justify-between flex-wrap">
-                  <p className="text-sm font-medium text-light">₦192,845.40</p>
+                  <p className="text-sm font-medium text-light">{`₦${(
+                    totalBalance * 1600
+                  ).toFixed(2)}`}</p>
 
                   <div className="flex items-center gap-2">
                     <span className="text-xs ">0x1A2b...c4D0</span>
                     <button
-                      onClick={() => copyToClipboard('0x1A2b...c4D0')}
+                      onClick={() => copyToClipboard("0x1A2b...c4D0")}
                       className="p-1 hover:bg-light/20 cursor-pointer rounded transition-colors"
                     >
                       <Copy className="w-4 h-4" />
@@ -218,10 +342,18 @@ const DashboardHome = () => {
 
               <div className="mb-2">
                 <div className="text-4xl text-black-text font-bold mb-1">
-                  3 plans
+                  {displayPlans.filter((p) => p.isActive).length === 0
+                    ? "0 plan"
+                    : `${displayPlans.filter((p) => p.isActive).length} ${
+                        displayPlans.filter((p) => p.isActive).length === 1
+                          ? "plan"
+                          : "plans"
+                      }`}
                 </div>
                 <p className="text-sm font-medium text-black-text ">
-                  Total value: 98.34 USDT
+                  {totalBalance > 0
+                    ? `Total value: ${totalBalance.toFixed(2)} USDT`
+                    : "Start saving today"}
                 </p>
               </div>
             </div>
@@ -237,7 +369,7 @@ const DashboardHome = () => {
             Deposit
           </button>
           <button
-            onClick={() => navigate('/savings/new')}
+            onClick={() => navigate("/savings/new")}
             className="flex-1 px-6 py-3 border-2 font-semibold border-blue text-blue rounded-full transition-colors cursor-pointer  flex items-center justify-center gap-2"
           >
             <CirclePlus className="w-5 h-5" />
@@ -258,7 +390,7 @@ const DashboardHome = () => {
               Saving Plans
             </h3>
             <button
-              onClick={() => navigate('/transactions')}
+              onClick={() => navigate("/transactions")}
               className="text-sm cursor-pointer font-medium text-blue flex items-center gap-1"
             >
               See all
@@ -266,17 +398,31 @@ const DashboardHome = () => {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {savingsPlans.map((plan) => (
-              <SavingPlanCard key={plan.name} {...plan} />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="h-64 animate-pulse rounded-2xl bg-muted"
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {displayPlans.map((plan, index) => (
+                <SavingPlanCard
+                  key={`${plan.type}-${index}`}
+                  {...toSavingPlanCardProps(plan)}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         <TransactionsTable />
       </div>
 
-      {showWelcome && <WelcomeModal onComplete={handleWelcomeComplete} />}
+      {showWelcomeModal && <WelcomeModal onComplete={handleWelcomeComplete} />}
 
       {showDepositModal && (
         <DepositModal onClose={() => setShowDepositModal(false)} />
