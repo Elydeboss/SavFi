@@ -1,160 +1,245 @@
 import { useState } from "react";
-import Navbar from "../components/Landpage-header";
-import Image from "../assets/img/Frame 1686563515.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
+import { z } from "zod";
+import Logo from "../assets/public/logo-dark.svg";
 
-const API_URL = "/api/accounts/login/"; // Proxy endpoint
+const loginSchema = z.object({
+  username: z.string().min(1, "Username is required"),
+  password: z.string().min(1, "Password is required"),
+});
 
 export default function Login() {
-  const navigate = useNavigate();
-  // const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleRegistration = async () => {
-    // 1. Client-Side Validation
-    if (!username || !password) {
-      // 👈 VALIDATION UPDATED
-      alert("All fields are required.");
-      return;
-    }
-
-    // if (password !== confirmPassword) {
-    //   alert("Passwords do not match!");
-    // return;
-    //   }
-
-    //  disable button after submission
-    setIsSubmitting(true);
-
-    // 2. Prepare Data for API (INCLUDING USERNAME)
-    const requestData = {
-      //email: email,
-      username: username,
-      password: password,
-    };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
     try {
-      const response = await fetch(API_URL, {
+      const validated = loginSchema.parse({ username, password });
+      setIsLoading(true);
+
+      const response = await fetch("/api/accounts/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestData),
+        body: JSON.stringify(validated),
       });
 
-      const result = await response.json();
+      const data = await response.json();
 
-      if (response.ok) {
-        // Success Handling
-        console.log(" Registration successful!", result);
-        alert("Account verified! Redirecting to dashboard...");
+      if (response.status === 200 || response.ok) {
+        // Store user data and token - backend returns "access" and "refresh" tokens
+        localStorage.setItem("authToken", data.access);
+        localStorage.setItem("refreshToken", data.refresh);
+        localStorage.setItem("username", data.username || username);
+        localStorage.setItem("email", data.email || "");
+
+        // Clear new user flag on login (existing users)
+        localStorage.removeItem("isNewUser");
+
+        toast.success("Login successful!");
         navigate("/dashboard");
       } else {
-        // Error Handling (API responded, but with an error status like 400)
-        console.error(" Registration failed:", result);
-        // The API error will now show if any other fields are missing
-        alert(
-          `Registration Failed: ${result.detail || JSON.stringify(result)}`
+        toast.error(
+          "Login failed: " +
+            (data.message || data.error || "Invalid username or password")
         );
-        throw new Error(result.detail || "API registration failed.");
       }
     } catch (error) {
-      // Network/Fetch Error Handling (e.g., connection lost or proxy error)
-      console.error("An error occurred during the fetch operation:", error);
-      alert("An unexpected network error occurred.");
+      if (error instanceof z.ZodError) {
+        toast.error(
+          "Login failed: " +
+            (error instanceof z.ZodError
+              ? error.issues[0]?.message
+              : "An unexpected error occurred")
+        );
+      } else {
+        toast.error(
+          "An unexpected error occurred during login.Please try again."
+        );
+      }
     } finally {
-      // Re-enable button regardless of success or failure
-      setIsSubmitting(false);
+      setIsLoading(false);
     }
   };
 
-  return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <Navbar />
+  const handleMetaMaskLogin = async () => {
+    toast.info("MetaMask login is not implemented yet.");
+  };
 
-      {/* Main Section */}
-      <div className="flex flex-col md:flex-row items-center justify-center gap-12 px-6 md:px-20 py-14 flex-1">
-        {/* LEFT IMAGE BLOCK */}
-        <div className="w-full md:w-1/2 flex justify-center">
-          <div className="w-full max-w-md h-[420px] bg-gray-200 rounded-xl flex items-center justify-center text-gray-500">
-            <img src={Image} alt="" />
-          </div>
+  return (
+    <div className="flex min-h-screen">
+      {/* Left Side */}
+      <div className="hidden w-1/2 bg-linear-to-br from-primary via-blue-600 to-blue-800 p-12 lg:flex lg:flex-col lg:justify-between">
+        <div className="flex items-center gap-3">
+          <Link to="/">
+            <img
+              src={Logo}
+              alt="SaveFi Logo"
+              className="h-30 w-30 cursor-pointer"
+            />
+          </Link>
         </div>
 
-        {/* RIGHT LOGIN BLOCK */}
-        <div className="w-full md:w-1/2 max-w-md flex flex-col text-center md:text-left">
-          <div className="flex flex-col justify-center items-center mb-24">
-            <h2 className="text-3xl mb-6 font-semibold text-gray-800">
-              Jump right in
-            </h2>
-            <p className="text-gray-500 mb-12">
-              Sign Up / Login to access SaveFi benefits
+        <div className="max-w-md">
+          <h1 className="mb-4 text-4xl font-bold text-white">
+            Save Smarter, Grow Faster
+          </h1>
+          <p className="text-lg text-white/80">
+            Join thousands of users who trust SaveFi to secure their financial
+            future with flexible savings plans and competitive interest rates.
+          </p>
+        </div>
+
+        <div className="flex gap-8 text-white/80 opacity-0">
+          <div>
+            <p className="text-3xl font-bold text-white">10K+</p>
+            <p className="text-sm">Active Users</p>
+          </div>
+          <div>
+            <p className="text-3xl font-bold text-white">$2M+</p>
+            <p className="text-sm">Saved</p>
+          </div>
+          <div>
+            <p className="text-3xl font-bold text-white">8%</p>
+            <p className="text-sm">Max Interest</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Side */}
+      <div className="flex w-full items-center justify-center p-8 lg:w-1/2">
+        <div className="w-full max-w-md space-y-8">
+          <div className="flex items-center justify-center gap-3 lg:hidden">
+            <Link to="/">
+              <img
+                src={Logo}
+                alt="SaveFi Logo"
+                className="h-25 w-25 cursor-pointer"
+              />
+            </Link>
+          </div>
+
+          <div className="text-center">
+            <h2 className="text-3xl font-bold">Welcome back</h2>
+            <p className="mt-2 text-gray-500">
+              Sign in to continue to your account
             </p>
           </div>
 
-          {/* Card */}
-          <div className="w-full bg-[#E5E8EB] shadow-md rounded-xl px-6 py-20 flex flex-col gap-4">
-            {/* Username Input */}
-            <input
-              type="text" // 👈 Changed type to 'text' for username
-              placeholder="Enter username"
-              className="border px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+          {/* FORM */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Username */}
+            <div className="space-y-2">
+              <label htmlFor="username" className="text-sm font-medium">
+                Username
+              </label>
+              <input
+                id="username"
+                type="text"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                disabled={isLoading}
+                className="w-full rounded-full bg-blue-50 px-6 py-3 focus:outline-0 focus:ring-2 focus:ring-primary"
+              />
+            </div>
 
-            {/* Password Input */}
-            <input
-              type="password"
-              placeholder="Enter password"
-              className="border px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            {/* Password */}
+            <div className="space-y-2">
+              <label htmlFor="password" className="text-sm font-medium">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
+                  className="w-full rounded-full bg-blue-50 px-6 py-3 focus:outline-0 focus:ring-2 focus:ring-primary"
+                />
 
-            {/* Registration Button */}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-primary cursor-pointer"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Login button */}
             <button
-              className="bg-blue-600 text-white py-3 rounded-full font-medium hover:bg-blue-700 disabled:opacity-50"
-              onClick={handleRegistration}
-              disabled={isSubmitting}
+              type="submit"
+              disabled={isLoading}
+              className="w-full rounded-full bg-primary px-4 py-2.5 border-2 border-primary text-white font-semibold hover:bg-primary/90 disabled:opacity-50 cursor-pointer"
             >
-              {isSubmitting ? "Registering..." : "Create Account"}
+              {isLoading ? "Signing in..." : "Sign in"}
             </button>
 
             {/* Divider */}
-            <div className="flex items-center gap-3">
-              <div className="flex-1 h-px bg-gray-300"></div>
-              <span className="text-gray-500 text-sm">OR</span>
-              <div className="flex-1 h-px bg-gray-300"></div>
+            <div className="relative mt-4 mb-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-border"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-card font-medium text-foreground">
+                  Or continue with
+                </span>
+              </div>
             </div>
 
-            {/* Metamask Button */}
-            <button className="border border-blue-400 text-blue-600 py-3 rounded-full font-medium hover:bg-blue-50 flex items-center justify-center gap-2">
+            {/* MetaMask */}
+            <button
+              onClick={handleMetaMaskLogin}
+              className=" w-full cursor-pointer border-2 border-blue text-blue py-3 rounded-full font-medium hover:bg-blue-50 flex items-center justify-center gap-2"
+            >
               <img
                 src="https://cdn.worldvectorlogo.com/logos/metamask.svg"
                 className="w-5"
               />
               Continue with Metamask
             </button>
+          </form>
+
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <button
+                onClick={() => navigate("/signup")}
+                className="font-medium text-primary cursor-pointer"
+              >
+                Sign up
+              </button>
+            </p>
           </div>
+
+          <p className="text-center text-xs text-gray-500">
+            By continuing, you agree to SaveFi’s{" "}
+            <a href="/terms-of-service" className="text-primary underline">
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="/privacy-policy" className="text-primary underline">
+              Privacy Policy
+            </a>
+          </p>
         </div>
       </div>
-
-      {/* Footer (unchanged) */}
-      <footer className="w-full text-center py-4 text-gray-600 text-sm flex flex-col md:flex-row items-center justify-center gap-4">
-        <span>© 2025 SaveFi</span>
-        <span className="hidden md:inline">•</span>
-        <a href="#" className="hover:text-gray-800">
-          Privacy policy
-        </a>
-        <span className="hidden md:inline">•</span>
-        <a href="#" className="hover:text-gray-800">
-          Terms of Service
-        </a>
-      </footer>
     </div>
   );
 }

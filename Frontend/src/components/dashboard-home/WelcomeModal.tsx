@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Sparkles, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 
 interface WelcomeModalProps {
   onComplete: () => void;
@@ -9,10 +10,53 @@ const WelcomeModal = ({ onComplete }: WelcomeModalProps) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [referralCode, setReferralCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onComplete();
+
+    if (!firstName.trim() || !lastName.trim()) {
+      toast.info("Required fields", {
+        description: "Please enter your first and last name",
+      });
+
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const authToken = localStorage.getItem("authToken");
+
+      const response = await fetch("/api/accounts/profile/", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({
+          first_name: firstName,
+          second_name: lastName,
+        }),
+      });
+
+      if (response.ok) {
+        localStorage.setItem("profileCompleted", "true");
+        localStorage.setItem("firstName", firstName);
+        localStorage.setItem("secondName", lastName);
+        toast.success("Profile updated successfully!, Welcome to SaveFi");
+
+        onComplete();
+      } else {
+        throw new Error("Failed to update profile");
+      }
+    } catch (error) {
+      console.error("Profile update error:", error);
+      toast.error(
+        "An error occurred while saving your profile. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -85,10 +129,11 @@ const WelcomeModal = ({ onComplete }: WelcomeModalProps) => {
             </div>
 
             <button
+              disabled={isLoading}
               type="submit"
               className="w-full px-6 py-3 bg-primary text-white font-semibold rounded-full hover:bg-blue/90 transition-colors mt-2 cursor-pointer"
             >
-              Save and continue to dashboard
+              {isLoading ? "Saving..." : "Save and continue to dashboard"}
             </button>
           </form>
         </div>
