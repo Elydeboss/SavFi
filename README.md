@@ -349,11 +349,8 @@ If you want, I can create a full Swagger/OpenAPI file.
 
 All contributions are welcome.
 
----
 
-## 📄 License
 
-[Add your license here - MIT, Apache 2.0, etc.]
 
 ---
 
