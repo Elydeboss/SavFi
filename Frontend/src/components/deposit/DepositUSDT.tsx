@@ -20,14 +20,14 @@ export default function DepositUSDT({
 
   return (
     <div className="max-w-xl mx-auto px-4 py-6 text-foreground">
+      <button
+        onClick={onBack}
+        className="text-blue  text-sm font-medium cursor-pointer"
+      >
+        ← Back
+      </button>
       {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <button
-          onClick={onBack}
-          className="text-blue text-sm font-medium hover:underline"
-        >
-          ← Back
-        </button>
+      <div className="flex flex-col items-center gap-2 mb-6">
         <h1 className="text-lg font-semibold">Deposit USDT</h1>
       </div>
 
@@ -63,7 +63,9 @@ export default function DepositUSDT({
 
       {/* Warning */}
       <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6">
-        <p className="text-sm text-yellow-700 dark:text-yellow-400 font-medium">⚠️ Important</p>
+        <p className="text-sm text-yellow-700 dark:text-yellow-400 font-medium">
+          ⚠️ Important
+        </p>
         <p className="text-sm text-yellow-700 dark:text-yellow-400 mt-1">
           Only send USDT on TRC-20 network. Sending other coins or using a
           different network may result in a permanent loss of funds.
