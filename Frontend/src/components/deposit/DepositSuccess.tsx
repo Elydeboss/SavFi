@@ -59,7 +59,7 @@ export default function DepositSuccess({
           {/* Primary Button: Return to dashboard (using the onClose prop) */}
           <button
             onClick={onClose}
-            className="w-full h-12 rounded-xl bg-blue hover:bg-blue-500 text-white font-semibold transition duration-150 shadow-md"
+            className="w-full h-12 rounded-xl bg-blue hover:bg-blue hover:opacity-80 text-white font-semibold transition duration-150 shadow-md"
           >
             Return to dashboard
           </button>
@@ -67,7 +67,7 @@ export default function DepositSuccess({
           {/* Secondary Button: View transaction details */}
           <button
             onClick={onViewDetails}
-            className="w-full h-12 rounded-xl bg-white dark:bg-gray-700 hover:bg-neutral-50 dark:hover:bg-gray-600 text-blue font-semibold transition duration-150 border border-blue-500"
+            className="w-full h-12 rounded-xl bg-white dark:bg-gray-700 hover:bg-neutral-50 dark:hover:bg-gray-600 text-blue font-semibold transition duration-150 border border-blue"
           >
             View transaction details
           </button>
