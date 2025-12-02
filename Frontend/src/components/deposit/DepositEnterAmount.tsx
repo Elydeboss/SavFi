@@ -24,26 +24,6 @@ function normalizeInput(raw: string) {
 }
 
 // --------------------
-// Modal Wrapper
-// --------------------
-function DepositModalWrapper({
-  isOpen,
-  children,
-}: {
-  isOpen: boolean;
-  children: React.ReactNode;
-}) {
-  if (!isOpen) return null;
-  return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white w-full max-w-md rounded-2xl shadow-xl p-6 animate-fadeIn">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-// --------------------
 // DepositEnterAmount
 // --------------------
 export default function DepositEnterAmount({

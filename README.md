@@ -31,9 +31,7 @@ Savfi is built for transparency, security, and programmable finance.
 - [Architecture](#-architecture)
 - [Getting Started](#-getting-started)
   - [Prerequisites](#prerequisites)
-  - [Backend Setup - Django](#backend-setup--django)
-  - [Backend Setup - Smart Contracts (Remix)](#backend-setup--smart-contracts-remix)
-  - [Connecting Django to the Smart Contract](#connecting-django-to-the-smart-contract)
+
   - [Environment Variables](#environment-variables)
 - [Deployment](#-deployment)
 - [API Documentation](#-api-documentation)
@@ -64,16 +62,6 @@ Savfi is built for transparency, security, and programmable finance.
 | TypeScript | Type-safe JavaScript |
 | Tailwind CSS | Utility-first styling |
 | Ethers.js / Web3.js | Web3 wallet integration |
-
-### Backend
-
-| Component | Purpose |
-|-----------|---------|
-| Django | API, auth, business logic |
-| Django REST Framework | API handling |
-| PostgreSQL / SQLite | Off-chain data |
-| Web3.py | Contract interaction from Django |
-| Solidity + Remix IDE | On-chain backend logic |
 
 ### Smart Contract
 
@@ -127,9 +115,7 @@ Savfi is built for transparency, security, and programmable finance.
 
 Ensure you have:
 
-- **Backend:**
-  - Python 3.10+
-  - Git
+
 - **Frontend:**
   - Node.js 18+ and npm/yarn
 - **Web3:**
@@ -349,11 +335,8 @@ If you want, I can create a full Swagger/OpenAPI file.
 
 All contributions are welcome.
 
----
 
-## 📄 License
 
-[Add your license here - MIT, Apache 2.0, etc.]
 
 ---
 
