@@ -1,10 +1,72 @@
-import { ChevronRight, PlusCircle } from 'lucide-react';
-import profileImg from '../assets/menu/profileImg.png';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import Breadcrumb from '../components/Breadcrumb';
+import { ChevronRight, PlusCircle } from "lucide-react";
+import profileImg from "../assets/menu/profileImg.png";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import Breadcrumb from "../components/Breadcrumb";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { set } from "zod";
 
 export default function ProfileOverview() {
+  const [firstName, setFirstName] = useState("");
+  const [secondName, setSecondName] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [username, setUsername] = useState("");
+
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    try {
+      const authToken = localStorage.getItem("authToken");
+
+      if (!authToken) {
+        toast.error("Please log in to view your profile");
+
+        return;
+      }
+
+      const response = await fetch(`/api/accounts/profile/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setFirstName(data.first_name || "");
+        setSecondName(data.second_name || "");
+        setUsername(data.username || "");
+        setAvatar(data.avatar || "");
+
+        setEmail(data.email || localStorage.getItem("email") || "");
+      } else {
+        // Fallback to localStorage
+
+        setEmail(localStorage.getItem("email") || "");
+        setFirstName(localStorage.getItem("firstName") || "");
+        setSecondName(localStorage.getItem("secondName") || "");
+        setUsername(localStorage.getItem("username") || "");
+        setAvatar(localStorage.getItem("avatar") || "");
+        toast.error("Failed to load profile from server");
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      toast.error("Failed to load profile data");
+      // Fallback to localStorage
+
+      setEmail(localStorage.getItem("email") || "");
+    } finally {
+    }
+  };
+
+  const fullName = `${firstName} ${secondName}`.trim();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -16,8 +78,8 @@ export default function ProfileOverview() {
       <div className="px-4 flex items-center gap-1 text-sm sm:text-base font-medium">
         <Breadcrumb
           items={[
-            { label: 'Profile', href: '/profile' },
-            { label: 'Overview' },
+            { label: "Profile", href: "/profile" },
+            { label: "Overview" },
           ]}
         />
       </div>
@@ -45,21 +107,23 @@ export default function ProfileOverview() {
               items-center sm:items-start gap-4
             "
           >
-            <img
-              src={profileImg}
-              alt="User avatar"
-              className="w-20 h-20 rounded-full object-cover"
-            />
+            <div className="h-20 w-20 relative rounded-full bg-primary text-white overflow-hidden flex items-center justify-center text-3xl font-semibold">
+              {avatar ? (
+                <img src={avatar} className="h-full w-full object-cover" />
+              ) : (
+                (firstName.charAt(0) || username.charAt(0) || "U").toUpperCase()
+              )}
+            </div>
 
             <div className="flex-1 w-full text-center sm:text-left">
               <p className="text-sm text-gray-500 dark:text-gray-300">
                 SaveFi ID: SF-1234XYZ
               </p>
 
-              <h1 className="text-xl sm:text-2xl font-semibold">Jolly Akeju</h1>
+              <h1 className="text-xl sm:text-2xl font-semibold">{fullName}</h1>
 
               <p className="text-sm text-gray-500 font-medium break-all">
-                Jollyakeju@gmail.com
+                {email}
               </p>
 
               <div className="flex justify-between gap-3 items-center pt-2">
@@ -212,7 +276,7 @@ export default function ProfileOverview() {
             className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-2"
           >
             <p className="text-sm font-medium">
-              KYC status:{' '}
+              KYC status:{" "}
               <span className="text-sm text-yellow-600 py-0.5 px-1.5 bg-[#FFE6CB] rounded-3xl">
                 KYC: Unverified
               </span>
