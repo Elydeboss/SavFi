@@ -80,9 +80,8 @@ export default function ChatBot() {
         <div className="w-full ">
           <div className="flex flex-col items-center text-center mb-6">
             <p className="max-w-xs text-sm text-gray-600 dark:text-gray-300 mx-auto">
-              Hi Jolly, I am SaveBot – your AI saving assistant. Ask me anything
-              about SaveFi! Use the quick topic option for appropriate
-              responses.
+              Hi, I am SaveBot – your AI saving assistant. Ask me anything about
+              SaveFi! Use the quick topic option for appropriate responses.
             </p>
           </div>
 
