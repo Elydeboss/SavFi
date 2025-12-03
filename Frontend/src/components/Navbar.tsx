@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
@@ -66,9 +68,9 @@ export default function Navbar() {
           className="md:hidden flex flex-col gap-1"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
-          <span className="w-6 h-[2px] bg-gray-700"></span>
-          <span className="w-6 h-[2px] bg-gray-700"></span>
-          <span className="w-6 h-[2px] bg-gray-700"></span>
+          <span className="w-6 h-0.5 bg-gray-700"></span>
+          <span className="w-6 h-0.5 bg-gray-700"></span>
+          <span className="w-6 h-0.5 bg-gray-700"></span>
         </button>
       </div>
 
@@ -85,7 +87,7 @@ export default function Navbar() {
               onClick={() => setProductsOpen(!productsOpen)}
               className="flex items-center justify-between w-full hover:text-blue-600"
             >
-              Products <span>{productsOpen ? '▴' : '▾'}</span>
+              Products <span>{productsOpen ? "▴" : "▾"}</span>
             </button>
 
             {productsOpen && (
