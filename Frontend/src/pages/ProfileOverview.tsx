@@ -1,19 +1,15 @@
-import { ChevronRight, PlusCircle } from "lucide-react";
+import { ChevronRight, Copy, PlusCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
-import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { useUserProfile } from "../contexts/UserProfileContext";
+
 export default function ProfileOverview() {
-  const [firstName, setFirstName] = useState("");
-  const [secondName, setSecondName] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [username, setUsername] = useState("");
+  const { profile } = useUserProfile();
 
-  const [email, setEmail] = useState("");
-
-  useEffect(() => {
+  /* useEffect(() => {
     fetchProfile();
     console.log(fetchProfile);
   }, []);
@@ -63,8 +59,31 @@ export default function ProfileOverview() {
     } finally {
     }
   };
+ */
 
-  const fullName = `${firstName} ${secondName}`.trim();
+  const walletAddress = "0x1A2b...C3D4"; // Mock data
+
+  const handleCopyWallet = () => {
+    navigator.clipboard.writeText(
+      "0x1A2b3C4d5E6f7G8h9I0jK1L2M3N4O5P6Q7R8S9T0C3D4"
+    );
+    toast.success("Wallet address copied to clipboard");
+  };
+
+  const getInitials = () => {
+    if (profile?.first_name) {
+      return profile.first_name.charAt(0).toUpperCase();
+    }
+    if (profile?.username) {
+      return profile.username.charAt(0).toUpperCase();
+    }
+    return "U";
+  };
+
+  const displayName =
+    profile?.first_name && profile?.second_name
+      ? `${profile.first_name} ${profile.second_name}`
+      : profile?.username || "User";
 
   return (
     <motion.div
@@ -100,32 +119,39 @@ export default function ProfileOverview() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
             className="
-              bg-white dark:bg-gray-800 shadow rounded-2xl
+              bg-white dark:bg-gray-700 shadow rounded-2xl
               p-4 sm:p-6 md:p-6
               flex flex-col sm:flex-row md:flex-col lg:flex-row
               items-center sm:items-start gap-4
             "
           >
             <div className="h-20 w-20 relative rounded-full bg-primary text-white overflow-hidden flex items-center justify-center text-3xl font-semibold">
-              {avatar ? (
-                <img src={avatar} className="h-full w-full object-cover" />
+              {profile?.avatar ? (
+                <img
+                  src={profile?.avatar}
+                  alt={displayName}
+                  className="h-full w-full object-cover"
+                />
               ) : (
-                (firstName.charAt(0) || username.charAt(0) || "U").toUpperCase()
+                <span>{getInitials()}</span>
               )}
             </div>
 
             <div className="flex-1 w-full text-center sm:text-left">
               <p className="text-sm text-gray-500 dark:text-gray-300">
-                SaveFi ID: SF-1234XYZ
+                SaveFi ID: SF-
+                {Math.random().toString(36).substring(2, 8).toUpperCase()}
               </p>
 
-              <h1 className="text-xl sm:text-2xl font-semibold">{fullName}</h1>
+              <h1 className="text-xl sm:text-2xl font-semibold">
+                {displayName}
+              </h1>
 
               <p className="text-sm text-gray-500 font-medium break-all">
-                {email}
+                {profile?.email}
               </p>
 
-              <div className="flex justify-between gap-3 items-center pt-2">
+              <div className="flex justify-between flex-wrap gap-3 items-center pt-2">
                 <p className="text-sm text-neutral-500 dark:text-white bg-gray py-1 px-1.5 dark:bg-gray-700 font-medium rounded">
                   Signed up from Google
                 </p>
@@ -150,35 +176,22 @@ export default function ProfileOverview() {
               initial={{ x: -30, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-3"
+              className="bg-white dark:bg-gray-700 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-3"
             >
-              <p className="font-medium text-sm text-gray-500">
+              <p className="font-medium text-sm text-foreground">
                 Auto-generated SaveFi wallet
               </p>
 
               <div className="flex gap-2 items-center flex-wrap">
-                <p className="font-mono text-sm">0x1A2b...C3D4</p>
+                <p className="font-mono text-sm">{walletAddress}</p>
 
                 {/* Copy Icon */}
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-gray-600 dark:text-blue-300"
+                <button
+                  onClick={handleCopyWallet}
+                  className="p-1 hover:bg-muted rounded"
                 >
-                  <path
-                    d="M5 9.1665C5 6.80948 5 5.63097 5.73223 4.89874C6.46447 4.1665 7.64298 4.1665 10 4.1665H12.5C14.857 4.1665 16.0355 4.1665 16.7678 4.89874C17.5 5.63097 17.5 6.80948 17.5 9.1665V13.3332C17.5 15.6902 17.5 16.8687 16.7678 17.6009C16.0355 18.3332 14.857 18.3332 12.5 18.3332H10C7.64298 18.3332 6.46447 18.3332 5.73223 17.6009C5 16.8687 5 15.6902 5 13.3332V9.1665Z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                  <path
-                    d="M5 15.8332C3.61929 15.8332 2.5 14.7139 2.5 13.3332V8.33317C2.5 5.19047 2.5 3.61913 3.47631 2.64281C4.45262 1.6665 6.02397 1.6665 9.16667 1.6665H12.5C13.8807 1.6665 15 2.78579 15 4.1665"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                </svg>
+                  <Copy className="h-4 w-4 text-muted-foreground" />
+                </button>
               </div>
 
               <p className="p-2 rounded-xl text-gray-500 bg-gray w-fit">
@@ -195,9 +208,9 @@ export default function ProfileOverview() {
               initial={{ x: 30, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-3"
+              className="bg-white dark:bg-gray-700 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-3"
             >
-              <p className="font-medium text-sm text-gray-500">
+              <p className="font-medium text-sm text-foreground">
                 SaveFi point balance
               </p>
               <div className="flex items-center gap-1">
@@ -254,11 +267,11 @@ export default function ProfileOverview() {
                   </defs>
                 </svg>
 
-                <p className="text-xl font-semibold">1.0 SFP</p>
+                <p className="text-xl font-semibold text-foreground">0 SFP</p>
               </div>
 
-              <p className="text-sm text-gray-500 gap-1 flex items-center">
-                ~3.01 USDT
+              <p className="text-sm text-muted-foreground gap-1 flex items-center">
+                ~0 USDT
               </p>
 
               <button className="text-blue font-medium text-base flex items-center gap-1">
@@ -272,7 +285,7 @@ export default function ProfileOverview() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-2"
+            className="bg-white dark:bg-gray-700 shadow rounded-2xl p-4 sm:p-5 md:p-6 space-y-2"
           >
             <p className="text-sm font-medium">
               KYC status:{" "}
@@ -302,26 +315,26 @@ export default function ProfileOverview() {
             initial={{ y: 25, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.45 }}
-            className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 sm:p-5 md:p-6"
+            className="bg-white dark:bg-gray-700 shadow rounded-2xl p-4 sm:p-5 md:p-6"
           >
             <h2 className="font-semibold text-base sm:text-lg mb-4">
               Savings snapshot
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-300">
                   Total saved:
                 </p>
-                <p className="text-xl font-semibold">35.72 USDT</p>
-                <p className="text-sm text-gray-500">~₦45,570.00</p>
+                <p className="text-xl font-semibold">0 USDT</p>
+                <p className="text-sm text-gray-500">~₦0.00</p>
               </div>
 
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-300">
                   Total plans
                 </p>
-                <p className="text-xl font-semibold">3</p>
+                <p className="text-xl font-semibold">0</p>
               </div>
 
               <div>
@@ -329,7 +342,7 @@ export default function ProfileOverview() {
                   Your saving streaks
                 </p>
                 <p className="text-base font-semibold">
-                  You saved 3 times this month!
+                  Start saving to build streaks!
                 </p>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import { ArrowRight, Shield } from "lucide-react";
 
 import heroImage from "../../assets/public/savefi.jpg";
-import heroImage2 from "../../assets/public/Image.svg";
+import heroImage2 from "../../assets/public/hero2.png";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
