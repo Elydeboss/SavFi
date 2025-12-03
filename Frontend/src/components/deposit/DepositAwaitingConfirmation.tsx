@@ -1,9 +1,10 @@
-import React from 'react';
-import awaiting from '../../assets/menu/awaiting.png';
+import React from "react";
+import awaiting from "../../assets/menu/awaiting.png";
 
 // --- Type Definitions ---
 type DepositAwaitingConfirmationProps = {
   isOpen: boolean;
+  failed: boolean;
   onRefresh: () => void; // make required so it's always interactive
   onReturn: () => void;
   onSupport: () => void;
