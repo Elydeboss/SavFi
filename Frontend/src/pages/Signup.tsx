@@ -1,21 +1,20 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
-import { toast } from "sonner";
-import { z } from "zod";
-import Logo from "../assets/public/logo-dark.svg";
-import Metawallet from "../Modal/Metamask";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import Logo from '../assets/public/logo-dark.svg';
 
 const registerSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters").max(50),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  username: z.string().min(3, 'Username must be at least 3 characters').max(50),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
 export default function Signup() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,114 +22,92 @@ export default function Signup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     try {
       const validated = registerSchema.parse({ username, email, password });
       setIsLoading(true);
 
-      const response = await fetch("/accounts/register/", {
-        method: "POST",
+      const response = await fetch('/api/accounts/register/', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(validated),
       });
 
-      const raw = await response.text();
-      console.log("REGISTER RAW RESPONSE:", raw);
-
-      let data;
-      try {
-        data = JSON.parse(raw);
-      } catch {
-        toast.error("Server returned invalid data for registration");
-        return;
-      }
+      const data = await response.json();
 
       if (response.status === 201) {
         // Auto-login after successful registration
-        const loginResponse = await fetch("/accounts/login/", {
-          method: "POST",
+        const loginResponse = await fetch('/api/accounts/login/', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ username, password }),
         });
 
-        const loginRaw = await loginResponse.text();
-        console.log("LOGIN RAW RESPONSE:", loginRaw);
-
-        let loginData;
-        try {
-          loginData = JSON.parse(loginRaw);
-        } catch {
-          toast.error("Server returned invalid data for login");
-          return;
-        }
+        const loginData = await loginResponse.json();
 
         if (loginResponse.ok) {
           // Store auth tokens and user data
           const accessToken = loginData.access;
-          localStorage.setItem("authToken", accessToken);
-          localStorage.setItem("refreshToken", loginData.refresh);
-          localStorage.setItem("username", loginData.username || username);
-          localStorage.setItem("email", loginData.email || email);
+          localStorage.setItem('authToken', accessToken);
+          localStorage.setItem('refreshToken', loginData.refresh);
+          localStorage.setItem('username', loginData.username || username);
+          localStorage.setItem('email', loginData.email || email);
 
           // Create wallet for user
           try {
-            const walletResponse = await fetch("/wallets/", {
-              method: "POST",
+            const walletResponse = await fetch('/api/wallets/', {
+              method: 'POST',
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
               },
             });
 
-            const walletRaw = await walletResponse.text();
-            console.log("WALLET RAW RESPONSE:", walletRaw);
-
-            let walletData;
-            try {
-              walletData = JSON.parse(walletRaw);
-            } catch {
-              console.warn("Wallet endpoint did NOT return JSON:", walletRaw);
-              return;
-            }
+            const walletData = await walletResponse.json();
 
             if (walletResponse.ok) {
-              localStorage.setItem("walletAddress", walletData.walletAddress);
-              console.log("Wallet created:", walletData.walletAddress);
+              localStorage.setItem('walletAddress', walletData.walletAddress);
+              console.log('Wallet created:', walletData.walletAddress);
             } else {
-              console.warn("Wallet creation failed:", walletData);
+              console.warn('Wallet creation failed:', walletData);
             }
           } catch (walletError) {
-            console.warn("Wallet error:", walletError);
+            console.warn('Wallet error:', walletError);
           }
 
           // Mark as new user to trigger welcome modal
-          localStorage.setItem("isNewUser", "true");
-          localStorage.removeItem("profileCompleted");
+          localStorage.setItem('isNewUser', 'true');
+          localStorage.removeItem('profileCompleted');
 
-          toast.success("Registration successful!");
+          toast.success('Registration successful!');
 
-          navigate("/dashboard");
+          navigate('/dashboard');
         }
       } else {
-        toast.error("Registration failed", {
-          description: data.message || data.error || "An error occurred.",
+        toast.error('Registration failed', {
+          description: data.message || data.error || 'An error occurred.',
         });
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const firstError = error.issues[0]?.message || "Validation error";
+        const firstError = error.issues[0]?.message || 'Validation error';
         toast.error(firstError);
       } else {
-        toast.error("Registration error", {
+        toast.error('Registration error', {
           description: (error as Error).message,
         });
       }
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleMetaMaskConnect = async () => {
+    toast.info('MetaMask integration coming soon!');
   };
 
   return (
@@ -236,7 +213,7 @@ export default function Signup() {
               <div className="relative">
                 <input
                   id="password"
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="Enter password"
                   className="w-full rounded-full bg-blue-50 px-6 py-3 focus:outline-0 focus:ring-2 focus:ring-primary"
                   value={password}
@@ -261,7 +238,7 @@ export default function Signup() {
               disabled={isLoading}
               className="w-full rounded-full bg-primary px-4 py-2.5 border-2 border-primary text-white font-semibold hover:bg-primary/90 disabled:opacity-50 cursor-pointer"
             >
-              {isLoading ? "Creating account..." : "Create account"}
+              {isLoading ? 'Creating account...' : 'Create account'}
             </button>
 
             {/* Divider */}
@@ -277,20 +254,23 @@ export default function Signup() {
             </div>
 
             {/* MetaMask Button */}
-            <button className=" w-full cursor-pointer border-2 border-blue text-blue py-3 rounded-full font-medium hover:bg-blue-50 flex items-center justify-center gap-2">
+            <button
+              onClick={handleMetaMaskConnect}
+              className=" w-full cursor-pointer border-2 border-blue text-blue py-3 rounded-full font-medium hover:bg-blue-50 flex items-center justify-center gap-2"
+            >
               <img
                 src="https://cdn.worldvectorlogo.com/logos/metamask.svg"
                 className="w-5"
               />
-              <Metawallet />
+              Continue with Metamask
             </button>
           </form>
 
           {/* Login Link */}
           <div className="text-center text-sm">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <button
-              onClick={() => navigate("/login")}
+              onClick={() => navigate('/login')}
               className="text-primary font-medium cursor-pointer"
             >
               Sign in
@@ -299,11 +279,11 @@ export default function Signup() {
 
           {/* Terms */}
           <p className="text-center text-xs text-muted-foreground">
-            By continuing, you agree to SaveFi's{" "}
+            By continuing, you agree to SaveFi's{' '}
             <a className="text-primary" href="/terms-of-service">
               Terms of Service
-            </a>{" "}
-            and{" "}
+            </a>{' '}
+            and{' '}
             <a className="text-primary" href="/privacy-policy">
               Privacy Policy
             </a>
