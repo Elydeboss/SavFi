@@ -8,11 +8,11 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
-
 import { NotificationPanel } from "./NotificationPanel";
 import type { Notification } from "./NotificationPanel";
 import { HelpCircle, LogOut } from "lucide-react";
 import { toast } from "sonner";
+import { useUserProfile } from "../../contexts/UserProfileContext";
 
 type NavbarProps = {
   title: string;
@@ -20,9 +20,7 @@ type NavbarProps = {
 
 const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState<string>("");
-  const [userEmail, setUserEmail] = useState<string>("");
-  const [avatarUrl, setAvatarUrl] = useState<string>("");
+  const { profile } = useUserProfile();
 
   const [searchActive, setSearchActive] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -33,6 +31,15 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
 
   const userDropdownRef = useRef<HTMLDivElement>(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  const userName = profile?.first_name || profile?.username || "User";
+  const email = profile?.email || "";
+  const avatarUrl = profile?.avatar || "";
+
+  const getInitials = () => {
+    if (!userName) return "U";
+    return userName.charAt(0).toUpperCase();
+  };
 
   // Notifications
   const [notifications, setNotifications] = useState<Notification[]>([
@@ -99,11 +106,11 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
 
   // FETCH USER PROFILE (FIXED)
 
-  useEffect(() => {
+  /* useEffect(() => {
     fetchUserProfile();
-  }, []);
+  }, []); */
 
-  const fetchUserProfile = async () => {
+  /* const fetchUserProfile = async () => {
     try {
       const authToken = localStorage.getItem("authToken");
       if (!authToken) return;
@@ -138,12 +145,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
       setUserName(localStorage.getItem("username") || "User");
       setUserEmail(localStorage.getItem("email") || "");
     }
-  };
-
-  const getInitials = () => {
-    if (!userName) return "U";
-    return userName.charAt(0).toUpperCase();
-  };
+  }; */
 
   // NOTIFICATION COUNT
   const unreadCount = notifications.filter((n) => !n.read).length;
@@ -204,7 +206,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
 
     toast.info("Logged out successfully. See you soon!");
 
-    navigate("/signup2", { replace: true });
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -256,6 +258,98 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
               </div>
             </>
           )}
+          <div className="relative" ref={userDropdownRef}>
+            <button
+              className="flex items-center space-x-2 cursor-pointer"
+              onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+            >
+              {avatarUrl ? (
+                <img
+                  src={avatarUrl}
+                  alt="User Avatar"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-blue-700 flex items-center justify-center text-white font-bold text-lg">
+                  {getInitials()}
+                </div>
+              )}
+              <FiChevronDown
+                className={`transition-transform duration-300 ${
+                  isUserDropdownOpen ? "rotate-180" : "rotate-0"
+                }`}
+              />
+            </button>
+
+            {/*  Custom dropdown menu */}
+            {isUserDropdownOpen && (
+              <>
+                <div
+                  className="fixed inset-0 z-30"
+                  onClick={() => setIsUserDropdownOpen(false)}
+                />
+                <div className="absolute right-0 top-full mt-6 w-80 bg-neutral-50  rounded-2xl shadow-2xl z-40 p-6">
+                  {/*  User profile section */}
+                  <div className="flex flex-col items-center mb-6">
+                    <div className="w-18 h-18 rounded-full bg-linear-to-br from-primary to-blue-700 flex items-center justify-center mb-4">
+                      {avatarUrl ? (
+                        <img
+                          src={avatarUrl}
+                          alt="User Avatar"
+                          className="w-16 h-16 rounded-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-white font-bold text-2xl">
+                          {getInitials()}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-1">
+                      {userName}
+                    </h3>
+                    <p className="text-muted-foreground mb-4">{email}</p>
+
+                    {/*  Status badges */}
+                    <div className="flex items-center gap-3">
+                      <div className="px-4 py-2 rounded-full bg-orange-100 text-orange-600 text-sm font-medium">
+                        KYC: Unverified
+                      </div>
+                      <div className="px-4 py-2 rounded-full bg-green-100 text-green-600 text-sm font-semibold">
+                        3.0 SFP
+                      </div>
+                    </div>
+                  </div>
+
+                  {/*  Menu items */}
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => {
+                        navigate("/profile/help");
+                        setIsUserDropdownOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-secondary dark:hover:bg-gray-600 transition-colors text-left"
+                    >
+                      <HelpCircle className="w-5 h-5 text-foreground" />
+                      <span className="text-foreground font-medium">
+                        Help & Support
+                      </span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setIsUserDropdownOpen(false);
+                        setShowLogoutModal(true);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3 cursor-pointer rounded-lg hover:bg-red-50 dark:hover:bg-gray-600 transition-colors text-left"
+                    >
+                      <LogOut className="w-5 h-5 text-red-600" />
+                      <span className="text-red-600 font-medium">Logout</span>
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
@@ -380,7 +474,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
                     <h3 className="text-xl font-bold text-foreground mb-1">
                       {userName}
                     </h3>
-                    <p className="text-muted-foreground mb-4">{userEmail}</p>
+                    <p className="text-muted-foreground mb-4">{email}</p>
 
                     {/*  Status badges */}
                     <div className="flex items-center gap-3">
@@ -400,7 +494,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
                         navigate("/profile/help");
                         setIsUserDropdownOpen(false);
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-secondary transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-secondary dark:hover:bg-gray-600 transition-colors text-left"
                     >
                       <HelpCircle className="w-5 h-5 text-foreground" />
                       <span className="text-foreground font-medium">
@@ -413,7 +507,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
                         setIsUserDropdownOpen(false);
                         setShowLogoutModal(true);
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-3 cursor-pointer rounded-lg hover:bg-red-50 transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-4 py-3 cursor-pointer rounded-lg hover:bg-red-50 dark:hover:bg-gray-600 transition-colors text-left"
                     >
                       <LogOut className="w-5 h-5 text-red-600" />
                       <span className="text-red-600 font-medium">Logout</span>

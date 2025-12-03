@@ -11,7 +11,7 @@ export interface Transaction {
   id: string;
   date: string;
   type: string;
-  usdt: string;
+  usdt?: string;
   amount: string;
   status: TransactionStatus;
   source: TransactionSource;

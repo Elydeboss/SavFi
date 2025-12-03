@@ -12,6 +12,7 @@ import { NotificationPanel } from "./NotificationPanel";
 import type { Notification } from "./NotificationPanel";
 import { HelpCircle, LogOut } from "lucide-react";
 import { toast } from "sonner";
+import { useUserProfile } from "../../contexts/UserProfileContext";
 
 type NavbarProps = {
   title: string;
@@ -19,9 +20,7 @@ type NavbarProps = {
 
 const Navbar: React.FC<NavbarProps> = ({ title }) => {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState<string>("");
-  const [userEmail, setUserEmail] = useState<string>("");
-  const [avatarUrl, setAvatarUrl] = useState<string>("");
+  const { profile } = useUserProfile();
 
   const [searchActive, setSearchActive] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -32,6 +31,15 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
 
   const userDropdownRef = useRef<HTMLDivElement>(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  const userName = profile?.first_name || profile?.username || "User";
+  const email = profile?.email || "";
+  const avatarUrl = profile?.avatar || "";
+
+  const getInitials = () => {
+    if (!userName) return "U";
+    return userName.charAt(0).toUpperCase();
+  };
 
   // Notifications
   const [notifications, setNotifications] = useState<Notification[]>([
@@ -96,54 +104,6 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
     },
   ]);
 
-  // FETCH USER PROFILE (FIXED)
-
-  useEffect(() => {
-    fetchUserProfile();
-  }, []);
-
-  const fetchUserProfile = async () => {
-    try {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) return;
-
-      const response = await fetch("/api/accounts/profile/", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const displayName =
-          data.first_name ||
-          data.username ||
-          localStorage.getItem("username") ||
-          "User";
-        setUserName(displayName);
-        setUserEmail(data.email || "");
-        setAvatarUrl(data.avatar || "");
-
-        if (data.email) {
-          localStorage.setItem("email", data.email);
-        }
-      } else {
-        setUserName(localStorage.getItem("username") || "User");
-      }
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      setUserName(localStorage.getItem("username") || "User");
-      setUserEmail(localStorage.getItem("email") || "");
-    }
-  };
-
-  const getInitials = () => {
-    if (!userName) return "U";
-    return userName.charAt(0).toUpperCase();
-  };
-
   // NOTIFICATION COUNT
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -200,6 +160,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
     localStorage.removeItem("fullName");
     localStorage.removeItem("profileCompleted");
     localStorage.removeItem("isNewUser");
+    localStorage.removeItem("userProfile");
 
     toast.info("Logged out successfully. See you soon!");
 
@@ -304,7 +265,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
                     <h3 className="text-xl font-bold text-foreground mb-1">
                       {userName}
                     </h3>
-                    <p className="text-muted-foreground mb-4">{userEmail}</p>
+                    <p className="text-muted-foreground mb-4">{email}</p>
 
                     {/*  Status badges */}
                     <div className="flex items-center gap-3">
@@ -312,7 +273,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
                         KYC: Unverified
                       </div>
                       <div className="px-4 py-2 rounded-full bg-green-100 text-green-600 text-sm font-semibold">
-                        3.0 SFP
+                        0 SFP
                       </div>
                     </div>
                   </div>
@@ -471,7 +432,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
                     <h3 className="text-xl font-bold text-foreground mb-1">
                       {userName}
                     </h3>
-                    <p className="text-muted-foreground mb-4">{userEmail}</p>
+                    <p className="text-muted-foreground mb-4">{email}</p>
 
                     {/*  Status badges */}
                     <div className="flex items-center gap-3">

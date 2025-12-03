@@ -2,8 +2,10 @@ import Breadcrumb from "../components/Breadcrumb";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Camera } from "lucide-react";
+import { useUserProfile } from "../contexts/UserProfileContext";
 
 export default function EditProfile() {
+  const { profile, updateProfile } = useUserProfile();
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [username, setUsername] = useState("");
@@ -14,61 +16,23 @@ export default function EditProfile() {
   const [bio, setBio] = useState("");
   const [avatar, setAvatar] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(true);
+  //const [isFetching, setIsFetching] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Initialize from context (instant, no delay)
   useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  const fetchProfile = async () => {
-    try {
-      setIsFetching(true);
-      const authToken = localStorage.getItem("authToken");
-
-      if (!authToken) {
-        toast.error("Please log in to view your profile");
-        setIsFetching(false);
-        return;
-      }
-
-      const response = await fetch(`/api/accounts/profile/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setFirstName(data.first_name || "");
-        setSecondName(data.second_name || "");
-        setUsername(data.username || localStorage.getItem("username") || "");
-        setEmail(data.email || localStorage.getItem("email") || "");
-        setPhone(data.phone || "");
-        setCountry(data.country || "");
-        setState(data.state || "");
-        setBio(data.bio || "");
-        setAvatar(data.avatar || "");
-      } else {
-        // Fallback to localStorage
-        setUsername(localStorage.getItem("username") || "");
-        setEmail(localStorage.getItem("email") || "");
-        setFirstName(localStorage.getItem("firstName") || "");
-        setSecondName(localStorage.getItem("secondName") || "");
-        toast.error("Failed to load profile from server");
-      }
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      toast.error("Failed to load profile data");
-      // Fallback to localStorage
-      setUsername(localStorage.getItem("username") || "");
-      setEmail(localStorage.getItem("email") || "");
-    } finally {
-      setIsFetching(false);
+    if (profile) {
+      setFirstName(profile.first_name || "");
+      setSecondName(profile.second_name || "");
+      setUsername(profile.username || "");
+      setEmail(profile.email || "");
+      setPhone(profile.phone || "");
+      setCountry(profile.country || "");
+      setState(profile.state || "");
+      setBio(profile.bio || "");
+      setAvatar(profile.avatar || "");
     }
-  };
+  }, [profile]);
 
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
@@ -145,6 +109,17 @@ export default function EditProfile() {
         localStorage.setItem("secondName", data.second_name || secondName);
         localStorage.setItem("profileCompleted", "true");
 
+        // Update context immediately for real-time sync across app
+        updateProfile({
+          first_name: firstName,
+          second_name: secondName,
+          phone,
+          country,
+          state,
+          bio,
+          avatar: data.avatar || avatar,
+        });
+
         toast.success("Profile updated successfully!");
       } else {
         const errorData = await response.json().catch(() => ({}));
@@ -162,14 +137,6 @@ export default function EditProfile() {
       setIsLoading(false);
     }
   };
-
-  if (isFetching) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-3 border-primary"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-neutral-200 dark:bg-gray-600 dark:text-white  min-h-screen">
@@ -344,7 +311,21 @@ export default function EditProfile() {
 
                       <button
                         type="button"
-                        onClick={fetchProfile}
+                        onClick={
+                          profile
+                            ? () => {
+                                setFirstName(profile.first_name || "");
+                                setSecondName(profile.second_name || "");
+                                setUsername(profile.username || "");
+                                setEmail(profile.email || "");
+                                setPhone(profile.phone || "");
+                                setCountry(profile.country || "");
+                                setState(profile.state || "");
+                                setBio(profile.bio || "");
+                                setAvatar(profile.avatar || "");
+                              }
+                            : undefined
+                        }
                         disabled={isLoading}
                         className="px-6 py-2 rounded-full border-2 text-primary border-primary hover:bg-blue-50 dark:hover:bg-transparent cursor-pointer disabled:opacity-50"
                       >

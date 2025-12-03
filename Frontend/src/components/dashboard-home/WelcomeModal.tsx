@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Sparkles, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
+import { useUserProfile } from "../../contexts/UserProfileContext";
 
 interface WelcomeModalProps {
   onComplete: () => void;
@@ -11,6 +12,7 @@ const WelcomeModal = ({ onComplete }: WelcomeModalProps) => {
   const [lastName, setLastName] = useState("");
   const [referralCode, setReferralCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { updateProfile } = useUserProfile();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +21,6 @@ const WelcomeModal = ({ onComplete }: WelcomeModalProps) => {
       toast.info("Required fields", {
         description: "Please enter your first and last name",
       });
-
       return;
     }
 
@@ -27,24 +28,29 @@ const WelcomeModal = ({ onComplete }: WelcomeModalProps) => {
     try {
       const authToken = localStorage.getItem("authToken");
 
+      const formData = new FormData();
+      formData.append("first_name", firstName);
+      formData.append("second_name", lastName);
+
       const response = await fetch("/api/accounts/profile/", {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,
         },
-        body: JSON.stringify({
-          first_name: firstName,
-          second_name: lastName,
-        }),
+        body: formData,
       });
 
       if (response.ok) {
+        // Update context immediately for instant sync
+        updateProfile({
+          first_name: firstName,
+          second_name: lastName,
+        });
+
         localStorage.setItem("profileCompleted", "true");
         localStorage.setItem("firstName", firstName);
         localStorage.setItem("secondName", lastName);
         toast.success("Profile updated successfully!, Welcome to SaveFi");
-
         onComplete();
       } else {
         throw new Error("Failed to update profile");

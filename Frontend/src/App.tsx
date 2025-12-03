@@ -1,5 +1,6 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { Toaster } from "sonner";
+import { UserProfileProvider } from "./contexts/UserProfileContext";
 
 //import Swiftfi from "./pages/sw";
 import Vaultfi from "./pages/vaultfi.tsx";
@@ -54,60 +55,62 @@ import EditProfile from "./pages/EditProfile.tsx";
 const App: React.FC = () => {
   return (
     <>
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductPage />} />
-        <Route path="/about-us" element={<AboutPage />} />
-        <Route path="/support-page" element={<Support />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
-        <Route path="/security-page" element={<SecurityPage />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<RegisterForm />} />
+      <UserProfileProvider>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductPage />} />
+          <Route path="/about-us" element={<AboutPage />} />
+          <Route path="/support-page" element={<Support />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/security-page" element={<SecurityPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<RegisterForm />} />
 
-        <Route path="/withdrawal/usdt" element={<UsdtWithdrawPage />} />
-        <Route path="/withdrawal/naira" element={<NairaWithdrawal />} />
-        <Route path="/about" element={<About />} />
+          <Route path="/withdrawal/usdt" element={<UsdtWithdrawPage />} />
+          <Route path="/withdrawal/naira" element={<NairaWithdrawal />} />
+          <Route path="/about" element={<About />} />
 
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/otp" element={<Otp />} />
-        <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/otp" element={<Otp />} />
+          <Route path="/login" element={<Login />} />
 
-        <Route path="/flexfi" element={<Flexifi />} />
-        <Route path="/vaultfi" element={<Vaultfi />} />
-        <Route path="/Growfi" element={<Growfi />} />
+          <Route path="/flexfi" element={<Flexifi />} />
+          <Route path="/vaultfi" element={<Vaultfi />} />
+          <Route path="/Growfi" element={<Growfi />} />
 
-        <Route element={<MainDashboard />}>
-          <Route path="/dashboard" element={<DashboardHome />} />
-          <Route path="/savings" element={<SavingsPlan />} />
-          <Route path="/savings/new" element={<StartNewPlan />} />
-          <Route path="/referrals" element={<Referrals />} />
-          <Route path="/savings/swiftfi" element={<SwiftFiPlan />} />
-          <Route path="/savings/plan/:id" element={<PlanDetails />} />
-          <Route path="/savings/vaultfi/create" element={<VaultFiPlan />} />
-          <Route path="/savings/growfi/create" element={<GrowFiPlan />} />
-          <Route path="/savings/flexfi/create" element={<FlexiFiPlan />} />
-          <Route path="transactions" element={<TransactionPage />}></Route>
-          <Route path="/savebot" element={<Savebot />} />
-        </Route>
-        <Route path="/profile" element={<Profile />}>
-          <Route index element={<ProfileOverview />} />
-          <Route path="help" element={<HelpSupport />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="security" element={<Security />} />
-          <Route path="wallets" element={<Wallets />} />
-          <Route path="preferences" element={<Preferences />} />
-          <Route path="kyc" element={<KycVerification />} />
-          <Route path="/profile/kyc/complete" element={<KycFlow />} />
-          <Route path="edit-profile" element={<ProfileEditForm />} />
-          <Route path="edit" element={<EditProfile />} />
-        </Route>
-        <Route path="/depositngn" element={<DepositEnterAmount />}></Route>
+          <Route element={<MainDashboard />}>
+            <Route path="/dashboard" element={<DashboardHome />} />
+            <Route path="/savings" element={<SavingsPlan />} />
+            <Route path="/savings/new" element={<StartNewPlan />} />
+            <Route path="/referrals" element={<Referrals />} />
+            <Route path="/savings/swiftfi" element={<SwiftFiPlan />} />
+            <Route path="/savings/plan/:id" element={<PlanDetails />} />
+            <Route path="/savings/vaultfi/create" element={<VaultFiPlan />} />
+            <Route path="/savings/growfi/create" element={<GrowFiPlan />} />
+            <Route path="/savings/flexfi/create" element={<FlexiFiPlan />} />
+            <Route path="transactions" element={<TransactionPage />}></Route>
+            <Route path="/savebot" element={<Savebot />} />
+          </Route>
+          <Route path="/profile" element={<Profile />}>
+            <Route index element={<ProfileOverview />} />
+            <Route path="help" element={<HelpSupport />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="security" element={<Security />} />
+            <Route path="wallets" element={<Wallets />} />
+            <Route path="preferences" element={<Preferences />} />
+            <Route path="kyc" element={<KycVerification />} />
+            <Route path="/profile/kyc/complete" element={<KycFlow />} />
+            <Route path="edit-profile" element={<ProfileEditForm />} />
+            <Route path="edit" element={<EditProfile />} />
+          </Route>
+          <Route path="/depositngn" element={<DepositEnterAmount />}></Route>
 
-        {<Route path="*" element={<NotFound />} />}
-      </Routes>
-      <Toaster richColors position="top-right" />
+          {<Route path="*" element={<NotFound />} />}
+        </Routes>
+        <Toaster richColors position="top-right" />
+      </UserProfileProvider>
     </>
   );
 };

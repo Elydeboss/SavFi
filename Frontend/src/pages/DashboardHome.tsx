@@ -19,6 +19,7 @@ import Navbar from "../components/dashboard/Navbar";
 import Toast from "../components/withdraw/Toast";
 import Piggy from "../assets/public/fluent_savings-32-filled.svg";
 import Tree from "../assets/public/tabler_growth.svg";
+import { useUserProfile } from "../contexts/UserProfileContext";
 
 type PlanType = "FlexFi" | "GrowFi" | "VaultFi" | "SwiftFi";
 
@@ -78,7 +79,7 @@ function toSavingPlanCardProps(p: DisplayPlan) {
 
 const DashboardHome = () => {
   const navigate = useNavigate();
-
+  const { profile, refreshProfile } = useUserProfile();
   const [showBalance, setShowBalance] = useState(true);
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
@@ -89,8 +90,8 @@ const DashboardHome = () => {
     type: "success" | "error";
   } | null>(null);
 
-  const [userName, setUserName] = useState<string>("User");
-  const [userEmail, setUserEmail] = useState<string>("");
+  const userName = profile?.first_name || profile?.username || "User";
+  const userEmail = profile?.email || "";
   const [displayPlans, setDisplayPlans] = useState<DisplayPlan[]>([]);
   const [totalBalance, setTotalBalance] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -109,12 +110,16 @@ const DashboardHome = () => {
 
     if (isNewUser === "true" && !profileCompleted) {
       setShowWelcomeModal(true);
+    } else if (profile?.first_name) {
+      localStorage.setItem("profileCompleted", "true");
+      setShowWelcomeModal(false);
     }
 
-    fetchUserProfile();
-  }, [navigate]);
+    initializeDisplayPlans();
+    setIsLoading(false);
+  }, [navigate, profile]);
 
-  const fetchUserProfile = async () => {
+  /* const fetchUserProfile = async () => {
     try {
       setIsLoading(true);
       const authToken = localStorage.getItem("authToken");
@@ -162,7 +167,7 @@ const DashboardHome = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }; */
 
   const initializeDisplayPlans = () => {
     // For now, show all 4 plans in 0% state (fresh account)
@@ -202,7 +207,8 @@ const DashboardHome = () => {
 
   const handleWelcomeComplete = () => {
     setShowWelcomeModal(false);
-    fetchUserProfile(); // Refresh to get updated profile
+    localStorage.removeItem("isNewUser");
+    refreshProfile();
   };
 
   /* const handleWelcomeComplete = () => {
