@@ -67,7 +67,9 @@ export default function ChatBot() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") handleSend();
+    if (e.key === "Enter") {
+      handleSend();
+    }
   };
 
   return (

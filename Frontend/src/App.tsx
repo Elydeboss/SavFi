@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 
-//import Swiftfi from "./pages/sw";
 import Vaultfi from "./pages/vaultfi.tsx";
 import Growfi from "./pages/Growfi.tsx";
 import Flexifi from "./pages/Flexfi.tsx";

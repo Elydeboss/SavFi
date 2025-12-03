@@ -1,4 +1,3 @@
-//import React, { useState } from "react";
 import { Smartphone, CheckCircle2, ArrowRight } from "lucide-react";
 import First from "../assets/img/Rectangle 1889.png";
 import second from "../assets/img/Rectangle 1890.png";
@@ -23,7 +22,6 @@ import Team7 from "../assets/img/Ellipse 10.png";
 import Team8 from "../assets/img/Ellipse 11.png";
 
 import Header from "../components/Landpage-header";
-//import { useState } from "react";
 
 const SavFiAbout = () => {
   // const [isMenuOpen, setIsMenuOpen] = useState(false);

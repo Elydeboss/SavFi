@@ -1,5 +1,6 @@
-//import React, { useState } from "react";
 import {
+  // Menu,
+  // X,
   ShieldCheck,
   RefreshCw,
   Smartphone,
@@ -13,11 +14,10 @@ import {
   Lock,
   ArrowRight,
 } from "lucide-react";
-/*
-import grow from "../assets/img/arcticons_growtracker.png";
-import vault from "../assets/img/stash_vault.png";
-import flexfi from "../assets/img/fluent_savings-32-regular.png";
-import pick from "../assets/img/picon_swift.png";*/
+//import grow from "../assets/img/arcticons_growtracker.png";
+//import vault from "../assets/img/stash_vault.png";
+//import flexfi from "../assets/img/fluent_savings-32-regular.png";
+//import pick from "../assets/img/picon_swift.png";
 import card from "../assets/img/card-coin.svg";
 import Lady from "../assets/img/Rectangle 12.png";
 import Dashimage from "../assets/img/Dashboard.png";

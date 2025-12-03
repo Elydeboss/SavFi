@@ -1,13 +1,17 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import { useState, useEffect } from "react";
-import { sidebarItems } from "../../data/sidebar";
-import type { SidebarProps } from "../../interfaces";
+import { sidebarItems as defaultSidebarItems } from "../../data/sidebar";
+import type { SidebarProps } from "../../interfaces/index";
 import logo from "../../assets/SavFi-logo.png";
 import user from "../../assets/menu/profile.png";
 import Profile from "../../pages/Profile";
 import { FiGift } from "react-icons/fi";
 
-const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
+const Sidebar: FC<SidebarProps> = ({
+  items = defaultSidebarItems,
+  onTitleChange,
+  onPageChange,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [activeIndex, setActiveIndex] = useState(() => {
@@ -19,7 +23,6 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
   const [topOffset, setTopOffset] = useState(0);
   const [add, setAdd] = useState(0);
 
-  // Update dimensions based on screen width
   useEffect(() => {
     const updateHeight = () => {
       const width = window.innerWidth;
@@ -27,7 +30,7 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
         setItemHeight(48);
         setTopOffset(40);
         setAdd(64);
-      } else if (width < 1024) {
+      } else if (width >= 768 && width < 1024) {
         setItemHeight(56);
         setTopOffset(40);
         setAdd(64);
@@ -42,29 +45,29 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
     return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
-  // Update page content and title on activeIndex change
   useEffect(() => {
-    if (activeIndex < sidebarItems.length) {
-      const item = sidebarItems[activeIndex];
-      onTitleChange?.(item.label);
-      onPageChange?.(item.component());
-    } else {
-      onTitleChange?.("Profile");
-      onPageChange?.(<Profile />);
+    let currentLabel = "Profile";
+    let currentPage: ReactNode = <Profile />;
+
+    if (activeIndex < items.length) {
+      const item = items[activeIndex];
+      currentLabel = item.label;
+      currentPage = item.component;
     }
-  }, [activeIndex, onTitleChange, onPageChange]);
+
+    onTitleChange?.(currentLabel);
+    onPageChange?.(currentPage);
+  }, [activeIndex, items, onTitleChange, onPageChange]);
 
   const indicatorOffset =
-    (activeIndex < sidebarItems.length
+    (activeIndex < items.length
       ? activeIndex * itemHeight
-      : sidebarItems.length * itemHeight + add) + topOffset;
+      : items.length * itemHeight + add) + topOffset;
 
   return (
     <>
-      {/* Hamburger for mobile */}
       <button
-        className="md:hidden fixed top-3 right-2 z-50 p-2 bg-gray-200 h-10 w-8 text-blue rounded-sm
-        dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+        className="md:hidden fixed top-3 right-2 z-50 p-2 bg-gray-200 h-10 w-8 text-blue rounded-sm dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
         onClick={() => setIsOpen(!isOpen)}
       >
         ☰
@@ -72,22 +75,19 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
 
       <aside>
         <div
-          className={`fixed top-0 left-0 w-55 md:w-65 lg:w-[332px] py-12 bg-neutral-50 text-black-text p-4 md:p-8 font-medium
-            transform z-50 transition-transform
-            ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
-            dark:bg-gray-700 dark:text-white`}
+          className={`fixed top-0 left-0 w-55 md:w-65 lg:w-[332px] py-12 bg-neutral-50 text-black-text p-4 md:p-8 font-medium transform z-50
+          ${
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 dark:bg-gray-700 dark:text-white`}
         >
-          {/* Logo */}
           <img
             src={logo}
             alt="SavFi logo"
-            className="w-auto h-6 md:h-[42px] cursor-pointer mb-8"
+            className="w-auto h-6 md:h-[42px] cursor-pointer"
           />
 
           <main className="flex flex-col h-full w-[180px] md:w-[200px] justify-between lg:w-full py-12 gap-12 md:pb-16">
-            {/* Sidebar Items */}
             <div className="relative flex flex-col gap-2 max-h-[430px]">
-              {/* Active indicator */}
               <div
                 className="absolute top-0 left-0 z-10 w-2 h-6 md:h-8 bg-blue-500 rounded-tr-md rounded-br-md transition-transform duration-300 ease-out"
                 style={{ transform: `translateY(${indicatorOffset}px)` }}
@@ -98,7 +98,7 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
               </h2>
 
               <ul className="relative list-none">
-                {sidebarItems.map((item, index) => {
+                {items.map((item, index) => {
                   const isActive = index === activeIndex;
                   return (
                     <li key={item.label} className="py-1 relative">
@@ -111,11 +111,11 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
                           );
                         }}
                         className={`text-sm md:text-base lg:text-6 group flex items-center gap-3 w-[190px] md:w-[220px] lg:w-full h-10 md:h-12 py-3 px-4 font-medium rounded-xl transition cursor-pointer
-                        ${
-                          isActive
-                            ? "bg-gray-200 dark:bg-gray-500"
-                            : "hover:opacity-50"
-                        }`}
+                          ${
+                            isActive
+                              ? "bg-gray-200 dark:bg-gray-500"
+                              : "hover:opacity-50"
+                          }`}
                       >
                         <img
                           src={item.icon}
@@ -129,7 +129,6 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
                 })}
               </ul>
 
-              {/* Account Section */}
               <h3 className="text-sm md:base lg:text-[18px] text-gray-500 dark:text-gray-400 mt-6">
                 ACCOUNT
               </h3>
@@ -138,15 +137,15 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
                 <li className="py-2 relative">
                   <button
                     onClick={() => {
-                      setActiveIndex(sidebarItems.length);
+                      setActiveIndex(items.length);
                       localStorage.setItem(
                         "activeSidebarIndex",
-                        sidebarItems.length.toString()
+                        items.length.toString()
                       );
                     }}
                     className={`text-sm md:text-base lg:text-6 group flex items-center gap-3 w-[190px] md:w-[220px] lg:w-full h-10 md:h-12 py-3 px-4 font-medium rounded-xl cursor-pointer transition
                       ${
-                        activeIndex === sidebarItems.length
+                        activeIndex === items.length
                           ? "bg-gray-200 dark:bg-gray-500"
                           : "hover:opacity-50"
                       }`}
@@ -162,7 +161,6 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
               </ul>
             </div>
 
-            {/* Invite & Earn */}
             <section className="w-full flex justify-center">
               <div className="max-w-[268px] rounded-xl p-4 shadow-sm bg-[#EAF4FF] dark:bg-[#1E293B]">
                 <div className="flex items-center gap-2 mb-1">
