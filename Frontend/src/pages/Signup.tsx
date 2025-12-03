@@ -7,7 +7,7 @@ import Logo from "../assets/public/logo-dark.svg";
 import Metawallet from "../Modal/Metamask";
 
 const registerSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters").max(50),
+  username: z.string().min(3, "Username must be at least 3 characters"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
@@ -21,112 +21,100 @@ export default function Signup() {
 
   const navigate = useNavigate();
 
+  // Helper: safely parse JSON
+  const safeJSON = (text: string) => {
+    try {
+      return JSON.parse(text);
+    } catch {
+      return null;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const validated = registerSchema.parse({ username, email, password });
-      setIsLoading(true);
+    setIsLoading(true);
 
-      const response = await fetch("/api/accounts/register/", {
+    try {
+      // Validate input
+      const validated = registerSchema.parse({ username, email, password });
+
+      // REGISTER USER
+      const registerRes = await fetch("/api/accounts/register/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(validated),
       });
 
-      const raw = await response.text();
-      console.log("REGISTER RAW RESPONSE:", raw);
+      const registerText = await registerRes.text();
+      const registerData = safeJSON(registerText);
+      console.log("REGISTER:", registerData);
 
-      let data;
-      try {
-        data = JSON.parse(raw);
-      } catch {
-        toast.error("Server returned invalid data for registration");
+      if (!registerRes.ok) {
+        toast.error("Registration failed", {
+          description: registerData?.message || registerData?.error,
+        });
         return;
       }
 
-      if (response.status === 201) {
-        // Auto-login after successful registration
-        const loginResponse = await fetch("/api/accounts/login/", {
+      if (registerRes.status !== 201) {
+        toast.error("Unexpected registration response");
+        return;
+      }
+
+      //  LOGIN USER (immediately after registration)
+      const loginRes = await fetch("/api/accounts/login/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const loginText = await loginRes.text();
+      const loginData = safeJSON(loginText);
+      console.log("LOGIN:", loginData);
+
+      if (!loginRes.ok || !loginData?.access) {
+        toast.error("Login failed, please login manually.");
+        navigate("/login");
+        return;
+      }
+
+      // Save tokens
+      localStorage.setItem("authToken", loginData.access);
+      localStorage.setItem("refreshToken", loginData.refresh);
+      localStorage.setItem("username", loginData.username || username);
+      localStorage.setItem("email", loginData.email || email);
+
+      // CREATE WALLET FOR THE USER
+      try {
+        const walletRes = await fetch("/api/wallets/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${loginData.access}`,
           },
-          body: JSON.stringify({ username, password }),
         });
 
-        const loginRaw = await loginResponse.text();
-        console.log("LOGIN RAW RESPONSE:", loginRaw);
+        const walletText = await walletRes.text();
+        const walletData = safeJSON(walletText);
+        console.log("WALLET:", walletData);
 
-        let loginData;
-        try {
-          loginData = JSON.parse(loginRaw);
-        } catch {
-          toast.error("Server returned invalid data for login");
-          return;
+        if (walletRes.ok && walletData?.walletAddress) {
+          localStorage.setItem("walletAddress", walletData.walletAddress);
+        } else {
+          console.warn("Wallet creation failed:", walletData);
         }
-
-        if (loginResponse.ok) {
-          // Store auth tokens and user data
-          const accessToken = loginData.access;
-          localStorage.setItem("authToken", accessToken);
-          localStorage.setItem("refreshToken", loginData.refresh);
-          localStorage.setItem("username", loginData.username || username);
-          localStorage.setItem("email", loginData.email || email);
-
-          // Create wallet for user
-          try {
-            const walletResponse = await fetch("/api/wallets/", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
-              },
-            });
-
-            const walletRaw = await walletResponse.text();
-            console.log("WALLET RAW RESPONSE:", walletRaw);
-
-            let walletData;
-            try {
-              walletData = JSON.parse(walletRaw);
-            } catch {
-              console.warn("Wallet endpoint did NOT return JSON:", walletRaw);
-              return;
-            }
-
-            if (walletResponse.ok) {
-              localStorage.setItem("walletAddress", walletData.walletAddress);
-              console.log("Wallet created:", walletData.walletAddress);
-            } else {
-              console.warn("Wallet creation failed:", walletData);
-            }
-          } catch (walletError) {
-            console.warn("Wallet error:", walletError);
-          }
-
-          // Mark as new user to trigger welcome modal
-          localStorage.setItem("isNewUser", "true");
-          localStorage.removeItem("profileCompleted");
-
-          toast.success("Registration successful!");
-
-          navigate("/dashboard");
-        }
-      } else {
-        toast.error("Registration failed", {
-          description: data.message || data.error || "An error occurred.",
-        });
+      } catch (err) {
+        console.warn("Wallet error:", err);
       }
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const firstError = error.issues[0]?.message || "Validation error";
-        toast.error(firstError);
+
+      //  SUCCESS → Redirect
+      toast.success("Account created!");
+      navigate("/dashboard");
+    } catch (err: any) {
+      if (err instanceof z.ZodError) {
+        toast.error(err.issues[0]?.message || "Invalid input");
       } else {
-        toast.error("Registration error", {
-          description: (error as Error).message,
-        });
+        toast.error("Error", { description: err.message });
       }
     } finally {
       setIsLoading(false);
