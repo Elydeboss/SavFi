@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { ChevronDown, Phone, Mail, Dot } from "lucide-react";
-import Header from "../components/Landpage-header";
+import React, { useState } from 'react';
+import { ChevronDown, Phone, Mail } from 'lucide-react';
+import Header from '../components/Landpage-header';
 
-import grow from "../assets/img/arcticons_growtracker.png";
+import grow from '../assets/img/arcticons_growtracker.png';
 
 // Define the types for the FAQItem component props to resolve 'implicit any'
 interface FAQItemProps {
@@ -59,7 +59,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
         <span>{question}</span>
         <ChevronDown
           className={`h-5 w-5 transition-transform duration-300 ${
-            isOpen ? "rotate-180 text-blue-500" : "text-gray-400"
+            isOpen ? 'rotate-180 text-blue-500' : 'text-gray-400'
           }`}
         />
       </button>
@@ -76,21 +76,21 @@ const GrowFi = () => {
   const faqs = [
     {
       question:
-        "Lorem ipsum dolor sit amet consectetur. Ut varius id pharetra et leo tricies.",
+        'Lorem ipsum dolor sit amet consectetur. Ut varius id pharetra et leo tricies.',
       answer:
-        "FlexFi is designed to be the easiest way to start your savings journey. You can start small, grow at your own pace, and benefit from the stability of dollar-backed assets (USDC/USDT) without worrying about local currency fluctuations.",
+        'FlexFi is designed to be the easiest way to start your savings journey. You can start small, grow at your own pace, and benefit from the stability of dollar-backed assets (USDC/USDT) without worrying about local currency fluctuations.',
     },
     {
       question:
-        "The interest accrues daily but is paid out in full at the end of the 3-month saving period, provided you complete the plan. If you withdraw early, you forfeit the interest.",
+        'The interest accrues daily but is paid out in full at the end of the 3-month saving period, provided you complete the plan. If you withdraw early, you forfeit the interest.',
       answer:
-        "The interest accrues daily but is paid out in full at the end of the 3-month saving period, provided you complete the plan. If you withdraw early, you forfeit the interest.",
+        'The interest accrues daily but is paid out in full at the end of the 3-month saving period, provided you complete the plan. If you withdraw early, you forfeit the interest.',
     },
     {
       question:
-        "Yes, early withdrawal is allowed. However, note that the interest is only applied if the plan is completed successfully. Early withdrawal incurs a small processing fee to cover transaction costs.",
+        'Yes, early withdrawal is allowed. However, note that the interest is only applied if the plan is completed successfully. Early withdrawal incurs a small processing fee to cover transaction costs.',
       answer:
-        "Yes, early withdrawal is allowed. However, note that the interest is only applied if the plan is completed successfully. Early withdrawal incurs a small processing fee to cover transaction costs.",
+        'Yes, early withdrawal is allowed. However, note that the interest is only applied if the plan is completed successfully. Early withdrawal incurs a small processing fee to cover transaction costs.',
     },
   ];
 
@@ -127,7 +127,7 @@ const GrowFi = () => {
             </div>
 
             {/* Piggy Bank Illustration (SVG for scalability and crispness) */}
-            <div className="w-full lg:w-96 flex-shrink-0 pt-8 lg:pt-0">
+            <div className="w-full lg:w-96 shrink-0 pt-8 lg:pt-0">
               <img src={grow} alt="" />
             </div>
           </div>
@@ -142,7 +142,7 @@ const GrowFi = () => {
           <div className=" space-y-8">
             {/* Step 1 */}
             <div className="flex items-start">
-              <div className="flex-shrink-0 w-10 h-10 bg-[#D6C8FF] text-[#8A38F5] rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
+              <div className="shrink-0 w-10 h-10 bg-[#D6C8FF] text-[#8A38F5] rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
                 1
               </div>
               <div className="ml-4 flex-1">
@@ -154,7 +154,7 @@ const GrowFi = () => {
 
             {/* Step 2 */}
             <div className="flex items-start">
-              <div className="flex-shrink-0 w-10 h-10 bg-[#D6C8FF] text-[#8A38F5] rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
+              <div className="shrink-0 w-10 h-10 bg-[#D6C8FF] text-[#8A38F5] rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
                 2
               </div>
               <div className="ml-4 flex-1">
@@ -166,7 +166,7 @@ const GrowFi = () => {
 
             {/* Step 3 */}
             <div className="flex items-start">
-              <div className="flex-shrink-0 w-10 h-10 bg-[#D6C8FF] text-[#8A38F5] rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
+              <div className="shrink-0 w-10 h-10 bg-[#D6C8FF] text-[#8A38F5] rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
                 3
               </div>
               <div className="ml-4 flex-1">
@@ -182,7 +182,7 @@ const GrowFi = () => {
 
             {/* Step 4 */}
             <div className="flex items-start">
-              <div className="flex-shrink-0 w-10 h-10 bg-[#D6C8FF] text-[#8A38F5] rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
+              <div className="shrink-0 w-10 h-10 bg-[#D6C8FF] text-[#8A38F5] rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
                 4
               </div>
               <div className="ml-4 flex-1">
@@ -199,7 +199,7 @@ const GrowFi = () => {
 
             {/* Step 5 */}
             <div className="flex items-start">
-              <div className="flex-shrink-0 w-10 h-10 bg-[#D6C8FF] text-[#8A38F5] rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
+              <div className="shrink-0 w-10 h-10 bg-[#D6C8FF] text-[#8A38F5] rounded-full flex items-center justify-center text-lg font-bold shadow-md mt-1">
                 5
               </div>
               <div className="ml-4 flex-1">
@@ -217,7 +217,7 @@ const GrowFi = () => {
         </section>
 
         {/* --- FAQ Section --- */}
-        <section className="bg-white p-6 md:p-10 rounded-xl p-6 md:p-12 border border-blue-100">
+        <section className="bg-white p-6 rounded-xl  md:p-12 border border-blue-100">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12">
             Frequently Asked Questions
           </h2>

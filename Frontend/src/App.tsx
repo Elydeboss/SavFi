@@ -1,8 +1,7 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import { UserProfileProvider } from "./contexts/UserProfileContext";
 
-//import Swiftfi from "./pages/sw";
 import Vaultfi from "./pages/vaultfi.tsx";
 import Growfi from "./pages/Growfi.tsx";
 import Flexifi from "./pages/Flexfi.tsx";
