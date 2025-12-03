@@ -43,7 +43,7 @@ const DepositModal = ({ onClose }: DepositModalProps) => {
                     Withdrawal in NGN
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Use your Nigerian bank account to fund your USDT balance
+                    Withdrawal your money in crypto
                   </p>
                 </div>
               </div>
@@ -63,7 +63,7 @@ const DepositModal = ({ onClose }: DepositModalProps) => {
                     Withdraw USDT
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Send USDT directly from any crypto wallet into your bank
+                    Send USDT directly to into your bank
                   </p>
                 </div>
               </div>
