@@ -1,27 +1,27 @@
-import { Smartphone, CheckCircle2, ArrowRight } from 'lucide-react';
-import First from '../assets/img/Rectangle 1889.png';
-import second from '../assets/img/Rectangle 1890.png';
-import third from '../assets/img/Rectangle 1891.png';
-import fourth from '../assets/img/Rectangle 1892.png';
-import firth from '../assets/img/Rectangle 1893.png';
-import sixth from '../assets/img/Rectangle 1894.png';
+import { Smartphone, CheckCircle2, ArrowRight } from "lucide-react";
+import First from "../assets/img/Rectangle 1889.png";
+import second from "../assets/img/Rectangle 1890.png";
+import third from "../assets/img/Rectangle 1891.png";
+import fourth from "../assets/img/Rectangle 1892.png";
+import firth from "../assets/img/Rectangle 1893.png";
+import sixth from "../assets/img/Rectangle 1894.png";
 
-import Img1 from '../assets/img/Rectangle 1912.png';
-import Img2 from '../assets/img/Rectangle 1916.png';
-import Img3 from '../assets/img/Rectangle 1918.png';
-import Img4 from '../assets/img/Rectangle 1920.png';
-import Img5 from '../assets/img/Rectangle 1922.png';
+import Img1 from "../assets/img/Rectangle 1912.png";
+import Img2 from "../assets/img/Rectangle 1916.png";
+import Img3 from "../assets/img/Rectangle 1918.png";
+import Img4 from "../assets/img/Rectangle 1920.png";
+import Img5 from "../assets/img/Rectangle 1922.png";
 
-import Team1 from '../assets/img/Ellipse 4.png';
-import Team2 from '../assets/img/Ellipse 5.png';
-import Team3 from '../assets/img/Ellipse 6.png';
-import Team4 from '../assets/img/Ellipse 7.png';
-import Team5 from '../assets/img/Ellipse 8.png';
-import Team6 from '../assets/img/Ellipse 9.png';
-import Team7 from '../assets/img/Ellipse 10.png';
-import Team8 from '../assets/img/Ellipse 11.png';
+import Team1 from "../assets/img/Ellipse 4.png";
+import Team2 from "../assets/img/Ellipse 5.png";
+import Team3 from "../assets/img/Ellipse 6.png";
+import Team4 from "../assets/img/Ellipse 7.png";
+import Team5 from "../assets/img/Ellipse 8.png";
+import Team6 from "../assets/img/Ellipse 9.png";
+import Team7 from "../assets/img/Ellipse 10.png";
+import Team8 from "../assets/img/Ellipse 11.png";
 
-import Header from '../components/Landpage-header';
+import Header from "../components/Landpage-header";
 
 const SavFiAbout = () => {
   // const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,28 +31,28 @@ const SavFiAbout = () => {
   // Data for "What defines us" section
   const values = [
     {
-      title: 'Customer First',
-      desc: 'Our customers are the heart of everything we do. We build products that solve their real-world problems and prioritize their financial well-being above all else.',
+      title: "Customer First",
+      desc: "Our customers are the heart of everything we do. We build products that solve their real-world problems and prioritize their financial well-being above all else.",
       img: Img1,
     },
     {
-      title: 'Better Together',
-      desc: 'We believe in the power of collaboration. By working together with our users and partners, we create a stronger financial ecosystem for everyone.',
+      title: "Better Together",
+      desc: "We believe in the power of collaboration. By working together with our users and partners, we create a stronger financial ecosystem for everyone.",
       img: Img2,
     },
     {
-      title: 'Transparency Always',
-      desc: 'We operate with complete openness. No hidden fees, no complex jargon—just clear, honest financial services you can understand.',
+      title: "Transparency Always",
+      desc: "We operate with complete openness. No hidden fees, no complex jargon—just clear, honest financial services you can understand.",
       img: Img3,
     },
     {
-      title: 'Security You Can Trust',
-      desc: 'Your asset security is our top priority. We employ bank-grade security measures and cutting-edge technology to keep your funds safe.',
+      title: "Security You Can Trust",
+      desc: "Your asset security is our top priority. We employ bank-grade security measures and cutting-edge technology to keep your funds safe.",
       img: Img4,
     },
     {
-      title: 'Innovation That Never Stops',
-      desc: 'The financial world is evolving, and so are we. We constantly innovate to bring you the best tools for wealth management in the digital age.',
+      title: "Innovation That Never Stops",
+      desc: "The financial world is evolving, and so are we. We constantly innovate to bring you the best tools for wealth management in the digital age.",
       img: Img5,
     },
   ];
@@ -60,43 +60,43 @@ const SavFiAbout = () => {
   // Data for Team section
   const team = [
     {
-      name: 'Elijah Tom',
-      role: 'Founder / frontend dev',
+      name: "Elijah Tom",
+      role: "Founder / frontend dev",
       img: Team1,
     },
     {
-      name: 'Kelly Mbaga',
-      role: 'Product Manager',
+      name: "Kelly Mbaga",
+      role: "Product Manager",
       img: Team2,
     },
     {
-      name: 'Solomon Odunayo',
-      role: 'Engineering Lead',
+      name: "Solomon Odunayo",
+      role: "Engineering Lead",
       img: Team3,
     },
     {
-      name: 'Abolaji Oladokun',
-      role: 'Legal & Compliance',
+      name: "Abolaji Oladokun",
+      role: "Legal & Compliance",
       img: Team4,
     },
     {
-      name: 'Bianca Onwa',
-      role: 'Growth & Marketing',
+      name: "Bianca Onwa",
+      role: "Growth & Marketing",
       img: Team5,
     },
     {
-      name: 'Chima Umeji',
-      role: 'Product Design',
+      name: "Chima Umeji",
+      role: "Product Design",
       img: Team6,
     },
     {
-      name: 'Isaac Asuquo',
-      role: 'Backend Engineer',
+      name: "Isaac Asuquo",
+      role: "Backend Engineer",
       img: Team7,
     },
     {
-      name: 'Abas Nwachukwu',
-      role: 'Frontend Engineer',
+      name: "Abas Nwachukwu",
+      role: "Frontend Engineer",
       img: Team8,
     },
   ];
@@ -345,7 +345,7 @@ const SavFiAbout = () => {
               <li className="flex items-start gap-2">
                 <div className="w-4 mt-1">
                   <CheckCircle2 size={16} />
-                </div>{' '}
+                </div>{" "}
                 Lagos, Nigeria
               </li>
             </ul>

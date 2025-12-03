@@ -1,11 +1,11 @@
-import type { FC, ReactNode } from 'react';
-import { useState, useEffect } from 'react';
-import { sidebarItems as defaultSidebarItems } from '../../data/sidebar';
-import type { SidebarProps } from '../../interfaces/index';
-import logo from '../../assets/SavFi-logo.png';
-import user from '../../assets/menu/profile.png';
-import Profile from '../../pages/Profile';
-import { FiGift } from 'react-icons/fi';
+import type { FC, ReactNode } from "react";
+import { useState, useEffect } from "react";
+import { sidebarItems as defaultSidebarItems } from "../../data/sidebar";
+import type { SidebarProps } from "../../interfaces/index";
+import logo from "../../assets/SavFi-logo.png";
+import user from "../../assets/menu/profile.png";
+import Profile from "../../pages/Profile";
+import { FiGift } from "react-icons/fi";
 
 const Sidebar: FC<SidebarProps> = ({
   items = defaultSidebarItems,
@@ -15,7 +15,7 @@ const Sidebar: FC<SidebarProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const [activeIndex, setActiveIndex] = useState(() => {
-    const saved = localStorage.getItem('activeSidebarIndex');
+    const saved = localStorage.getItem("activeSidebarIndex");
     return saved !== null ? Number(saved) : 0;
   });
 
@@ -41,12 +41,12 @@ const Sidebar: FC<SidebarProps> = ({
       }
     };
     updateHeight();
-    window.addEventListener('resize', updateHeight);
-    return () => window.removeEventListener('resize', updateHeight);
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
   useEffect(() => {
-    let currentLabel = 'Profile';
+    let currentLabel = "Profile";
     let currentPage: ReactNode = <Profile />;
 
     if (activeIndex < items.length) {
@@ -77,7 +77,7 @@ const Sidebar: FC<SidebarProps> = ({
         <div
           className={`fixed top-0 left-0 w-55 md:w-65 lg:w-[332px] py-12 bg-neutral-50 text-black-text p-4 md:p-8 font-medium transform z-50
           ${
-            isOpen ? 'translate-x-0' : '-translate-x-full'
+            isOpen ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 dark:bg-gray-700 dark:text-white`}
         >
           <img
@@ -106,15 +106,15 @@ const Sidebar: FC<SidebarProps> = ({
                         onClick={() => {
                           setActiveIndex(index);
                           localStorage.setItem(
-                            'activeSidebarIndex',
+                            "activeSidebarIndex",
                             index.toString()
                           );
                         }}
                         className={`text-sm md:text-base lg:text-6 group flex items-center gap-3 w-[190px] md:w-[220px] lg:w-full h-10 md:h-12 py-3 px-4 font-medium rounded-xl transition cursor-pointer
                           ${
                             isActive
-                              ? 'bg-gray-200 dark:bg-gray-500'
-                              : 'hover:opacity-50'
+                              ? "bg-gray-200 dark:bg-gray-500"
+                              : "hover:opacity-50"
                           }`}
                       >
                         <img
@@ -139,15 +139,15 @@ const Sidebar: FC<SidebarProps> = ({
                     onClick={() => {
                       setActiveIndex(items.length);
                       localStorage.setItem(
-                        'activeSidebarIndex',
+                        "activeSidebarIndex",
                         items.length.toString()
                       );
                     }}
                     className={`text-sm md:text-base lg:text-6 group flex items-center gap-3 w-[190px] md:w-[220px] lg:w-full h-10 md:h-12 py-3 px-4 font-medium rounded-xl cursor-pointer transition
                       ${
                         activeIndex === items.length
-                          ? 'bg-gray-200 dark:bg-gray-500'
-                          : 'hover:opacity-50'
+                          ? "bg-gray-200 dark:bg-gray-500"
+                          : "hover:opacity-50"
                       }`}
                   >
                     <img

@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Navbar from '../components/Landpage-header';
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import Navbar from "../components/Landpage-header";
 
 // API endpoint for OTP verification
-const VERIFY_API_URL = '/api/accounts/verify-otp/';
+const VERIFY_API_URL = "/api/accounts/verify-otp/";
 
 interface LocationState {
   userEmail?: string;
@@ -15,43 +15,43 @@ export default function OTPPage() {
   const location = useLocation();
   const state = location.state as LocationState;
 
-  const userEmail = state?.userEmail || 'unknown';
-  const userName = state?.userName || 'User';
+  const userEmail = state?.userEmail || "unknown";
+  const userName = state?.userName || "User";
 
   // OTP state
-  const [otpCode, setOtpCode] = useState('');
+  const [otpCode, setOtpCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleOTPVerification = async () => {
     if (otpCode.length !== 6 || isNaN(+otpCode)) {
-      setError('Please enter a valid 6-digit numeric code.');
+      setError("Please enter a valid 6-digit numeric code.");
       return;
     }
 
     setIsVerifying(true);
-    setError('');
+    setError("");
 
     const requestData = { email: userEmail, otp_code: otpCode };
 
     try {
       const response = await fetch(VERIFY_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestData),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        alert('Account verified! Redirecting to login page...');
-        navigate('/login');
+        alert("Account verified! Redirecting to login page...");
+        navigate("/login");
       } else {
-        setError(result.detail || 'Invalid code. Please try again.');
+        setError(result.detail || "Invalid code. Please try again.");
       }
     } catch (err) {
-      console.error('Verification error:', err);
-      setError('Could not connect to the server. Check your connection.');
+      console.error("Verification error:", err);
+      setError("Could not connect to the server. Check your connection.");
     } finally {
       setIsVerifying(false);
     }
@@ -94,7 +94,7 @@ export default function OTPPage() {
             onClick={handleOTPVerification}
             disabled={isVerifying || otpCode.length !== 6}
           >
-            {isVerifying ? 'Verifying...' : 'Verify Account'}
+            {isVerifying ? "Verifying..." : "Verify Account"}
           </button>
 
           {/* Resend code */}

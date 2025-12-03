@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { ChevronDown, Phone, Mail, Vault } from 'lucide-react';
-import Header from '../components/Landpage-header';
+import React, { useState } from "react";
+import { ChevronDown, Phone, Mail, Vault } from "lucide-react";
+import Header from "../components/Landpage-header";
 //import grow from "../assets/img/arcticons_growtracker.png";
 //import vault from "../assets/img/stash_vault.png";
 //import flexfi from "../assets/img/fluent_savings-32-regular.png";
@@ -61,7 +61,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
         <span>{question}</span>
         <ChevronDown
           className={`h-5 w-5 transition-transform duration-300 ${
-            isOpen ? 'rotate-180 text-blue-500' : 'text-gray-400'
+            isOpen ? "rotate-180 text-blue-500" : "text-gray-400"
           }`}
         />
       </button>
@@ -78,21 +78,21 @@ const valutFi = () => {
   const faqs = [
     {
       question:
-        'Lorem ipsum dolor sit amet consectetur. Ut varius id pharetra et leo tricies.',
+        "Lorem ipsum dolor sit amet consectetur. Ut varius id pharetra et leo tricies.",
       answer:
-        'FlexFi is designed to be the easiest way to start your savings journey. You can start small, grow at your own pace, and benefit from the stability of dollar-backed assets (USDC/USDT) without worrying about local currency fluctuations.',
+        "FlexFi is designed to be the easiest way to start your savings journey. You can start small, grow at your own pace, and benefit from the stability of dollar-backed assets (USDC/USDT) without worrying about local currency fluctuations.",
     },
     {
       question:
-        'The interest accrues daily but is paid out in full at the end of the 3-month saving period, provided you complete the plan. If you withdraw early, you forfeit the interest.',
+        "The interest accrues daily but is paid out in full at the end of the 3-month saving period, provided you complete the plan. If you withdraw early, you forfeit the interest.",
       answer:
-        'The interest accrues daily but is paid out in full at the end of the 3-month saving period, provided you complete the plan. If you withdraw early, you forfeit the interest.',
+        "The interest accrues daily but is paid out in full at the end of the 3-month saving period, provided you complete the plan. If you withdraw early, you forfeit the interest.",
     },
     {
       question:
-        'Yes, early withdrawal is allowed. However, note that the interest is only applied if the plan is completed successfully. Early withdrawal incurs a small processing fee to cover transaction costs.',
+        "Yes, early withdrawal is allowed. However, note that the interest is only applied if the plan is completed successfully. Early withdrawal incurs a small processing fee to cover transaction costs.",
       answer:
-        'Yes, early withdrawal is allowed. However, note that the interest is only applied if the plan is completed successfully. Early withdrawal incurs a small processing fee to cover transaction costs.',
+        "Yes, early withdrawal is allowed. However, note that the interest is only applied if the plan is completed successfully. Early withdrawal incurs a small processing fee to cover transaction costs.",
     },
   ];
 

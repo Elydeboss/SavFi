@@ -51,10 +51,33 @@ export default function Signup() {
 
         if (loginResponse.ok) {
           // Store auth tokens and user data
-          localStorage.setItem("authToken", loginData.access);
+          const accessToken = loginData.access;
+          localStorage.setItem("authToken", accessToken);
           localStorage.setItem("refreshToken", loginData.refresh);
           localStorage.setItem("username", loginData.username || username);
           localStorage.setItem("email", loginData.email || email);
+
+          // Create wallet for user
+          try {
+            const walletResponse = await fetch("/api/wallets/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            });
+
+            const walletData = await walletResponse.json();
+
+            if (walletResponse.ok) {
+              localStorage.setItem("walletAddress", walletData.walletAddress);
+              console.log("Wallet created:", walletData.walletAddress);
+            } else {
+              console.warn("Wallet creation failed:", walletData);
+            }
+          } catch (walletError) {
+            console.warn("Wallet error:", walletError);
+          }
 
           // Mark as new user to trigger welcome modal
           localStorage.setItem("isNewUser", "true");
@@ -63,11 +86,6 @@ export default function Signup() {
           toast.success("Registration successful!");
 
           navigate("/dashboard");
-        } else {
-          toast.info(
-            "Registration succeeded but login failed. Please login manually."
-          );
-          navigate("/login");
         }
       } else {
         toast.error("Registration failed", {

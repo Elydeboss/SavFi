@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import type { ReactNode } from 'react';
-import Sidebar from './Sidebar';
-import Navbar from './Navbar';
-import { sidebarItems } from '../../data/sidebar';
+import { useState } from "react";
+import type { ReactNode } from "react";
+import Sidebar from "./Sidebar";
+import Navbar from "./Navbar";
+import { sidebarItems } from "../../data/sidebar";
 
 const Layout: React.FC = () => {
-  const [title, setTitle] = useState<string>('Dashboard');
+  const [title, setTitle] = useState<string>("Dashboard");
   const [currentPage, setCurrentPage] = useState<ReactNode>(
     sidebarItems[0].component
   );

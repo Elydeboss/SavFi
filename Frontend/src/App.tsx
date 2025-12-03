@@ -1,6 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
+<<<<<<< HEAD
 import { UserProfileProvider } from "./contexts/UserProfileContext";
+=======
+>>>>>>> fcdaab7e2b521236c5f0b94ba636c03aa3f242e8
 
 import Vaultfi from "./pages/vaultfi.tsx";
 import Growfi from "./pages/Growfi.tsx";

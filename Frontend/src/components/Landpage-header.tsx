@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Menu,
   X,
@@ -7,42 +7,42 @@ import {
   Lock,
   Sprout,
   Zap,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const products = [
   {
-    name: 'FlexFi',
-    description: 'Flexible savings',
-    color: 'text-blue-500',
+    name: "FlexFi",
+    description: "Flexible savings",
+    color: "text-blue-500",
     icon: PiggyBank,
-    bg: 'bg-blue-50',
-    href: '/flexfi',
+    bg: "bg-blue-50",
+    href: "/flexfi",
   },
   {
-    name: 'VaultFi',
-    description: 'Locked Savings',
-    color: 'text-purple-600',
+    name: "VaultFi",
+    description: "Locked Savings",
+    color: "text-purple-600",
     icon: Lock,
-    bg: 'bg-purple-50',
-    href: '/vaultfi',
+    bg: "bg-purple-50",
+    href: "/vaultfi",
   },
   {
-    name: 'GrowFi',
-    description: 'Growth Plan',
-    color: 'text-green-600',
+    name: "GrowFi",
+    description: "Growth Plan",
+    color: "text-green-600",
     icon: Sprout,
-    bg: 'bg-green-50',
-    href: '/Growfi',
+    bg: "bg-green-50",
+    href: "/Growfi",
   },
   {
-    name: 'SwiftFi',
-    description: 'Quick Saving Plan',
-    color: 'text-yellow-600',
+    name: "SwiftFi",
+    description: "Quick Saving Plan",
+    color: "text-yellow-600",
     icon: Zap,
-    bg: 'bg-yellow-50',
-    href: '/products/swiftfi',
+    bg: "bg-yellow-50",
+    href: "/products/swiftfi",
   },
 ];
 
@@ -83,7 +83,7 @@ const Header = () => {
               <ChevronDown
                 size={18}
                 className={`ml-1 transition-transform duration-200 ${
-                  isProductDropdownOpen ? 'rotate-180' : ''
+                  isProductDropdownOpen ? "rotate-180" : ""
                 }`}
               />
             </button>
