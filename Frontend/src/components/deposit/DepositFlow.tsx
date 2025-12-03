@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import DepositEnterAmount from './DepositEnterAmount';
-import DepositBankDetails from './DepositBankDetails';
-import DepositVerifyingTransfer from './DepositVerifyingTransfer';
-import DepositAwaitingConfirmation from './DepositAwaitingConfirmation';
-import DepositSuccess from './DepositSuccess';
+import { useState, useEffect } from "react";
+import DepositEnterAmount from "./DepositEnterAmount";
+import DepositBankDetails from "./DepositBankDetails";
+import DepositVerifyingTransfer from "./DepositVerifyingTransfer";
+import DepositAwaitingConfirmation from "./DepositAwaitingConfirmation";
+import DepositSuccess from "./DepositSuccess";
 
 type DepositFlowProps = {
   onBack?: () => void;
   onClose?: () => void;
 };
 
-type ModalState = 'none' | 'verifying' | 'awaiting' | 'success' | 'receipt';
+type ModalState = "none" | "verifying" | "awaiting" | "success" | "receipt";
 
 type ReceiptModalProps = {
   isOpen: boolean;
@@ -95,38 +95,38 @@ function ReceiptModal({
 }
 
 export default function DepositFlow({ onBack, onClose }: DepositFlowProps) {
-  const [step, setStep] = useState<'enter' | 'bank'>('enter');
+  const [step, setStep] = useState<"enter" | "bank">("enter");
   const [amountNgn, setAmountNgn] = useState(0);
   const [amountUsdt, setAmountUsdt] = useState(0);
-  const [modal, setModal] = useState<ModalState>('none');
-  const [reference, setReference] = useState('');
+  const [modal, setModal] = useState<ModalState>("none");
+  const [reference, setReference] = useState("");
   const [transactionStatus, setTransactionStatus] = useState<
-    'pending' | 'success' | 'failure'
-  >('pending');
+    "pending" | "success" | "failure"
+  >("pending");
 
   useEffect(() => {
-    if (modal === 'success') {
+    if (modal === "success") {
       // Generate transaction reference when success modal shows
-      setReference('TXN-' + Math.floor(Math.random() * 999999));
+      setReference("TXN-" + Math.floor(Math.random() * 999999));
     }
   }, [modal]);
 
   const handleBankContinue = () => {
-    setModal('verifying');
-    setTransactionStatus('pending');
+    setModal("verifying");
+    setTransactionStatus("pending");
 
     setTimeout(() => {
-      setModal('awaiting');
+      setModal("awaiting");
 
       // Simulate transaction result after 3s
       setTimeout(() => {
         const didSucceed = Math.random() > 0.5; // replace with real API result
         if (didSucceed) {
-          setTransactionStatus('success');
-          setModal('success');
+          setTransactionStatus("success");
+          setModal("success");
         } else {
-          setTransactionStatus('failure');
-          setModal('awaiting'); // stay on awaiting but mark as failed
+          setTransactionStatus("failure");
+          setModal("awaiting"); // stay on awaiting but mark as failed
         }
       }, 3000);
     }, 2000);
@@ -142,67 +142,67 @@ export default function DepositFlow({ onBack, onClose }: DepositFlowProps) {
   return (
     <div className="w-full">
       {/* Main UI */}
-      {modal === 'none' && (
+      {modal === "none" && (
         <>
-          {step === 'enter' && (
+          {step === "enter" && (
             <DepositEnterAmount
               onContinue={(ngn, usdt) => {
                 setAmountNgn(ngn);
                 setAmountUsdt(usdt);
-                setStep('bank');
+                setStep("bank");
               }}
               onCancel={() => onBack?.()}
             />
           )}
-          {step === 'bank' && (
+          {step === "bank" && (
             <DepositBankDetails
               amountToPay={amountNgn}
               amountUsdt={amountUsdt}
               onContinue={handleBankContinue}
-              onCancel={() => setStep('enter')}
+              onCancel={() => setStep("enter")}
             />
           )}
         </>
       )}
 
       {/* Modals */}
-      {modal === 'verifying' && <DepositVerifyingTransfer isOpen={true} />}
-      {modal === 'awaiting' && (
+      {modal === "verifying" && <DepositVerifyingTransfer isOpen={true} />}
+      {modal === "awaiting" && (
         <DepositAwaitingConfirmation
           isOpen={true}
-          failed={transactionStatus === 'failure'} // <-- use it here
+          failed={transactionStatus === "failure"} // <-- use it here
           onRefresh={() => handleBankContinue()}
           onReturn={() => {
-            setModal('none');
-            setStep('enter');
+            setModal("none");
+            setStep("enter");
             onClose?.();
           }}
-          onSupport={() => console.log('support')}
+          onSupport={() => console.log("support")}
         />
       )}
 
-      {modal === 'success' && (
+      {modal === "success" && (
         <DepositSuccess
           isOpen={true}
           amountUsdt={amountUsdt}
           onClose={() => {
-            setModal('none');
-            setStep('enter');
+            setModal("none");
+            setStep("enter");
             onClose?.();
           }}
-          onViewDetails={() => setModal('receipt')}
+          onViewDetails={() => setModal("receipt")}
         />
       )}
 
-      {modal === 'receipt' && (
+      {modal === "receipt" && (
         <ReceiptModal
           isOpen={true}
           onClose={() => {
-            setModal('none');
-            setStep('enter');
+            setModal("none");
+            setStep("enter");
             onClose?.();
           }}
-          onBack={() => setModal('success')}
+          onBack={() => setModal("success")}
           amount={receipt.amount}
           usdt={receipt.usdt}
           reference={receipt.reference}

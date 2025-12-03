@@ -1,33 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const UseTheme = () => {
   const preferredTheme = () => {
-    const activeTheme = localStorage.getItem('theme');
+    const activeTheme = localStorage.getItem("theme");
     if (activeTheme) return activeTheme;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   };
 
   const [theme, setTheme] = useState(preferredTheme);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   useEffect(() => {
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const stored = localStorage.getItem('theme');
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const stored = localStorage.getItem("theme");
 
-    const handleChange = (e) => {
+    const handleChange = (e: Event) => {
+      const mediaEvent = e as MediaQueryListEvent;
       if (!stored) {
-        setTheme(e.matches ? 'dark' : 'light');
+        setTheme(mediaEvent.matches ? "dark" : "light");
       }
     };
 
-    media.addEventListener('change', handleChange);
-    return () => media.removeEventListener('change', handleChange);
+    media.addEventListener("change", handleChange);
+    return () => media.removeEventListener("change", handleChange);
   }, []);
 
   return { theme, setTheme };
