@@ -440,7 +440,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
                         KYC: Unverified
                       </div>
                       <div className="px-4 py-2 rounded-full bg-green-100 text-green-600 text-sm font-semibold">
-                        3.0 SFP
+                        0 SFP
                       </div>
                     </div>
                   </div>
