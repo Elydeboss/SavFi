@@ -12,8 +12,6 @@ const registerSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
-
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -29,9 +27,11 @@ export default function Signup() {
       const validated = registerSchema.parse({ username, email, password });
       setIsLoading(true);
 
-      const response = await fetch(`${API_BASE}/accounts/register/`, {
+      const response = await fetch("/api/accounts/register/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(validated),
       });
 
@@ -48,9 +48,11 @@ export default function Signup() {
 
       if (response.status === 201) {
         // Auto-login after successful registration
-        const loginResponse = await fetch(`${API_BASE}/accounts/login/`, {
+        const loginResponse = await fetch("/api/accounts/login/", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({ username, password }),
         });
 
@@ -75,7 +77,7 @@ export default function Signup() {
 
           // Create wallet for user
           try {
-            const walletResponse = await fetch(`${API_BASE}/wallets/`, {
+            const walletResponse = await fetch("/api/wallets/", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
