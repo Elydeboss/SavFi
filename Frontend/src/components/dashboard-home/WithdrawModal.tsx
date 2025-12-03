@@ -19,7 +19,7 @@ const DepositModal = ({ onClose }: DepositModalProps) => {
         >
           <div className="flex items-center justify-between p-6 border-b border-border">
             <h2 className="text-xl font-semibold text-foreground">
-              Deposit funds
+              withdraw funds
             </h2>
             <button
               onClick={onClose}
@@ -40,7 +40,7 @@ const DepositModal = ({ onClose }: DepositModalProps) => {
                 </div>
                 <div className="text-left">
                   <h3 className="font-semibold text-foreground mb-0.5">
-                    Deposit in NGN
+                    Withdrawal in NGN
                   </h3>
                   <p className="text-sm text-muted-foreground">
                     Use your Nigerian bank account to fund your USDT balance
@@ -60,10 +60,10 @@ const DepositModal = ({ onClose }: DepositModalProps) => {
                 </div>
                 <div className="text-left">
                   <h3 className="font-semibold text-foreground mb-0.5">
-                    Deposit USDT
+                    Withdraw USDT
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Send USDT directly from any crypto wallet into your balance
+                    Send USDT directly from any crypto wallet into your bank
                   </p>
                 </div>
               </div>
