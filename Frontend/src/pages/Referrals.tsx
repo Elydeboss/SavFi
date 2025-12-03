@@ -194,11 +194,11 @@ const Referrals = () => {
                   Progress
                 </p>
                 <span className="text-[11px] text-[#67886b] dark:text-white/80">
-                  2/5 referrals
+                  0/5 referrals
                 </span>
               </div>
               <div className="h-1.5 w-full rounded-full bg-[#eaedef]">
-                <div className="h-full w-2/5 rounded-full bg-[#2BCB89] " />
+                <div className="h-full w-0/5 rounded-full bg-[#2BCB89] " />
               </div>
             </div>
           </Card>
@@ -265,16 +265,16 @@ const Referrals = () => {
                 </div>
                 <div>
                   <div className="text-4xl font-bold text-black dark:text-white">
-                    1.0 SFP
+                    0.0 SFP
                   </div>
                   <p className="mt-1 text-base font-medium text-center text-[#67686B] dark:text-white/80">
-                    ~3.01 USDT
+                    ~0.00 USDT
                   </p>
                 </div>
               </div>
 
               <div className="mt-3 w-full text-center rounded-full bg-[#FFF7EE] dark:bg-gray-600 px-4 py-3 font-medium text-sm text-[#B57C3E] dark:text-[#f4a44e] ">
-                Locked – refer 2 more users to unlock withdrawal
+                Locked – refer 5 users to unlock withdrawal
               </div>
             </div>
 

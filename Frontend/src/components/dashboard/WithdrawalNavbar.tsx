@@ -8,11 +8,15 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
-import type { NavbarProps } from "../../interfaces";
+
 import { NotificationPanel } from "./NotificationPanel";
 import type { Notification } from "./NotificationPanel";
 import { HelpCircle, LogOut } from "lucide-react";
 import { toast } from "sonner";
+
+type NavbarProps = {
+  title: string;
+};
 
 const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
   const navigate = useNavigate();

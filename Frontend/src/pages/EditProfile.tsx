@@ -197,34 +197,36 @@ export default function EditProfile() {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Avatar Section */}
                     <div className="flex items-center justify-center gap-4 pb-6">
-                      <div className="h-20 w-20 relative rounded-full bg-primary text-white overflow-hidden flex items-center justify-center text-3xl font-semibold">
-                        {avatar ? (
-                          <img
-                            src={avatar}
-                            className="h-full w-full object-cover"
+                      <div className="relative">
+                        <div className="h-20 w-20 rounded-full bg-primary text-white overflow-hidden flex items-center justify-center text-3xl font-semibold">
+                          {avatar ? (
+                            <img
+                              src={avatar}
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            (
+                              firstName.charAt(0) ||
+                              username.charAt(0) ||
+                              "U"
+                            ).toUpperCase()
+                          )}
+                          <button
+                            type="button"
+                            onClick={handleAvatarClick}
+                            disabled={isLoading}
+                            className="absolute bottom-2 -right-2 bg-black/70 hover:bg-black text-white p-1 rounded-full cursor-pointer"
+                          >
+                            <Camera className="h-4 w-4" />
+                          </button>
+                          <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            className="hidden"
                           />
-                        ) : (
-                          (
-                            firstName.charAt(0) ||
-                            username.charAt(0) ||
-                            "U"
-                          ).toUpperCase()
-                        )}
-                        <button
-                          type="button"
-                          onClick={handleAvatarClick}
-                          disabled={isLoading}
-                          className="absolute bottom-2 right-2 bg-black/70 hover:bg-black text-white p-1 rounded-full cursor-pointer"
-                        >
-                          <Camera className="h-4 w-4" />
-                        </button>
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          accept="image/*"
-                          onChange={handleFileChange}
-                          className="hidden"
-                        />
+                        </div>
                       </div>
                     </div>
 
@@ -262,7 +264,7 @@ export default function EditProfile() {
                       <input
                         value={username}
                         disabled
-                        className="w-full rounded-md placeholder:text-muted-foreground bg-blue-50 px-6 dark:bg-gray-600 py-3 focus:outline-0 focus:ring-2 focus:ring-primary"
+                        className="w-full rounded-md placeholder:text-muted-foreground bg-blue-50 px-6 dark:bg-gray-600 py-3 focus:outline-0 focus:ring-2 focus:ring-primary opacity-50"
                       />
                       <p className="text-xs text-muted-foreground">
                         Username cannot be changed
@@ -272,10 +274,11 @@ export default function EditProfile() {
                     <div className="space-y-1">
                       <label className="text-sm font-medium">Email</label>
                       <input
+                        disabled
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full rounded-md placeholder:text-muted-foreground bg-blue-50 px-6 dark:bg-gray-600 py-3 focus:outline-0 focus:ring-2 focus:ring-primary"
+                        className="w-full rounded-md placeholder:text-muted-foreground bg-blue-50 px-6 dark:bg-gray-600 py-3 focus:outline-0 focus:ring-2 focus:ring-primary opacity-50"
                       />
                       <p className="text-xs text-muted-foreground">
                         Email cannot be changed
