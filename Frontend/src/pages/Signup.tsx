@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
+import Wallets from "../Modal/Metamask";
 
 const API_BASE = "https://wallet-api-55mt.onrender.com"; //
 
@@ -123,9 +124,9 @@ export default function Signup() {
     }
   };
 
-  const handleMetaMaskConnect = async () => {
-    toast.info("MetaMask integration coming soon!");
-  };
+  //const handleMetaMaskConnect = async () => {
+  // toast.info("MetaMask integration coming soon!");
+  //};
 
   return (
     <div className="flex min-h-screen">
@@ -271,15 +272,12 @@ export default function Signup() {
             </div>
 
             {/* MetaMask Button */}
-            <button
-              onClick={handleMetaMaskConnect}
-              className=" w-full cursor-pointer border-2 border-blue text-blue py-3 rounded-full font-medium hover:bg-blue-50 flex items-center justify-center gap-2"
-            >
+            <button className=" w-full cursor-pointer border-2 border-blue text-blue py-3 rounded-full font-medium hover:bg-blue-50 flex items-center justify-center gap-2">
               <img
                 src="https://cdn.worldvectorlogo.com/logos/metamask.svg"
                 className="w-5"
               />
-              Continue with Metamask
+              <Wallets />
             </button>
           </form>
 
