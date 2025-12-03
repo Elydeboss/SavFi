@@ -27,7 +27,7 @@ export default function Signup() {
       const validated = registerSchema.parse({ username, email, password });
       setIsLoading(true);
 
-      const response = await fetch("/api/accounts/register/", {
+      const response = await fetch("/accounts/register/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export default function Signup() {
 
           // Create wallet for user
           try {
-            const walletResponse = await fetch("/api/wallets/", {
+            const walletResponse = await fetch("/wallets/", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
