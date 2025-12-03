@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
 
+const API_BASE = "https://wallet-api-55mt.onrender.com"; //
+
 const registerSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),
   email: z.string().email("Invalid email address"),
@@ -20,100 +22,101 @@ export default function Signup() {
 
   const navigate = useNavigate();
 
-  // Helper: safely parse JSON
+  /* Helper: safely parse JSON
   const safeJSON = (text: string) => {
     try {
       return JSON.parse(text);
     } catch {
       return null;
     }
-  };
+  };*/
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
     try {
-      // Validate input
       const validated = registerSchema.parse({ username, email, password });
+      setIsLoading(true);
 
-      // REGISTER USER
-      const registerRes = await fetch("/api/accounts/register/", {
+      // -----------------------
+      // 1. REGISTER USER
+      // -----------------------
+      const registerRes = await fetch(`${API_BASE}/accounts/register/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(validated),
       });
 
-      const registerText = await registerRes.text();
-      const registerData = safeJSON(registerText);
+      const registerData = await registerRes.json();
       console.log("REGISTER:", registerData);
 
-      if (!registerRes.ok) {
+      if (registerRes.status !== 201) {
         toast.error("Registration failed", {
-          description: registerData?.message || registerData?.error,
+          description: registerData.message || registerData.error,
         });
         return;
       }
 
-      if (registerRes.status !== 201) {
-        toast.error("Unexpected registration response");
-        return;
-      }
-
-      //  LOGIN USER (immediately after registration)
-      const loginRes = await fetch("/api/accounts/login/", {
+      // -----------------------
+      // 2. LOGIN USER
+      // -----------------------
+      const loginRes = await fetch(`${API_BASE}/accounts/login/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
-      const loginText = await loginRes.text();
-      const loginData = safeJSON(loginText);
+      const loginData = await loginRes.json();
       console.log("LOGIN:", loginData);
 
-      if (!loginRes.ok || !loginData?.access) {
-        toast.error("Login failed, please login manually.");
-        navigate("/login");
+      if (!loginRes.ok) {
+        toast.error("Login failed after registration");
         return;
       }
 
       // Save tokens
-      localStorage.setItem("authToken", loginData.access);
+      const accessToken = loginData.access;
+      localStorage.setItem("authToken", accessToken);
       localStorage.setItem("refreshToken", loginData.refresh);
-      localStorage.setItem("username", loginData.username || username);
-      localStorage.setItem("email", loginData.email || email);
+      localStorage.setItem("username", loginData.username);
+      localStorage.setItem("email", loginData.email);
 
-      // CREATE WALLET FOR THE USER
+      // -----------------------
+      // 3. CREATE WALLET
+      // -----------------------
+      const walletRes = await fetch(`${API_BASE}/wallets/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      let walletData;
       try {
-        const walletRes = await fetch("/api/wallets/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${loginData.access}`,
-          },
-        });
-
-        const walletText = await walletRes.text();
-        const walletData = safeJSON(walletText);
-        console.log("WALLET:", walletData);
-
-        if (walletRes.ok && walletData?.walletAddress) {
-          localStorage.setItem("walletAddress", walletData.walletAddress);
-        } else {
-          console.warn("Wallet creation failed:", walletData);
-        }
-      } catch (err) {
-        console.warn("Wallet error:", err);
+        walletData = await walletRes.json();
+      } catch {
+        walletData = null;
       }
 
-      //  SUCCESS → Redirect
+      console.log("WALLET:", walletData);
+
+      if (walletRes.ok && walletData?.address) {
+        localStorage.setItem("walletAddress", walletData.address);
+      } else {
+        console.warn("Wallet not created automatically.");
+      }
+
+      // -----------------------
+      // SUCCESS
+      // -----------------------
       toast.success("Account created!");
       navigate("/dashboard");
     } catch (err: any) {
       if (err instanceof z.ZodError) {
-        toast.error(err.issues[0]?.message || "Invalid input");
+        toast.error(err.issues[0].message);
       } else {
-        toast.error("Error", { description: err.message });
+        toast.error("Something went wrong");
       }
     } finally {
       setIsLoading(false);
