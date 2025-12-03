@@ -97,9 +97,9 @@ export default function Signup() {
   return (
     <div className="flex min-h-screen flex-col lg:flex-row">
       {/* LEFT SIDE (hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-blue-600 to-blue-800 p-12 flex-col justify-between">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-blue-600 to-blue-800 p-6 sm:p-12 flex-col justify-between">
         <Link to="/" className="flex items-center gap-3">
-          <img src={Logo} alt="SaveFi Logo" className="h-28 w-auto" />
+          <img src={Logo} alt="SaveFi Logo" className="h-20 w-20" />
         </Link>
 
         <div className="max-w-md">
