@@ -12,8 +12,6 @@ const loginSchema = z.object({
 });
 
 export default function Login() {
-  const [contract, setContract] = useState(null);
-  const [address, setAddress] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -71,10 +69,6 @@ export default function Login() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleMetaMaskLogin = async () => {
-    toast.info("MetaMask login is not implemented yet.");
   };
 
   return (

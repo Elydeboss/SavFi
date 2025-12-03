@@ -8,7 +8,7 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
-import type { NavbarProps } from "../../interfaces";
+import { NavbarProps } from "../../interfaces/index";
 import { NotificationPanel } from "./NotificationPanel";
 import type { Notification } from "./NotificationPanel";
 import { HelpCircle, LogOut } from "lucide-react";

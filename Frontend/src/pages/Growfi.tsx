@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, Phone, Mail, Dot } from "lucide-react";
+import { ChevronDown, Phone, Mail } from "lucide-react";
 import Header from "../components/Landpage-header";
 
 import grow from "../assets/img/arcticons_growtracker.png";

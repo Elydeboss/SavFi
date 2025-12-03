@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function connectWallet() {
   const [walletAddress, setWalletAddress] = useState("");
-  const [contract, setContract] = useState<Contract | null>(null);
+  const [setContract] = useState<Contract | null>(null);
   const navigate = useNavigate();
 
   // Connect Wallet
