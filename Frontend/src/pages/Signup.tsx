@@ -48,7 +48,7 @@ export default function Signup() {
 
       if (response.status === 201) {
         // Auto-login after successful registration
-        const loginResponse = await fetch("/api/accounts/login/", {
+        const loginResponse = await fetch("/accounts/login/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
