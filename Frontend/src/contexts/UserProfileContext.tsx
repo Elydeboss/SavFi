@@ -23,6 +23,7 @@ interface UserProfileContextType {
   profile: UserProfile | null;
   isLoading: boolean;
   updateProfile: (newProfile: Partial<UserProfile>) => void;
+  clearProfile: () => void;
   refreshProfile: () => Promise<void>;
 }
 
@@ -110,6 +111,19 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const clearProfile = useCallback(() => {
+    // Clear profile from state and localStorage
+    setProfile(null);
+    localStorage.removeItem("userProfile");
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("email");
+    localStorage.removeItem("fullName");
+    localStorage.removeItem("profileCompleted");
+    localStorage.removeItem("isNewUser");
+  }, []);
+
   const refreshProfile = useCallback(async () => {
     await fetchProfile();
   }, [fetchProfile]);
@@ -118,12 +132,20 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
     const authToken = localStorage.getItem("authToken");
     if (authToken) {
       fetchProfile();
+    } else {
+      setProfile(null);
     }
   }, [fetchProfile]);
 
   return (
     <UserProfileContext.Provider
-      value={{ profile, isLoading, updateProfile, refreshProfile }}
+      value={{
+        profile,
+        isLoading,
+        updateProfile,
+        clearProfile,
+        refreshProfile,
+      }}
     >
       {children}
     </UserProfileContext.Provider>

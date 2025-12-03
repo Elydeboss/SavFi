@@ -36,7 +36,7 @@ const Hero = () => {
               <span className="text-blue">Secure Your Future.</span>
             </h1>
 
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed max-w-xl">
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed text-center sm:text-start max-w-xl">
               Save smart, earn rewards, and build wealth effortlessly.
             </p>
 

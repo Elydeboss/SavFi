@@ -139,7 +139,7 @@ const Footer = () => {
             <p className="text-light/70 mb-4 text-sm">
               Get the latest updates on new features and savings tips
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
                 placeholder="Enter your email"

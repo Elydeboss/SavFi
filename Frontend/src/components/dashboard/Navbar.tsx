@@ -20,7 +20,7 @@ type NavbarProps = {
 
 const Navbar: React.FC<NavbarProps> = ({ title }) => {
   const navigate = useNavigate();
-  const { profile } = useUserProfile();
+  const { profile, clearProfile } = useUserProfile();
 
   const [searchActive, setSearchActive] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -153,14 +153,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
 
   const handleLogout = () => {
     // Clear all localStorage data
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("username");
-    localStorage.removeItem("email");
-    localStorage.removeItem("fullName");
-    localStorage.removeItem("profileCompleted");
-    localStorage.removeItem("isNewUser");
-    localStorage.removeItem("userProfile");
+    clearProfile();
 
     toast.info("Logged out successfully. See you soon!");
 

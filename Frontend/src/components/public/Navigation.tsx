@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import Logo from '../../assets/SavFi-logo.png';
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import Logo from "../../assets/SavFi-logo.png";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Products', href: '/products' },
-    { name: 'About Us', href: '/about-us' },
-    { name: 'Support', href: '/support-page' },
+    { name: "Home", href: "/" },
+    { name: "Products", href: "/products" },
+    { name: "About Us", href: "/about-us" },
+    { name: "Support", href: "/support-page" },
   ];
 
   return (
@@ -30,8 +30,8 @@ const Navigation = () => {
                 to={link.href}
                 className={`font-semibold transition-colors ${
                   location.pathname === link.href
-                    ? 'text-blue'
-                    : 'text-foreground/80 hover:text-blue'
+                    ? "text-blue"
+                    : "text-foreground/80 hover:text-blue"
                 }`}
               >
                 {link.name}
@@ -72,21 +72,25 @@ const Navigation = () => {
                   to={link.href}
                   className={`font-medium transition-colors py-2 ${
                     location.pathname === link.href
-                      ? 'text-blue'
-                      : 'text-foreground/80 hover:text-blue'
+                      ? "text-blue"
+                      : "text-foreground/80 hover:text-blue"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
-              <div className="flex flex-col space-y-2 pt-4">
-                <button className="text-foreground/90 cursor-pointer font-semibold">
-                  Sign In
-                </button>
-                <button className="w-full py-2.5 font-semibold cursor-pointer rounded-full text-white bg-blue hover:opacity-90 transition-opacity">
-                  Get Started
-                </button>
+              <div className="flex flex-col space-y-5 pt-4">
+                <Link to="/login">
+                  <button className="text-foreground/90 cursor-pointer font-semibold">
+                    Sign In
+                  </button>
+                </Link>
+                <Link to="/login">
+                  <button className="w-full py-2.5 font-semibold cursor-pointer rounded-full text-white bg-blue hover:opacity-90 transition-opacity">
+                    Get Started
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

@@ -18,7 +18,7 @@ const DashBoardShowcase = () => {
               See your savings <br /> grow in real time
             </h2>
 
-            <p className="mt-6 text-lg text-foreground leading-relaxed max-w-lg">
+            <p className="mt-6 text-lg text-center md:text-start text-foreground leading-relaxed max-w-lg">
               Personalized dashboard that lets you take control.
             </p>
 
