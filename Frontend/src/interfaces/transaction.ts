@@ -1,17 +1,17 @@
 // src/types/transactions.ts
-export type TransactionStatus = "Success" | "Pending" | "Failed";
+export type TransactionStatus = 'Success' | 'Pending' | 'Failed';
 export type TransactionSource =
-  | "Naira"
-  | "Interest"
-  | "Crypto"
-  | "Referral"
-  | "System";
+  | 'Naira'
+  | 'Interest'
+  | 'Crypto'
+  | 'Referral'
+  | 'System';
 
 export interface Transaction {
   id: string;
   date: string;
   type: string;
-  usdt: string;
+  usdt?: string;
   amount: string;
   status: TransactionStatus;
   source: TransactionSource;

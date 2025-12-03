@@ -1,7 +1,6 @@
-import React, { useState } from "react";
 import {
-  Menu,
-  X,
+  // Menu,
+  // X,
   ShieldCheck,
   RefreshCw,
   Smartphone,
@@ -14,18 +13,18 @@ import {
   CheckCircle2,
   Lock,
   ArrowRight,
-} from "lucide-react";
-import grow from "../assets/img/arcticons_growtracker.png";
-import vault from "../assets/img/stash_vault.png";
-import flexfi from "../assets/img/fluent_savings-32-regular.png";
-import pick from "../assets/img/picon_swift.png";
-import card from "../assets/img/card-coin.svg";
-import Lady from "../assets/img/Rectangle 12.png";
-import Dashimage from "../assets/img/Dashboard.png";
-import Shield from "../assets/img/Shield Star.svg";
-import trade from "../assets/img/trade.svg";
+} from 'lucide-react';
+//import grow from "../assets/img/arcticons_growtracker.png";
+//import vault from "../assets/img/stash_vault.png";
+//import flexfi from "../assets/img/fluent_savings-32-regular.png";
+//import pick from "../assets/img/picon_swift.png";
+import card from '../assets/img/card-coin.svg';
+import Lady from '../assets/img/Rectangle 12.png';
+import Dashimage from '../assets/img/Dashboard.png';
+import Shield from '../assets/img/Shield Star.svg';
+import trade from '../assets/img/trade.svg';
 
-import Header from "../components/Landpage-header";
+import Header from '../components/Landpage-header';
 
 const SavFiLanding = () => {
   return (
@@ -452,7 +451,7 @@ const SavFiLanding = () => {
               <li className="flex items-start gap-2">
                 <div className="w-4 mt-1">
                   <CheckCircle2 size={16} />
-                </div>{" "}
+                </div>{' '}
                 Lagos, Nigeria
               </li>
             </ul>

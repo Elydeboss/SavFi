@@ -1,39 +1,39 @@
-import Navigation from "../components/public/Navigation";
-import Community from "../components/public/Community";
-import CTA from "../components/public/CTA";
-import Footer from "../components/public/Footer";
-import { Shield, Target, Users, TrendingUp } from "lucide-react";
-import Member1 from "../assets/public/team1.svg";
-import Member2 from "../assets/public/team2.svg";
-import Member3 from "../assets/public/team3.svg";
-import Member4 from "../assets/public/team4.svg";
-import Member5 from "../assets/public/team5.svg";
-import Member6 from "../assets/public/team6.svg";
-import Member7 from "../assets/public/team7.svg";
-import Member8 from "../assets/public/team8.svg";
+import Navigation from '../components/public/Navigation';
+import Community from '../components/public/Community';
+import CTA from '../components/public/CTA';
+import Footer from '../components/public/Footer';
+import { Shield, Target, Users, TrendingUp } from 'lucide-react';
+import Member1 from '../assets/public/team1.svg';
+import Member2 from '../assets/public/team2.svg';
+import Member3 from '../assets/public/team3.svg';
+import Member4 from '../assets/public/team4.svg';
+import Member5 from '../assets/public/team5.svg';
+import Member6 from '../assets/public/team6.svg';
+import Member7 from '../assets/public/team7.svg';
+import Member8 from '../assets/public/team8.svg';
 
 const values = [
   {
     icon: Shield,
-    title: "Security First",
+    title: 'Security First',
     description:
-      "Your funds are protected with blockchain technology and backed by stablecoins for maximum security.",
+      'Your funds are protected with blockchain technology and backed by stablecoins for maximum security.',
   },
   {
     icon: Target,
-    title: "Goal-Oriented",
+    title: 'Goal-Oriented',
     description:
-      "We help you set and achieve your financial goals with structured savings plans and expert guidance.",
+      'We help you set and achieve your financial goals with structured savings plans and expert guidance.',
   },
   {
     icon: Users,
-    title: "Community Driven",
+    title: 'Community Driven',
     description:
-      "Join thousands of Nigerians building better financial futures together through SavFi.",
+      'Join thousands of Nigerians building better financial futures together through SavFi.',
   },
   {
     icon: TrendingUp,
-    title: "Growth Focused",
+    title: 'Growth Focused',
     description:
       "We're committed to helping you grow your wealth with competitive interest rates and smart savings strategies.",
   },
@@ -157,43 +157,43 @@ const AboutPage = () => {
             <div className="grid md:w-[80%] mx-auto justify-center items-center md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 {
-                  name: "Elijah Tom",
-                  role: "Co-Founder",
+                  name: 'Elijah Tom',
+                  role: 'Co-Founder',
                   image: Member1,
                 },
                 {
-                  name: "Jolly Akeju",
-                  role: "Product Designer",
+                  name: 'Jolly Akeju',
+                  role: 'Product Designer',
                   image: Member2,
                 },
                 {
-                  name: "Adewale Adesanya",
-                  role: "Frontend Engineer",
+                  name: 'Adewale Adesanya',
+                  role: 'Frontend Engineer',
                   image: Member3,
                 },
                 {
-                  name: "Abolaji Oladokun",
-                  role: "Product Designer",
+                  name: 'Abolaji Oladokun',
+                  role: 'Product Designer',
                   image: Member4,
                 },
                 {
-                  name: "Bianca Onovo",
-                  role: "Product Manager",
+                  name: 'Bianca Onovo',
+                  role: 'Product Manager',
                   image: Member5,
                 },
                 {
-                  name: "Chidera Umeji",
-                  role: "Product Manager",
+                  name: 'Chidera Umeji',
+                  role: 'Product Manager',
                   image: Member6,
                 },
                 {
-                  name: "Isaac Sopulu",
-                  role: "Backend Engineer",
+                  name: 'Isaac Sopulu',
+                  role: 'Backend Engineer',
                   image: Member7,
                 },
                 {
-                  name: "Peter Yeboah",
-                  role: "Frontend Engineer",
+                  name: 'Peter Yeboah',
+                  role: 'Frontend Engineer',
                   image: Member8,
                 },
               ].map((member, index) => (
