@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useState, useEffect } from "react";
 import { sidebarItems } from "../../data/sidebar";
-import type { SidebarProps } from "../../interfaces";
+import type { SidebarProps } from "../../interfaces/index";
 import logo from "../../assets/SavFi-logo.png";
 import user from "../../assets/menu/profile.png";
 import Profile from "../../pages/Profile";

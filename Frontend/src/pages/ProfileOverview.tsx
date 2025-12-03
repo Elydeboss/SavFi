@@ -1,11 +1,9 @@
 import { ChevronRight, PlusCircle } from "lucide-react";
-import profileImg from "../assets/menu/profileImg.png";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { set } from "zod";
 
 export default function ProfileOverview() {
   const [firstName, setFirstName] = useState("");
@@ -17,6 +15,7 @@ export default function ProfileOverview() {
 
   useEffect(() => {
     fetchProfile();
+    console.log(fetchProfile);
   }, []);
 
   const fetchProfile = async () => {

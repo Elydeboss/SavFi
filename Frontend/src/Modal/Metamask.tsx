@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function connectWallet() {
   const [walletAddress, setWalletAddress] = useState("");
-  const [setContract] = useState<Contract | null>(null);
+  const [contract, setContract] = useState<Contract | null>(null);
   const navigate = useNavigate();
 
   // Connect Wallet
@@ -35,6 +35,9 @@ function connectWallet() {
     const instance = new ethers.Contract(CONTRACT_ADDRESS, savefiABI, signer);
 
     setContract(instance);
+    if (contract) {
+      console.log("");
+    }
   };
 
   return (

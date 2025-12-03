@@ -8,11 +8,14 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
-import { NavbarProps } from "../../interfaces/index";
 import { NotificationPanel } from "./NotificationPanel";
 import type { Notification } from "./NotificationPanel";
 import { HelpCircle, LogOut } from "lucide-react";
 import { toast } from "sonner";
+
+type NavbarProps = {
+  title: string;
+};
 
 const Navbar: React.FC<NavbarProps> = ({ title }) => {
   const navigate = useNavigate();
