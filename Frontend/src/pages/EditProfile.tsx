@@ -171,7 +171,7 @@ export default function EditProfile() {
                         <div className="h-20 w-20 rounded-full bg-primary text-white overflow-hidden flex items-center justify-center text-3xl font-semibold">
                           {avatar ? (
                             <img
-                              src={avatar}
+                              src={`${API_BASE}${avatar}`}
                               className="h-full w-full object-cover"
                             />
                           ) : (
