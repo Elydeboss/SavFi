@@ -3,6 +3,9 @@ import { Sparkles, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useUserProfile } from "../../contexts/UserProfileContext";
 
+// BACKEND URL
+const API_BASE = "https://wallet-api-55mt.onrender.com";
+
 interface WelcomeModalProps {
   onComplete: () => void;
 }
@@ -32,7 +35,7 @@ const WelcomeModal = ({ onComplete }: WelcomeModalProps) => {
       formData.append("first_name", firstName);
       formData.append("second_name", lastName);
 
-      const response = await fetch("/api/accounts/profile/", {
+      const response = await fetch(`${API_BASE}/accounts/profile/`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${authToken}`,
