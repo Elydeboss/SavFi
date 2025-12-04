@@ -6,6 +6,8 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
+// BACKEND URL
+const API_BASE = "https://wallet-api-55mt.onrender.com";
 
 interface UserProfile {
   first_name: string;
@@ -19,12 +21,21 @@ interface UserProfile {
   avatar: string;
 }
 
+interface Wallet {
+  id: string;
+  owner: string;
+  addresses: string[];
+  balance: number;
+}
+
 interface UserProfileContextType {
   profile: UserProfile | null;
+  wallet: Wallet | null;
   isLoading: boolean;
   updateProfile: (newProfile: Partial<UserProfile>) => void;
-  clearProfile: () => void;
   refreshProfile: () => Promise<void>;
+  clearProfile: () => void;
+  setWallet: (wallet: Wallet | null) => void;
 }
 
 const defaultProfile: UserProfile = {
@@ -63,6 +74,17 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
       second_name: localStorage.getItem("secondName") || "",
     };
   });
+  const [wallet, setWalletState] = useState<Wallet | null>(() => {
+    const cached = localStorage.getItem("userWallet");
+    if (cached) {
+      try {
+        return JSON.parse(cached);
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchProfile = useCallback(async () => {
@@ -71,7 +93,7 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
 
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/accounts/profile/`, {
+      const response = await fetch(`${API_BASE}/accounts/profile/`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -112,16 +134,19 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const clearProfile = useCallback(() => {
-    // Clear profile from state and localStorage
     setProfile(null);
+    setWalletState(null);
     localStorage.removeItem("userProfile");
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("username");
-    localStorage.removeItem("email");
-    localStorage.removeItem("fullName");
-    localStorage.removeItem("profileCompleted");
-    localStorage.removeItem("isNewUser");
+    localStorage.removeItem("userWallet");
+  }, []);
+
+  const setWallet = useCallback((newWallet: Wallet | null) => {
+    setWalletState(newWallet);
+    if (newWallet) {
+      localStorage.setItem("userWallet", JSON.stringify(newWallet));
+    } else {
+      localStorage.removeItem("userWallet");
+    }
   }, []);
 
   const refreshProfile = useCallback(async () => {
@@ -132,8 +157,6 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
     const authToken = localStorage.getItem("authToken");
     if (authToken) {
       fetchProfile();
-    } else {
-      setProfile(null);
     }
   }, [fetchProfile]);
 
@@ -141,10 +164,12 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
     <UserProfileContext.Provider
       value={{
         profile,
+        wallet,
         isLoading,
         updateProfile,
-        clearProfile,
         refreshProfile,
+        clearProfile,
+        setWallet,
       }}
     >
       {children}
