@@ -1,7 +1,7 @@
 import Breadcrumb from "../components/Breadcrumb";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { Camera } from "lucide-react";
+// import { Camera } from "lucide-react";
 import { useUserProfile } from "../contexts/UserProfileContext";
 
 // BACKEND URL
@@ -37,11 +37,11 @@ export default function EditProfile() {
     }
   }, [profile]);
 
-  const handleAvatarClick = () => {
+  /* const handleAvatarClick = () => {
     fileInputRef.current?.click();
-  };
+  }; */
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  /* const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -58,7 +58,7 @@ export default function EditProfile() {
     };
     reader.readAsDataURL(file);
   };
-
+ */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -181,7 +181,7 @@ export default function EditProfile() {
                               "U"
                             ).toUpperCase()
                           )}
-                          <button
+                          {/* <button
                             type="button"
                             onClick={handleAvatarClick}
                             disabled={isLoading}
@@ -195,7 +195,7 @@ export default function EditProfile() {
                             accept="image/*"
                             onChange={handleFileChange}
                             className="hidden"
-                          />
+                          /> */}
                         </div>
                       </div>
                     </div>
