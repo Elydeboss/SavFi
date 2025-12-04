@@ -6,6 +6,7 @@ import Cubes from "../assets/referral/3dcube.svg";
 import Gift from "../assets/referral/gift.svg";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import Navbar from "../components/dashboard/Navbar";
+import { useUserProfile } from "../contexts/UserProfileContext";
 
 type FaqItem = {
   id: string;
@@ -61,6 +62,7 @@ const Referrals = () => {
   const [openFaqId, setOpenFaqId] = useState<string | null>("what-is");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [toastVisible, setToastVisible] = useState(false);
+  const { profile } = useUserProfile();
 
   const toggleFaq = (id: string) => {
     setOpenFaqId((current) => (current === id ? null : id));
@@ -82,6 +84,13 @@ const Referrals = () => {
       }, 2000);
     }
   };
+
+  const referralCode = profile?.username
+    ? profile.username.toUpperCase()
+    : "SAVEFIUSER";
+  const referralLink = `https://savefi.com/invite/${
+    profile?.username || "savefiuser"
+  }`;
 
   return (
     <div className="min-h-screen  dark:bg-gray-600 dark:text-white">
@@ -110,12 +119,10 @@ const Referrals = () => {
                 </p>
                 <div className="flex items-center gap-2 rounded-lg bg-neutral-200 dark:bg-gray-600 px-3 py-2.5 text-xs text-black-text">
                   <span className="truncate font-medium dark:text-white">
-                    https://savefi.com/invite/jolly2025
+                    {referralLink}
                   </span>
                   <button
-                    onClick={() =>
-                      copyToClipboard("https://savefi.com/invite/jolly2025")
-                    }
+                    onClick={() => copyToClipboard(referralLink)}
                     className="cursor-pointer ml-auto"
                     aria-label="Copy referral link"
                   >
@@ -149,10 +156,10 @@ const Referrals = () => {
                 </p>
                 <div className="flex items-center gap-2 rounded-lg  bg-neutral-200 dark:bg-gray-600 px-3 py-2.5 text-xs text-black-text">
                   <span className="font-semibold dark:text-white">
-                    JOLLY2025
+                    {referralCode}
                   </span>
                   <button
-                    onClick={() => copyToClipboard("JOLLY2025")}
+                    onClick={() => copyToClipboard(`${referralCode}`)}
                     className="cursor-pointer ml-auto"
                     aria-label="Copy referral code"
                   >
