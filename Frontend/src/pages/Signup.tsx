@@ -7,6 +7,7 @@ import Logo from "../assets/public/logo-dark.svg";
 import Logo2 from "../assets/SavFi-logo.png";
 import Wallets from "../Modal/Metamask";
 import { useUserProfile } from "../contexts/UserProfileContext";
+import { v4 as uuidv4 } from "uuid";
 
 const API_BASE = "https://wallet-api-55mt.onrender.com";
 
@@ -23,6 +24,9 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { clearProfile, refreshProfile, setWallet } = useUserProfile();
+  const walletAddress = uuidv4();
+
+  console.log(walletAddress);
 
   const navigate = useNavigate();
 
@@ -58,6 +62,7 @@ export default function Signup() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
+      console.log("Login REQ:", { username, password });
 
       console.log("LOGIN RES:", loginRes);
 
@@ -85,7 +90,7 @@ export default function Signup() {
         },
         body: JSON.stringify({
           owner: loginData.username || "defaultUser",
-          address: [],
+          address: [walletAddress],
           idempotency_key: `wallet-${Date.now()}-${loginData.username}`,
         }),
       });
