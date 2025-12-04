@@ -6,6 +6,7 @@ import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
 import Logo2 from "../assets/SavFi-logo.png";
 import Wallets from "../Modal/Metamask";
+import { useUserProfile } from "../contexts/UserProfileContext";
 
 const API_BASE = "https://wallet-api-55mt.onrender.com";
 
@@ -21,6 +22,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { clearProfile, refreshProfile, setWallet } = useUserProfile();
 
   const navigate = useNavigate();
 
@@ -30,6 +32,8 @@ export default function Signup() {
     try {
       const validated = registerSchema.parse({ username, email, password });
       setIsLoading(true);
+
+      clearProfile();
 
       // REGISTER
       const registerRes = await fetch(`${API_BASE}/accounts/register/`, {
@@ -76,14 +80,28 @@ export default function Signup() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
+        body: JSON.stringify({
+          owner: loginData.username,
+          address: [],
+          idempotency_key: `wallet-${Date.now()}-${loginData.username}`,
+        }),
       });
 
-      const walletData = await walletRes.json().catch(() => null);
+      const walletData = await walletRes.json();
       console.log("WALLET:", walletData);
 
       if (walletRes.ok && walletData?.address) {
         localStorage.setItem("walletAddress", walletData.address);
+        setWallet(walletData);
+      } else {
+        toast.error("Wallet creation failed");
+        console.error("Wallet creation error:", walletData);
       }
+
+      localStorage.setItem("isNewUser", "true");
+      localStorage.removeItem("profileCompleted");
+
+      await refreshProfile();
 
       toast.success("Account created!");
       navigate("/dashboard");
