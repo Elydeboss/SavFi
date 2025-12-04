@@ -30,7 +30,7 @@ const CTA = () => {
               </p>
 
               <Link
-                to="/register"
+                to="/signup"
                 className="flex sm:flex-row gap-4 justify-center"
               >
                 <button className="bg-white flex items-center font-semibold text-primary py-2.5 cursor-pointer rounded-full hover:bg-white/90 transition-opacity px-10 shadow-lg">

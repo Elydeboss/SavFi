@@ -43,7 +43,7 @@ const DashBoardShowcase = () => {
               </li>
             </ul>
 
-            <Link to="/register" className="mt-10 flex flex-wrap gap-4">
+            <Link to="/signup" className="mt-10 flex flex-wrap gap-4">
               <button className="px-10 py-3 cursor-pointer rounded-full bg-primary text-light font-semibold shadow-lg hover:bg-primary/90 transition">
                 Get Started
               </button>

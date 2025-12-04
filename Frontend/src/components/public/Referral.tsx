@@ -23,7 +23,7 @@ const Referral = () => {
               </p>
 
               <Link
-                to="/register"
+                to="/signup"
                 className="flex justify-center items-center md:justify-start"
               >
                 <button className="bg-white flex items-center justify-center md:justify-start cursor-pointer rounded-full font-semibold py-2.5 text-primary hover:bg-white/90 transition-opacity px-8">
