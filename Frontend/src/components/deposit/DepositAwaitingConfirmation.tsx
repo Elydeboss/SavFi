@@ -1,5 +1,5 @@
-import React from "react";
-import awaiting from "../../assets/menu/awaiting.png";
+import React from 'react';
+import awaiting from '../../assets/menu/awaiting.png';
 
 // --- Type Definitions ---
 type DepositAwaitingConfirmationProps = {
@@ -23,7 +23,7 @@ const DepositModalWrapper: React.FC<DepositModalWrapperProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-40 transition-opacity"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4  bg-opacity-40 transition-opacity"
       role="dialog"
       aria-modal="true"
       aria-labelledby="awaiting-title"
@@ -72,7 +72,7 @@ export default function DepositAwaitingConfirmation({
         <div className="flex flex-col gap-3 w-full">
           <button
             onClick={onRefresh}
-            className="w-full h-11 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold transition duration-150 shadow-md"
+            className="w-full h-11 rounded-full bg-blue hover:opacity-85 text-white font-semibold transition duration-150 shadow-md"
           >
             Refresh status
           </button>
