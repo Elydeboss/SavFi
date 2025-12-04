@@ -6,6 +6,7 @@ import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
 import Logo2 from "../assets/SavFi-logo.png";
 import WalletConnector from "../Modal/Metamask";
+import { useUserProfile } from "../contexts/UserProfileContext";
 
 // BACKEND URL
 const API_BASE = "https://wallet-api-55mt.onrender.com";
@@ -21,6 +22,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { clearProfile, refreshProfile, setWallet } = useUserProfile();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +30,9 @@ export default function Login() {
     try {
       const validated = loginSchema.parse({ username, password });
       setIsLoading(true);
+
+      // Clear any existing profile data
+      clearProfile();
 
       const response = await fetch(`${API_BASE}/accounts/login/`, {
         method: "POST",
@@ -43,10 +48,35 @@ export default function Login() {
         // save jwt tokens
         localStorage.setItem("authToken", data.access);
         localStorage.setItem("refreshToken", data.refresh);
+        localStorage.setItem("username", data.username || username);
+        localStorage.setItem("email", data.email || "");
 
-        // Save additional data
-        if (data.username) localStorage.setItem("username", data.username);
-        if (data.email) localStorage.setItem("email", data.email);
+        localStorage.removeItem("isNewUser");
+
+        try {
+          const walletResponse = await fetch(`${API_BASE}/accounts/wallet/`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${data.access}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (walletResponse.ok) {
+            const walletData = await walletResponse.json();
+            const wallet = Array.isArray(walletData)
+              ? walletData[0]
+              : walletData;
+            if (wallet) {
+              setWallet(wallet);
+            }
+          }
+        } catch (walletError) {
+          console.error("Error fetching wallet:", walletError);
+        }
+
+        // Refresh user profile
+        await refreshProfile();
 
         toast.success("Login successful!");
         navigate("/dashboard");
