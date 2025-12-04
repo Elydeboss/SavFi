@@ -4,7 +4,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
-import { useUserProfile } from "../contexts/UserProfileContext";
 import WalletConnector from "../Modal/Metamask";
 
 // BACKEND URL
@@ -16,7 +15,6 @@ const loginSchema = z.object({
 });
 
 export default function Login() {
-  const { updateProfile } = useUserProfile();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -41,26 +39,13 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
+        // save jwt tokens
         localStorage.setItem("authToken", data.access);
         localStorage.setItem("refreshToken", data.refresh);
-<<<<<<< HEAD
-        localStorage.setItem("username", data.username || username);
-        localStorage.setItem("email", data.email || "");
 
-        // Clear new user flag on login (existing users)
-        // localStorage.removeItem("isNewUser");
-
-        updateProfile({
-          username: data.username,
-          email: data.email,
-          first_name: data.first_name,
-          second_name: data.second_name,
-          avatar: data.avatar,
-        });
-=======
+        // Save additional data
         if (data.username) localStorage.setItem("username", data.username);
         if (data.email) localStorage.setItem("email", data.email);
->>>>>>> 9a97a235e2b663385c612765853129a9786343f3
 
         toast.success("Login successful!");
         navigate("/dashboard");
@@ -81,24 +66,24 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col lg:flex-row">
+    <div className="flex min-h-screen">
       {/* LEFT SIDE */}
-      <div className="hidden lg:flex w-full lg:w-1/2 bg-linear-to-br from-primary via-blue-600 to-blue-800 p-6 sm:p-12 flex-col justify-between">
+      <div className="hidden w-1/2 bg-linear-to-br from-primary via-blue-600 to-blue-800 p-12 lg:flex flex-col justify-between">
         <div className="flex items-center gap-3">
           <Link to="/">
             <img
               src={Logo}
               alt="SaveFi Logo"
-              className="h-20 w-20 cursor-pointer"
+              className="h-30 w-30 cursor-pointer"
             />
           </Link>
         </div>
 
-        <div className="max-w-lg">
-          <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight">
+        <div className="max-w-md">
+          <h1 className="text-4xl font-bold text-white">
             Save Smarter, Grow Faster
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-white/80">
+          <p className="mt-4 text-lg text-white/80">
             Join thousands of users who trust SaveFi.
           </p>
         </div>
@@ -107,24 +92,21 @@ export default function Login() {
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex w-full lg:w-1/2 items-center justify-center p-6 sm:p-8">
+      <div className="flex w-full items-center justify-center p-8 lg:w-1/2">
         <div className="w-full max-w-md space-y-8">
-          {/* Mobile Logo */}
           <div className="text-center lg:hidden">
             <Link to="/">
               <img
                 src={Logo}
                 alt="SaveFi Logo"
-                className="h-16 w-16 cursor-pointer mx-auto"
+                className="h-25 w-25 cursor-pointer"
               />
             </Link>
           </div>
 
           <div className="text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold">Welcome back</h2>
-            <p className="mt-2 text-gray-500 text-sm sm:text-base">
-              Sign in to continue
-            </p>
+            <h2 className="text-3xl font-bold">Welcome back</h2>
+            <p className="mt-2 text-gray-500">Sign in to continue</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -137,7 +119,7 @@ export default function Login() {
                 value={username}
                 disabled={isLoading}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full rounded-full bg-blue-50 px-5 sm:px-6 py-3 focus:ring-2 focus:ring-primary"
+                className="w-full rounded-full bg-blue-50 px-6 py-3 focus:ring-2 focus:ring-primary"
               />
             </div>
 
@@ -151,7 +133,7 @@ export default function Login() {
                   value={password}
                   disabled={isLoading}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-full bg-blue-50 px-5 sm:px-6 py-3 focus:ring-2 focus:ring-primary"
+                  className="w-full rounded-full bg-blue-50 px-6 py-3 focus:ring-2 focus:ring-primary"
                 />
 
                 <button
@@ -172,7 +154,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full rounded-full bg-primary text-white font-semibold px-4 py-3 text-sm sm:text-base"
+              className="w-full rounded-full bg-primary text-white font-semibold px-4 py-2.5"
             >
               {isLoading ? "Signing in..." : "Sign in"}
             </button>
