@@ -243,7 +243,7 @@ export default function EditProfile() {
 
                     <div className="space-y-1">
                       <label className="text-sm font-medium">Email</label>
-                      <label className="text-sm font-medium">Email</label>
+
                       <input
                         disabled
                         type="email"

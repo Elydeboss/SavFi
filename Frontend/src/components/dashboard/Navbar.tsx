@@ -204,7 +204,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
                 )}
               </div>
 
-              <div className="mr-12">
+              <div className="">
                 <ThemeToggle />
               </div>
             </>
