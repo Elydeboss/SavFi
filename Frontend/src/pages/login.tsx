@@ -22,7 +22,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { clearProfile, refreshProfile, setWallet } = useUserProfile();
+  const { clearProfile, refreshProfile } = useUserProfile();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,28 +52,6 @@ export default function Login() {
         localStorage.setItem("email", data.email || "");
 
         localStorage.removeItem("isNewUser");
-
-        try {
-          const walletResponse = await fetch(`${API_BASE}/accounts/wallet/`, {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${data.access}`,
-              "Content-Type": "application/json",
-            },
-          });
-
-          if (walletResponse.ok) {
-            const walletData = await walletResponse.json();
-            const wallet = Array.isArray(walletData)
-              ? walletData[0]
-              : walletData;
-            if (wallet) {
-              setWallet(wallet);
-            }
-          }
-        } catch (walletError) {
-          console.error("Error fetching wallet:", walletError);
-        }
 
         // Refresh user profile
         await refreshProfile();

@@ -22,7 +22,7 @@ import Tree from "../assets/public/tabler_growth.svg";
 import { useUserProfile } from "../contexts/UserProfileContext";
 
 // BACKEND URL
-const API_BASE = "https://wallet-api-55mt.onrender.com";
+//const API_BASE = "https://wallet-api-55mt.onrender.com";
 
 type PlanType = "FlexFi" | "GrowFi" | "VaultFi" | "SwiftFi";
 
@@ -82,7 +82,7 @@ function toSavingPlanCardProps(p: DisplayPlan) {
 
 const DashboardHome = () => {
   const navigate = useNavigate();
-  const { profile, wallet, setWallet, refreshProfile } = useUserProfile();
+  const { profile, refreshProfile } = useUserProfile();
   const [showBalance, setShowBalance] = useState(true);
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
@@ -99,14 +99,6 @@ const DashboardHome = () => {
   const [totalBalance, setTotalBalance] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
-
-  // Format wallet address for display
-  const formattedAddress = (address: string) => {
-    if (address.length <= 10) return address;
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
-  };
-
-  const walletAddress = wallet?.addresses?.[0] || wallet?.id || "";
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
@@ -126,35 +118,9 @@ const DashboardHome = () => {
       setShowWelcomeModal(false);
     }
 
-    // Fetch wallet if not in context
-    const fetchWallet = async () => {
-      if (!wallet) {
-        try {
-          const response = await fetch(`${API_BASE}/accounts/wallets/`, {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-              "Content-Type": "application/json",
-            },
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            const walletData = Array.isArray(data) ? data[0] : data;
-            if (walletData) {
-              setWallet(walletData);
-            }
-          }
-        } catch (error) {
-          console.error("Error fetching wallet:", error);
-        }
-      }
-    };
-
-    fetchWallet();
     initializeDisplayPlans();
     setIsLoading(false);
-  }, [navigate, profile, wallet, setWallet]);
+  }, [navigate, profile]);
 
   const initializeDisplayPlans = () => {
     // For now, show all 4 plans in 0% state (fresh account)
@@ -307,11 +273,7 @@ const DashboardHome = () => {
                   ).toFixed(2)}`}</p>
 
                   <div className="flex items-center gap-2">
-                    <span className="text-xs ">
-                      {walletAddress
-                        ? formattedAddress(walletAddress)
-                        : "No wallet"}
-                    </span>
+                    <span className="text-xs ">0x1A2b...c4D0</span>
                     <button
                       onClick={() => copyToClipboard("0x1A2b...c4D0")}
                       className="p-1 hover:bg-light/20 cursor-pointer rounded transition-colors"
