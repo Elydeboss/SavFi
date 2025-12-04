@@ -130,7 +130,7 @@ const DashboardHome = () => {
     const fetchWallet = async () => {
       if (!wallet) {
         try {
-          const response = await fetch(`${API_BASE}/accounts/wallet/info`, {
+          const response = await fetch(`${API_BASE}/wallet/info`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${authToken}`,

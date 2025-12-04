@@ -86,7 +86,7 @@ const Navigation = () => {
                     Sign In
                   </button>
                 </Link>
-                <Link to="/login">
+                <Link to="/signup">
                   <button className="w-full py-2.5 font-semibold cursor-pointer rounded-full text-white bg-blue hover:opacity-90 transition-opacity">
                     Get Started
                   </button>
