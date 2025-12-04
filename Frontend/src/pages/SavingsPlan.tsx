@@ -113,7 +113,7 @@ const SavingsPlan = () => {
         </div>
 
         {/* Your Plans Section */}
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-6 flex flex-col gap-4 md:flex-row items-center justify-between">
           <h2 className="text-xl font-bold text-foreground mb-4">Your plans</h2>
 
           {/* Plan Tabs */}
@@ -146,11 +146,25 @@ const SavingsPlan = () => {
         </div>
 
         {/* Plans Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-          {filteredPlans.map((plan, index) => (
-            <SavingsPlanCard key={plan.id} plan={plan} delay={index * 0.05} />
-          ))}
-        </div>
+        {filteredPlans.length === 0 ? (
+          <div className="flex flex-col items-center justify-center w-full py-16 border border-dashed border-gray-300 dark:border-gray-600 rounded-xl text-center mb-12">
+            <p className="text-lg font-semibold text-muted-foreground mb-4">
+              You don’t have any savings plans yet
+            </p>
+            <button
+              onClick={() => navigate("/savings/new")}
+              className="bg-blue hover:bg-blue/90 px-7 font-semibold py-3 rounded-3xl text-white cursor-pointer shadow-md"
+            >
+              Start new plan
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+            {filteredPlans.map((plan, index) => (
+              <SavingsPlanCard key={plan.id} plan={plan} delay={index * 0.05} />
+            ))}
+          </div>
+        )}
 
         {/* Bottom CTA */}
         <div className="flex flex-col w-full bg-[#EEF0F2] dark:bg-gray-700 dark:text-white border border-[#D0D3D6] rounded-xl items-center justify-center py-6 text-center mb-15">
