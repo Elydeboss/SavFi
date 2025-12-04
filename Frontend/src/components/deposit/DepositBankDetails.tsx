@@ -24,7 +24,7 @@ export default function DepositBankDetails({
 
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5 md:p-8 border border-border">
         <button
-          className="text-muted-foreground text-sm mb-5 flex items-center -ml-5 cursor-pointer"
+          className="text-muted-foreground text-medium mb-5 flex items-center -ml-4 cursor-pointer"
           onClick={() => onCancel?.()}
         >
           <ChevronLeft /> Back
