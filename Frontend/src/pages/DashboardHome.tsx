@@ -40,8 +40,8 @@ interface DisplayPlan {
 }
 
 const PLAN_CONFIGS = {
-  FlexFi: { duration: "4 months plan", interestDisplay: "+3% interest" },
-  GrowFi: { duration: "6 months plan", interestDisplay: "+7% interest" },
+  FlexFi: { duration: "4 months plan", interestDisplay: "+2% interest" },
+  GrowFi: { duration: "6 months plan", interestDisplay: "+4% interest" },
   VaultFi: { duration: "1 year plan", interestDisplay: "+8% interest" },
   SwiftFi: { duration: "", interestDisplay: "+0% interest" },
 };
