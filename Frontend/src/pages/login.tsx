@@ -54,7 +54,7 @@ export default function Login() {
         localStorage.removeItem("isNewUser");
 
         try {
-          const walletResponse = await fetch(`${API_BASE}/accounts/wallet/`, {
+          const walletResponse = await fetch(`${API_BASE}/accounts/wallets/`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${data.access}`,
