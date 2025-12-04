@@ -89,7 +89,7 @@ export default function Signup() {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-          owner: loginData.username || "defaultUser",
+          owner: loginData.username,
           address: [walletAddress],
           idempotency_key: `wallet-${Date.now()}-${loginData.username}`,
         }),
