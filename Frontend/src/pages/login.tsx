@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
+import Logo2 from "../assets/SavFi-logo.png";
 import WalletConnector from "../Modal/Metamask";
 
 // BACKEND URL
@@ -95,11 +96,11 @@ export default function Login() {
       <div className="flex w-full items-center justify-center p-8 lg:w-1/2">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center lg:hidden">
-            <Link to="/">
+            <Link to="/" className=" flex justify-center mb-6">
               <img
-                src={Logo}
+                src={Logo2}
                 alt="SaveFi Logo"
-                className="h-25 w-25 cursor-pointer"
+                className="w-25 cursor-pointer"
               />
             </Link>
           </div>

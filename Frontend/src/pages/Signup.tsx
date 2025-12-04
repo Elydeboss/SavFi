@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
+import Logo2 from "../assets/SavFi-logo.png";
 import Wallets from "../Modal/Metamask";
 
 const API_BASE = "https://wallet-api-55mt.onrender.com";
@@ -97,7 +98,7 @@ export default function Signup() {
   return (
     <div className="flex min-h-screen flex-col lg:flex-row">
       {/* LEFT SIDE (hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-blue-600 to-blue-800 p-6 sm:p-12 flex-col justify-between">
+      <div className="hidden lg:flex lg:w-1/2 bg-linear-to-br from-primary via-blue-600 to-blue-800 p-6 sm:p-12 flex-col justify-between">
         <Link to="/" className="flex items-center gap-3">
           <img src={Logo} alt="SaveFi Logo" className="h-20 w-20" />
         </Link>
@@ -121,8 +122,12 @@ export default function Signup() {
         <div className="w-full max-w-md space-y-8">
           {/* MOBILE LOGO */}
           <div className="lg:hidden flex justify-center mb-2">
-            <Link to="/">
-              <img src={Logo} alt="SaveFi Logo" className="h-20 w-auto" />
+            <Link to="/" className=" flex justify-center mb-6">
+              <img
+                src={Logo2}
+                alt="SaveFi Logo"
+                className="w-25 cursor-pointer"
+              />
             </Link>
           </div>
 
