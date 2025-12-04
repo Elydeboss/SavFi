@@ -59,8 +59,11 @@ export default function Signup() {
         body: JSON.stringify({ username, password }),
       });
 
+      console.log("LOGIN RES:", loginRes);
+
       const loginData = await loginRes.json();
       console.log("LOGIN:", loginData);
+      console.log(loginData.username);
 
       if (!loginRes.ok) {
         toast.error("Login failed after registration");
@@ -81,7 +84,7 @@ export default function Signup() {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-          owner: loginData.username,
+          owner: loginData.username || "defaultUser",
           address: [],
           idempotency_key: `wallet-${Date.now()}-${loginData.username}`,
         }),

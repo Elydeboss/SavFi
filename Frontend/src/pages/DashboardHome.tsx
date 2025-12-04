@@ -217,8 +217,10 @@ const DashboardHome = () => {
               Lock in. Level up.
             </span>
           </h2>
-          {userEmail && (
+          {userEmail ? (
             <p className="text-sm text-muted-foreground">{userEmail}</p>
+          ) : (
+            ""
           )}
         </div>
 
