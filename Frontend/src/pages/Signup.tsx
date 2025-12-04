@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
+import Metawallet from "../Modal/Metamask";
 
 const registerSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters").max(50),
@@ -22,12 +23,11 @@ export default function Signup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const validated = registerSchema.parse({ username, email, password });
       setIsLoading(true);
 
-      const response = await fetch("/api/accounts/register/", {
+      const response = await fetch("/accounts/register/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,11 +35,20 @@ export default function Signup() {
         body: JSON.stringify(validated),
       });
 
-      const data = await response.json();
+      const raw = await response.text();
+      console.log("REGISTER RAW RESPONSE:", raw);
+
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        toast.error("Server returned invalid data for registration");
+        return;
+      }
 
       if (response.status === 201) {
         // Auto-login after successful registration
-        const loginResponse = await fetch("/api/accounts/login/", {
+        const loginResponse = await fetch("/accounts/login/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -47,7 +56,16 @@ export default function Signup() {
           body: JSON.stringify({ username, password }),
         });
 
-        const loginData = await loginResponse.json();
+        const loginRaw = await loginResponse.text();
+        console.log("LOGIN RAW RESPONSE:", loginRaw);
+
+        let loginData;
+        try {
+          loginData = JSON.parse(loginRaw);
+        } catch {
+          toast.error("Server returned invalid data for login");
+          return;
+        }
 
         if (loginResponse.ok) {
           // Store auth tokens and user data
@@ -59,7 +77,7 @@ export default function Signup() {
 
           // Create wallet for user
           try {
-            const walletResponse = await fetch("/api/wallets/", {
+            const walletResponse = await fetch("/wallets/", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -67,7 +85,16 @@ export default function Signup() {
               },
             });
 
-            const walletData = await walletResponse.json();
+            const walletRaw = await walletResponse.text();
+            console.log("WALLET RAW RESPONSE:", walletRaw);
+
+            let walletData;
+            try {
+              walletData = JSON.parse(walletRaw);
+            } catch {
+              console.warn("Wallet endpoint did NOT return JSON:", walletRaw);
+              return;
+            }
 
             if (walletResponse.ok) {
               localStorage.setItem("walletAddress", walletData.walletAddress);
@@ -104,10 +131,6 @@ export default function Signup() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleMetaMaskConnect = async () => {
-    toast.info("MetaMask integration coming soon!");
   };
 
   return (
@@ -254,15 +277,12 @@ export default function Signup() {
             </div>
 
             {/* MetaMask Button */}
-            <button
-              onClick={handleMetaMaskConnect}
-              className=" w-full cursor-pointer border-2 border-blue text-blue py-3 rounded-full font-medium hover:bg-blue-50 flex items-center justify-center gap-2"
-            >
+            <button className=" w-full cursor-pointer border-2 border-blue text-blue py-3 rounded-full font-medium hover:bg-blue-50 flex items-center justify-center gap-2">
               <img
                 src="https://cdn.worldvectorlogo.com/logos/metamask.svg"
                 className="w-5"
               />
-              Continue with Metamask
+              <Metawallet />
             </button>
           </form>
 

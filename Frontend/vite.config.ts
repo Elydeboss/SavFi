@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  base: "/SavFi/", // <- trailing slash is important
   plugins: [
     react({
       babel: {

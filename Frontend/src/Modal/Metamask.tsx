@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ethers, Contract } from "ethers";
 import savefiABI from "../contract/SaveFi.json";
-const CONTRACT_ADDRESS = "0xYourContractAddressHere";
+const CONTRACT_ADDRESS = "0x84eaac1b2dc3f84d92ff84c3ec205b1fa74671fc";
 import { useNavigate } from "react-router-dom";
 
 function connectWallet() {
