@@ -236,7 +236,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
             {isUserDropdownOpen && (
               <>
                 <div
-                  className="fixed inset-0 z-30"
+                  className="fixed inset-0 z-100"
                   onClick={() => setIsUserDropdownOpen(false)}
                 />
                 <div className="absolute right-0 top-full mt-6 w-80 bg-neutral-50  rounded-2xl shadow-2xl z-40 p-6">
