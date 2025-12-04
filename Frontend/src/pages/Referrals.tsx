@@ -64,6 +64,8 @@ const Referrals = () => {
   const [toastVisible, setToastVisible] = useState(false);
   const { profile } = useUserProfile();
 
+  const referralData: any[] = [];
+
   const toggleFaq = (id: string) => {
     setOpenFaqId((current) => (current === id ? null : id));
   };
@@ -359,56 +361,45 @@ const Referrals = () => {
                 </tr>
               </thead>
               <tbody className="divide-y-2 divide-slate-200 dark:divide-gray-600 bg-[#F7F8F9] dark:bg-gray-700 text-[15px]">
-                <tr className="text-sm">
-                  <td className="px-4 py-3 text-black-text dark:text-white/80">
-                    Deposit
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="inline-block text-[#27B97D] bg-[#E9F4FD] dark:bg-[#0b2718]/20 rounded-full py-1.5 px-3 text-xs font-medium">
-                      Eligible (Saved)
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="text-[#27B97D] text-sm font-medium">
-                      +0.5 SFP
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-black-text dark:text-white/80">
-                    Nov 15, 2025
-                  </td>
-                </tr>
-                <tr className="text-sm">
-                  <td className="px-4 py-3 text-black-text dark:text-white/80">
-                    Interest
-                  </td>
-                  <td className="px-4 py-3">
-                    <button className="inline-block text-xs font-medium text-[#1D85D4]  rounded-full py-1.5 px-3 bg-[#E9F4FD] dark:bg-[#0f1d28]/20">
-                      KYC completed
-                    </button>
-                  </td>
-                  <td className="px-4 py-3 text-black-text dark:text-white/80">
-                    -
-                  </td>
-                  <td className="px-4 py-3 text-black-text dark:text-white/80">
-                    Nov 15, 2025
-                  </td>
-                </tr>
-                <tr className="text-sm">
-                  <td className="px-4 py-3 text-black-text dark:text-white/80">
-                    Conversion
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="inline-flex rounded-full font-medium bg-[#EAEDEF] dark:bg-[#EAEDEF]/10 px-3 py-1.5 text-xs text-black dark:text-white/80">
-                      Registered
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-black-text dark:text-white/80">
-                    -
-                  </td>
-                  <td className="px-4 py-3 text-black-text dark:text-white/80">
-                    Nov 15, 2025
-                  </td>
-                </tr>
+                {referralData.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={4}
+                      className="px-4 py-6 text-center text-sm text-black-text dark:text-white/80"
+                    >
+                      No referrals yet — share your link to start earning SFP.
+                    </td>
+                  </tr>
+                ) : (
+                  referralData.map((ref, idx) => (
+                    <tr key={idx} className="text-sm">
+                      <td className="px-4 py-3 text-black-text dark:text-white/80">
+                        {ref.name}
+                      </td>
+                      <td className="px-4 py-3">
+                        {ref.status === "saved" ? (
+                          <span className="inline-block text-[#27B97D] bg-[#E9F4FD] dark:bg-[#0b2718]/20 rounded-full py-1.5 px-3 text-xs font-medium">
+                            Eligible (Saved)
+                          </span>
+                        ) : ref.status === "kyc" ? (
+                          <span className="inline-block text-xs font-medium text-[#1D85D4] bg-[#E9F4FD] dark:bg-[#0f1d28]/20 rounded-full py-1.5 px-3">
+                            KYC completed
+                          </span>
+                        ) : (
+                          <span className="inline-flex rounded-full font-medium bg-[#EAEDEF] dark:bg-[#EAEDEF]/10 px-3 py-1.5 text-xs text-black dark:text-white/80">
+                            Registered
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-black-text dark:text-white/80">
+                        {ref.tokens || "-"}
+                      </td>
+                      <td className="px-4 py-3 text-black-text dark:text-white/80">
+                        {ref.date}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
