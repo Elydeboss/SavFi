@@ -69,7 +69,27 @@ const SavingPlanCard = ({
   };
 
   const handleClick = () => {
-    navigate(`/plan/${name.toLowerCase()}`);
+    let route;
+
+    // Map saving plan names to routes
+    switch (name.toLowerCase()) {
+      case "flexfi":
+        route = "/savings/flexfi/create"; // Add the route for FlexFi plan
+        break;
+      case "growfi":
+        route = "/savings/growfi/create"; // Add the route for GrowFi plan
+        break;
+      case "vaultfi":
+        route = "/savings/vaultfi/create"; // Add the route for VaultFi plan
+        break;
+      case "swiftfi":
+        route = "/savings/swiftfi"; // Add the route for SwiftFi plan
+        break;
+      default:
+        route = `/savings/${name.toLowerCase()}`; // Fallback to default route
+    }
+
+    navigate(route);
   };
 
   return (

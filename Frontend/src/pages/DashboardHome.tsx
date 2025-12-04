@@ -94,7 +94,7 @@ const DashboardHome = () => {
   } | null>(null);
 
   const userName = profile?.first_name || profile?.username || "User";
-  const userEmail = profile?.email || "";
+  // const userEmail = profile?.email || "";
   const [displayPlans, setDisplayPlans] = useState<DisplayPlan[]>([]);
   const [totalBalance, setTotalBalance] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -217,11 +217,6 @@ const DashboardHome = () => {
               Lock in. Level up.
             </span>
           </h2>
-          {userEmail ? (
-            <p className="text-sm text-muted-foreground">{userEmail}</p>
-          ) : (
-            ""
-          )}
         </div>
 
         <div className="mb-6 p-4 bg-[#FFF7EE] border border-[#FFAE58] dark:bg-gray-700 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
