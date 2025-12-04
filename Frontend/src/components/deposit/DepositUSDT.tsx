@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-
+import { ChevronLeft } from 'lucide-react';
 const walletAddress = '0x1A2b25dbduF4DSinciNHC3D4';
 
 export default function DepositUSDT({
@@ -22,9 +22,9 @@ export default function DepositUSDT({
     <div className="max-w-xl mx-auto px-4 py-6 text-foreground">
       <button
         onClick={onBack}
-        className="text-blue  text-sm font-medium cursor-pointer"
+        className="text-blue  text-medium font-medium flex items-center cursor-pointer"
       >
-        ← Back
+        <ChevronLeft /> Back
       </button>
       {/* Header */}
       <div className="flex flex-col items-center gap-2 mb-6">
