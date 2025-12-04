@@ -110,7 +110,7 @@ const SavingsPlans = () => {
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-blue text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
+                    <span className="bg-[#27B97D] text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
                       Most Popular
                     </span>
                   </div>
@@ -144,7 +144,9 @@ const SavingsPlans = () => {
                 <ul className="space-y-3 mb-6">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                      <Check
+                        className={`w-5 h-5 ${plan.textColor} shrink-0 mt-0.5`}
+                      />
                       <span className="text-sm text-foreground/80">
                         {feature}
                       </span>

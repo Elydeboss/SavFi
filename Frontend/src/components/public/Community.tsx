@@ -90,7 +90,7 @@ const Community = () => {
               <p className="text-muted-foreground">
                 Join thousands of Nigerians saving smarter with SaveFi
               </p>
-              <Link to="/register">
+              <Link to="/signup">
                 <button className="bg-primary mt-4 inline-flex items-center font-semibold text-white py-2.5 cursor-pointer rounded-full hover:bg-primary/90 transition-opacity px-10 shadow-lg">
                   Get Started
                   <ArrowRight className="ml-2 w-5 h-5" />

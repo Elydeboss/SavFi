@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
+import { useUserProfile } from "../contexts/UserProfileContext";
 import WalletConnector from "../Modal/Metamask";
 
 // BACKEND URL
@@ -15,6 +16,7 @@ const loginSchema = z.object({
 });
 
 export default function Login() {
+  const { updateProfile } = useUserProfile();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -41,8 +43,24 @@ export default function Login() {
       if (response.ok) {
         localStorage.setItem("authToken", data.access);
         localStorage.setItem("refreshToken", data.refresh);
+<<<<<<< HEAD
+        localStorage.setItem("username", data.username || username);
+        localStorage.setItem("email", data.email || "");
+
+        // Clear new user flag on login (existing users)
+        // localStorage.removeItem("isNewUser");
+
+        updateProfile({
+          username: data.username,
+          email: data.email,
+          first_name: data.first_name,
+          second_name: data.second_name,
+          avatar: data.avatar,
+        });
+=======
         if (data.username) localStorage.setItem("username", data.username);
         if (data.email) localStorage.setItem("email", data.email);
+>>>>>>> 9a97a235e2b663385c612765853129a9786343f3
 
         toast.success("Login successful!");
         navigate("/dashboard");

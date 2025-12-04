@@ -211,11 +211,6 @@ const DashboardHome = () => {
     refreshProfile();
   };
 
-  /* const handleWelcomeComplete = () => {
-    localStorage.setItem("hasSeenWelcome", "true");
-    setShowWelcome(false);
-  }; */
-
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
 
@@ -240,7 +235,7 @@ const DashboardHome = () => {
           )}
         </div>
 
-        <div className="mb-6 p-4 bg-[#FFF7EE] border border-[#FFAE58] dark:bg-gray-700 rounded-xl flex items-center justify-between flex-wrap">
+        <div className="mb-6 p-4 bg-[#FFF7EE] border border-[#FFAE58] dark:bg-gray-700 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-[#ffead4]  flex items-center justify-center">
               <ShieldCheck className="text-[#FFAE58]" />
@@ -254,8 +249,8 @@ const DashboardHome = () => {
               </p>
             </div>
           </div>
-          <Link to="/profile/kyc">
-            <button className="px-6 py-2 bg-foreground text-light dark:text-black-text rounded-lg text-sm font-medium hover:bg-foreground/90 transition-colors">
+          <Link to="/profile/kyc" className="w-full sm:w-auto">
+            <button className="px-6 py-2   bg-foreground text-light dark:text-black-text rounded-lg text-sm font-medium hover:bg-foreground/90 transition-colors">
               Complete KYC
             </button>
           </Link>

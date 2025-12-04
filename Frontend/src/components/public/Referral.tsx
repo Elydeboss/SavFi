@@ -7,7 +7,7 @@ const Referral = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="bg-linear-to-br from-ring to-[#2e6bd8] rounded-3xl overflow-hidden">
           <div className="grid lg:grid-cols-2 gap-12 items-center p-8 lg:p-16">
-            <div className="text-white animate-fade-in">
+            <div className="text-white text-center md:text-start animate-fade-in">
               <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
                 <Gift className="w-4 h-4" />
                 <span className="text-sm font-medium">Referral Program</span>
@@ -22,8 +22,11 @@ const Referral = () => {
                 you both earn bonus rewards. Build your wealth together!
               </p>
 
-              <Link to="/register">
-                <button className="bg-white flex items-center cursor-pointer rounded-full font-semibold py-2.5 text-primary hover:bg-white/90 transition-opacity px-8">
+              <Link
+                to="/signup"
+                className="flex justify-center items-center md:justify-start"
+              >
+                <button className="bg-white flex items-center justify-center md:justify-start cursor-pointer rounded-full font-semibold py-2.5 text-primary hover:bg-white/90 transition-opacity px-8">
                   Get Your Referral Link
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </button>
