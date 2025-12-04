@@ -155,7 +155,7 @@ const SavingsPlan = () => {
             <p className="text-lg font-semibold text-muted-foreground mb-4">
               You don’t have any savings plans yet
             </p>
-            <button
+            {/* <button
               onClick={() => navigate("/savings/new")}
               className="bg-blue hover:bg-blue/90 px-7 font-semibold py-3 flex items-center gap-2 rounded-3xl text-white cursor-pointer shadow-md"
             >
@@ -174,7 +174,7 @@ const SavingsPlan = () => {
                 />
               </svg>
               Start new plan
-            </button>
+            </button> */}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
