@@ -4,7 +4,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
-import { useUserProfile } from "../contexts/UserProfileContext";
 import WalletConnector from "../Modal/Metamask";
 
 // BACKEND URL
@@ -16,7 +15,6 @@ const loginSchema = z.object({
 });
 
 export default function Login() {
-  const { updateProfile } = useUserProfile();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
