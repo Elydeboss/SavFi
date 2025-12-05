@@ -1,23 +1,66 @@
-import { ChevronRight, Copy, PlusCircle } from "lucide-react";
+import { ChevronRight, Copy, PlusCircle, Wallet } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
 import { toast } from "sonner";
-
 import { useUserProfile } from "../contexts/UserProfileContext";
+import { useEffect, useState } from "react";
+
+// BACKEND URL
+const API_BASE = "https://wallet-api-55mt.onrender.com";
 
 export default function ProfileOverview() {
-  const { profile } = useUserProfile();
+  const { profile, wallet, setWallet } = useUserProfile();
 
-  
+  const [isLoadingWallet, setIsLoadingWallet] = useState(false);
 
-  const walletAddress = "0x1A2b...C3D4"; // Mock data
+  // Fetch wallet on mount if not cached
+  useEffect(() => {
+    const fetchWallet = async () => {
+      if (wallet) return; // Already have wallet
+
+      const authToken = localStorage.getItem("authToken");
+      if (!authToken) return;
+
+      setIsLoadingWallet(true);
+      try {
+        const response = await fetch(`${API_BASE}/wallet/info`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          // Handle if it's an array or single object
+          const walletData = Array.isArray(data) ? data[0] : data;
+          if (walletData) {
+            setWallet(walletData);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching wallet:", error);
+      } finally {
+        setIsLoadingWallet(false);
+      }
+    };
+
+    fetchWallet();
+  }, [wallet, setWallet]);
+
+  const formatWalletAddress = (address: string) => {
+    if (!address || address.length < 10) return address;
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
 
   const handleCopyWallet = () => {
-    navigator.clipboard.writeText(
-      "0x1A2b3C4d5E6f7G8h9I0jK1L2M3N4O5P6Q7R8S9T0C3D4"
-    );
-    toast.success("Wallet address copied to clipboard");
+    const address = wallet?.addresses?.[0] || wallet?.id || "";
+    if (address) {
+      navigator.clipboard.writeText(address);
+      toast.success("Wallet address copied to clipboard");
+    }
   };
 
   const getInitials = () => {
@@ -34,6 +77,8 @@ export default function ProfileOverview() {
     profile?.first_name && profile?.second_name
       ? `${profile.first_name} ${profile.second_name}`
       : profile?.username || "User";
+
+  const walletAddress = wallet?.addresses?.[0] || wallet?.id || "No wallet";
 
   return (
     <motion.div
@@ -132,24 +177,36 @@ export default function ProfileOverview() {
                 Auto-generated SaveFi wallet
               </p>
 
-              <div className="flex gap-2 items-center flex-wrap">
-                <p className="font-mono text-sm">{walletAddress}</p>
-
-                {/* Copy Icon */}
-                <button
-                  onClick={handleCopyWallet}
-                  className="p-1 hover:bg-muted rounded"
-                >
-                  <Copy className="h-4 w-4 text-muted-foreground" />
-                </button>
-              </div>
-
-              <p className="p-2 rounded-xl text-gray-500 bg-gray w-fit">
-                TRC-20 / ERC-20
-              </p>
-
-              <button className="text-blue text-base font-medium flex items-center gap-1">
-                Manage connected wallets <ChevronRight className="w-4 h-4" />
+              {isLoadingWallet ? (
+                <div className="animate-pulse h-6 bg-muted rounded w-32 mb-2"></div>
+              ) : wallet ? (
+                <>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="font-mono text-sm md:text-base text-foreground">
+                      {formatWalletAddress(walletAddress)}
+                    </span>
+                    <button
+                      onClick={handleCopyWallet}
+                      className="p-1 hover:bg-muted rounded"
+                    >
+                      <Copy className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  </div>
+                  <p className="p-2 rounded-xl text-gray-500 bg-gray w-fit">
+                    TRC-20 / ERC-20
+                  </p>
+                </>
+              ) : (
+                <div className="flex items-center gap-2 mb-2">
+                  <Wallet className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">
+                    No wallet created
+                  </span>
+                </div>
+              )}
+              <button className="flex items-center gap-1 text-sm text-primary hover:underline">
+                Manage connected wallets
+                <ChevronRight className="h-4 w-4" />
               </button>
             </motion.div>
 
