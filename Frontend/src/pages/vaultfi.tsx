@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { ChevronDown, Phone, Mail, Vault } from "lucide-react";
 import Header from "../components/Landpage-header";
-//import grow from "../assets/img/arcticons_growtracker.png";
-//import vault from "../assets/img/stash_vault.png";
-//import flexfi from "../assets/img/fluent_savings-32-regular.png";
-//import pick from "../assets/img/picon_swift.png";
+import grow from "../assets/img/arcticons_growtracker.png";
+import vault from "../assets/img/stash_vault.png";
+import flexfi from "../assets/img/fluent_savings-32-regular.png";
+import pick from "../assets/img/picon_swift.png";
 
 // Define the types for the FAQItem component props to resolve 'implicit any'
 interface FAQItemProps {
@@ -129,7 +129,7 @@ const valutFi = () => {
             </div>
 
             {/* Piggy Bank Illustration (SVG for scalability and crispness) */}
-            <div className="w-full lg:w-96 flex-shrink-0 pt-8 lg:pt-0">
+            <div className="w-full lg:w-96 shrink-0 pt-8 lg:pt-0">
               <Vault className="text-[#8A38F5] w-98 h-85" />
             </div>
           </div>

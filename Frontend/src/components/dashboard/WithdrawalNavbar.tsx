@@ -20,7 +20,7 @@ type NavbarProps = {
 
 const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
   const navigate = useNavigate();
-  const { profile } = useUserProfile();
+  const { profile, clearProfile } = useUserProfile();
 
   const [searchActive, setSearchActive] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -104,49 +104,6 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
     },
   ]);
 
-  // FETCH USER PROFILE (FIXED)
-
-  /* useEffect(() => {
-    fetchUserProfile();
-  }, []); */
-
-  /* const fetchUserProfile = async () => {
-    try {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) return;
-
-      const response = await fetch("/api/accounts/profile/", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const displayName =
-          data.first_name ||
-          data.username ||
-          localStorage.getItem("username") ||
-          "User";
-        setUserName(displayName);
-        setUserEmail(data.email || "");
-        setAvatarUrl(data.avatar || "");
-
-        if (data.email) {
-          localStorage.setItem("email", data.email);
-        }
-      } else {
-        setUserName(localStorage.getItem("username") || "User");
-      }
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      setUserName(localStorage.getItem("username") || "User");
-      setUserEmail(localStorage.getItem("email") || "");
-    }
-  }; */
-
   // NOTIFICATION COUNT
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -196,13 +153,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
 
   const handleLogout = () => {
     // Clear all localStorage data
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("username");
-    localStorage.removeItem("email");
-    localStorage.removeItem("fullName");
-    localStorage.removeItem("profileCompleted");
-    localStorage.removeItem("isNewUser");
+    clearProfile();
 
     toast.info("Logged out successfully. See you soon!");
 
@@ -213,7 +164,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
     <header className=" fixed  md:sticky top-0 right-0 left-0 h-18  md:left-65 md:h-18 lg:left-75 flex flex-col md:flex-row items-start md:items-center justify-between px-3.5 py-4 bg-neutral-50 gap-2 md:gap-4 dark:bg-gray-700 dark:text-white z-40 ">
       <div className="flex items-center w-full md:w-auto justify-between md:justify-start gap-2 md:gap-6">
         <h1
-          className={`text-2xl md:text-3xl font-semibold ml-15 md:ml-0 text-gray-800 transition-all duration-300 dark:text-white ${
+          className={`text-lg sm:text-2xl md:text-3xl font-semibold ml-15 md:ml-0 text-gray-800 transition-all duration-300 dark:text-white ${
             searchActive ? "md:block" : "block"
           }`}
         >
@@ -253,7 +204,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
                 )}
               </div>
 
-              <div className="mr-12">
+              <div className="">
                 <ThemeToggle />
               </div>
             </>
@@ -315,7 +266,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
                         KYC: Unverified
                       </div>
                       <div className="px-4 py-2 rounded-full bg-green-100 text-green-600 text-sm font-semibold">
-                        3.0 SFP
+                        0 SFP
                       </div>
                     </div>
                   </div>
@@ -336,6 +287,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
                     </button>
 
                     <button
+                      onMouseDown={(e) => e.stopPropagation()}
                       onClick={() => {
                         setIsUserDropdownOpen(false);
                         setShowLogoutModal(true);
@@ -482,7 +434,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
                         KYC: Unverified
                       </div>
                       <div className="px-4 py-2 rounded-full bg-green-100 text-green-600 text-sm font-semibold">
-                        3.0 SFP
+                        0 SFP
                       </div>
                     </div>
                   </div>
@@ -503,6 +455,7 @@ const WithdrawalNavbar: React.FC<NavbarProps> = ({ title }) => {
                     </button>
 
                     <button
+                      onMouseDown={(e) => e.stopPropagation()}
                       onClick={() => {
                         setIsUserDropdownOpen(false);
                         setShowLogoutModal(true);

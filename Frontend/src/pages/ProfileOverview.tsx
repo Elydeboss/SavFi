@@ -9,57 +9,7 @@ import { useUserProfile } from "../contexts/UserProfileContext";
 export default function ProfileOverview() {
   const { profile } = useUserProfile();
 
-  /* useEffect(() => {
-    fetchProfile();
-    console.log(fetchProfile);
-  }, []);
-
-  const fetchProfile = async () => {
-    try {
-      const authToken = localStorage.getItem("authToken");
-
-      if (!authToken) {
-        toast.error("Please log in to view your profile");
-
-        return;
-      }
-
-      const response = await fetch(`/api/accounts/profile/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setFirstName(data.first_name || "");
-        setSecondName(data.second_name || "");
-        setUsername(data.username || "");
-        setAvatar(data.avatar || "");
-
-        setEmail(data.email || localStorage.getItem("email") || "");
-      } else {
-        // Fallback to localStorage
-
-        setEmail(localStorage.getItem("email") || "");
-        setFirstName(localStorage.getItem("firstName") || "");
-        setSecondName(localStorage.getItem("secondName") || "");
-        setUsername(localStorage.getItem("username") || "");
-        setAvatar(localStorage.getItem("avatar") || "");
-        toast.error("Failed to load profile from server");
-      }
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      toast.error("Failed to load profile data");
-      // Fallback to localStorage
-
-      setEmail(localStorage.getItem("email") || "");
-    } finally {
-    }
-  };
- */
+  
 
   const walletAddress = "0x1A2b...C3D4"; // Mock data
 

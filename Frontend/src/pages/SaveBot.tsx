@@ -104,7 +104,7 @@ export default function ChatBot() {
                   }`}
                 >
                   <div
-                    className={`px-4 py-2 rounded-lg text-sm max-w-[80%] break-words ${
+                    className={`px-4 py-2 rounded-lg text-sm max-w-[80%] wrap-break-word ${
                       m.from === "bot"
                         ? "bg-blue-100 text-blue-900"
                         : "bg-green-100 text-green-900"

@@ -223,7 +223,7 @@ const UsdtWithdrawPage: React.FC = () => {
             {/* Withdraw Button */}
             <button
               onClick={() => setShowModal(true)}
-              className="w-full bg-[#2092E9] mt-4 text-white rounded-full py-3 text-sm font-semibold hover:brightness-105"
+              className="w-full bg-[#2092E9] mt-4 cursor-pointer text-white rounded-full py-3 text-sm font-semibold hover:brightness-105"
             >
               Withdraw USDT
             </button>
@@ -237,10 +237,26 @@ const UsdtWithdrawPage: React.FC = () => {
   );
 };
 
-/* -------------------------
-   WITHDRAW MODAL COMPONENT
---------------------------*/
+// WITHDRAW MODAL COMPONENT
 const WithdrawModal = ({ onClose }: { onClose: () => void }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleConfirm = () => {
+    setIsLoading(true);
+
+    // Simulate withdrawal processing delay
+    setTimeout(() => {
+      setIsLoading(false);
+      setShowSuccess(true);
+    }, 2000);
+  };
+
+  // If success modal is active, show only success modal
+  if (showSuccess) {
+    return <SuccessModal onClose={onClose} />;
+  }
+
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
       <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl max-w-sm w-full shadow-lg">
@@ -255,15 +271,65 @@ const WithdrawModal = ({ onClose }: { onClose: () => void }) => {
         <div className="flex justify-end gap-3 mt-6">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg border dark:border-gray-600 dark:text-white"
+            disabled={isLoading}
+            className="px-4 py-2 rounded-lg border cursor-pointer dark:border-gray-600 dark:text-white disabled:opacity-40"
           >
             Cancel
           </button>
 
-          <button className="px-4 py-2 rounded-lg bg-[#2092E9] text-white">
-            Confirm
+          <button
+            onClick={handleConfirm}
+            disabled={isLoading}
+            className="px-4 py-2 rounded-lg bg-[#2092E9] cursor-pointer text-white flex items-center gap-2 disabled:opacity-40"
+          >
+            {isLoading ? (
+              <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            ) : (
+              "Confirm"
+            )}
           </button>
         </div>
+      </div>
+    </div>
+  );
+};
+
+// SUCCESS MODAL COMPONENT
+const SuccessModal = ({ onClose }: { onClose: () => void }) => {
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-gray-800 p-7 rounded-2xl max-w-sm w-full shadow-xl text-center">
+        {/* Success Icon */}
+        <div className="mx-auto h-16 w-16 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center">
+          <svg
+            className="w-9 h-9 text-green-600 dark:text-green-400"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+        </div>
+
+        <h2 className="mt-4 text-xl font-semibold dark:text-white">
+          Withdrawal Successful
+        </h2>
+
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+          Your USDT withdrawal has been processed successfully.
+        </p>
+
+        <button
+          onClick={onClose}
+          className="mt-6 w-full bg-[#2092E9] cursor-pointer text-white py-3 rounded-full font-medium hover:brightness-110"
+        >
+          Done
+        </button>
       </div>
     </div>
   );

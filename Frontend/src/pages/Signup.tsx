@@ -7,7 +7,7 @@ import Logo from "../assets/public/logo-dark.svg";
 import Logo2 from "../assets/SavFi-logo.png";
 import Wallets from "../Modal/Metamask";
 import { useUserProfile } from "../contexts/UserProfileContext";
-import { v4 as uuidv4 } from "uuid";
+import { ethers } from "ethers";
 
 const API_BASE = "https://wallet-api-55mt.onrender.com";
 
@@ -24,7 +24,9 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { clearProfile, refreshProfile, setWallet } = useUserProfile();
-  const walletAddress = uuidv4();
+  const wallet = ethers.Wallet.createRandom();
+
+  const walletAddress = wallet.address;
 
   console.log(walletAddress);
 
