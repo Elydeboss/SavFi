@@ -233,12 +233,9 @@ export default function EditProfile() {
                       <label className="text-sm font-medium">Username</label>
                       <input
                         value={username}
-                        disabled
-                        className="w-full rounded-md placeholder:text-muted-foreground bg-blue-50 px-6 dark:bg-gray-600 py-3 focus:outline-0 focus:ring-2 focus:ring-primary opacity-50"
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="w-full rounded-md placeholder:text-muted-foreground bg-blue-50 px-6 dark:bg-gray-600 py-3 focus:outline-0 focus:ring-2 focus:ring-primary"
                       />
-                      <p className="text-xs text-muted-foreground">
-                        Username cannot be changed
-                      </p>
                     </div>
 
                     <div className="space-y-1">

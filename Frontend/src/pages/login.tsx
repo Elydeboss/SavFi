@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import Logo from "../assets/public/logo-dark.svg";
 import Logo2 from "../assets/SavFi-logo.png";
-import WalletConnector from "../Modal/Metamask";
+import Toast from "../components/withdraw/Toast";
+import { getMetaMaskDeepLink } from "../lib/api";
+//import WalletConnector from "../Modal/Metamask";
 import { useUserProfile } from "../contexts/UserProfileContext";
 
 // BACKEND URL
@@ -21,8 +23,33 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMetaMaskConnecting, setIsMetaMaskConnecting] = useState(false);
+
+  const { clearProfile, refreshProfile, setWallet, updateProfile } =
+    useUserProfile();
+
+  const [toasts, setToast] = useState<{
+    message: string;
+    description?: string;
+    type: "success" | "error";
+  } | null>(null);
+
   const navigate = useNavigate();
-  const { clearProfile, refreshProfile, setWallet } = useUserProfile();
+
+  // Check for MetaMask return on mobile
+  useEffect(() => {
+    const checkMetaMaskReturn = async () => {
+      const pendingMetaMask = localStorage.getItem("pendingMetaMaskLogin");
+      if (
+        pendingMetaMask === "true" &&
+        typeof (window as any).ethereum !== "undefined"
+      ) {
+        localStorage.removeItem("pendingMetaMaskLogin");
+        await handleMetaMaskLogin();
+      }
+    };
+    checkMetaMaskReturn();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,7 +81,7 @@ export default function Login() {
         localStorage.removeItem("isNewUser");
 
         try {
-          const walletResponse = await fetch(`${API_BASE}/accounts/wallets/`, {
+          const walletResponse = await fetch(`${API_BASE}/wallets/`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${data.access}`,
@@ -93,6 +120,119 @@ export default function Login() {
       }
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleMetaMaskLogin = async () => {
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+
+    if (typeof (window as any).ethereum === "undefined") {
+      if (isMobile) {
+        localStorage.setItem("pendingMetaMaskLogin", "true");
+        const deepLink = getMetaMaskDeepLink();
+        if (deepLink) {
+          window.location.href = deepLink;
+          return;
+        }
+      }
+      setToast({
+        message: "MetaMask not found",
+        description: isMobile
+          ? "Opening MetaMask app..."
+          : "Please install MetaMask to continue",
+        type: "error",
+      });
+      return;
+    }
+
+    try {
+      setIsMetaMaskConnecting(true);
+      setIsLoading(true);
+
+      // Clear old profile data
+      clearProfile();
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("refreshToken");
+
+      const accounts = await (window as any).ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      const walletAddress = accounts[0];
+
+      const response = await fetch(`${API_BASE}/accounts/login/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: walletAddress,
+          password: walletAddress.slice(0, 20),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200 || response.ok) {
+        localStorage.setItem("authToken", data.access);
+        localStorage.setItem("refreshToken", data.refresh);
+        localStorage.setItem("username", data.username || walletAddress);
+        localStorage.setItem(
+          "email",
+          data.email || `${walletAddress.slice(0, 10)}@metamask.wallet`
+        );
+
+        // Update profile context
+        updateProfile({
+          username: data.username || walletAddress,
+          email: data.email || `${walletAddress.slice(0, 10)}@metamask.wallet`,
+        });
+
+        // Fetch wallet for logged-in user
+        try {
+          const walletResponse = await fetch(`${API_BASE}/wallet/info`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${data.access}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (walletResponse.ok) {
+            const walletData = await walletResponse.json();
+            setWallet(walletData);
+          }
+        } catch (walletError) {
+          console.error("Wallet fetch error:", walletError);
+        }
+
+        // Refresh profile from server
+        setTimeout(() => refreshProfile(), 100);
+        toast.success("Login successful!, Welcome back to SaveFi");
+
+        navigate("/dashboard");
+      } else {
+        setToast({
+          message: "Login failed",
+          description:
+            data.message ||
+            "Failed to login with MetaMask. Please register first.",
+          type: "error",
+        });
+      }
+    } catch (error: any) {
+      console.error("MetaMask error:", error);
+      setToast({
+        message: "Error",
+        description: error.message || "Failed to connect with MetaMask",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+      setIsMetaMaskConnecting(false);
     }
   };
 
@@ -201,12 +341,18 @@ export default function Login() {
             </div>
 
             {/* MetaMask */}
-            <button className="flex gap-2 items-center justify-center py-3 rounded-full border-2 border-blue w-full">
+            <button
+              onClick={handleMetaMaskLogin}
+              disabled={isLoading}
+              className="flex gap-2 items-center justify-center py-3 rounded-full border-2 border-blue w-full"
+            >
               <img
                 src="https://cdn.worldvectorlogo.com/logos/metamask.svg"
                 className="w-5"
               />
-              <WalletConnector />
+              {isMetaMaskConnecting
+                ? "Connecting MetaMask..."
+                : "Continue with MetaMask"}
             </button>
           </form>
 
@@ -227,6 +373,7 @@ export default function Login() {
           </p>
         </div>
       </div>
+      {toasts && <Toast message={toasts.message} type={toasts.type} />}
     </div>
   );
 }
