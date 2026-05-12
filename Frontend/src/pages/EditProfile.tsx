@@ -3,9 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 // import { Camera } from "lucide-react";
 import { useUserProfile } from "../contexts/UserProfileContext";
-
-// BACKEND URL
-const API_BASE = "https://wallet-api-55mt.onrender.com";
+import { API_BASE_URL_URL } from "../config/api";
 
 export default function EditProfile() {
   const { profile, updateProfile } = useUserProfile();
@@ -98,7 +96,7 @@ export default function EditProfile() {
       }
 
       // Send the FormData as a PUT request
-      const response = await fetch(`${API_BASE}/accounts/profile/`, {
+      const response = await fetch(`${API_BASE_URL}/accounts/profile/`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -171,7 +169,7 @@ export default function EditProfile() {
                         <div className="h-20 w-20 rounded-full bg-primary text-white overflow-hidden flex items-center justify-center text-3xl font-semibold">
                           {avatar ? (
                             <img
-                              src={`${API_BASE}${avatar}`}
+                              src={`${API_BASE_URL}${avatar}`}
                               className="h-full w-full object-cover"
                             />
                           ) : (

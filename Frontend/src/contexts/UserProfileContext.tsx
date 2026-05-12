@@ -6,8 +6,7 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
-// BACKEND URL
-const API_BASE = "https://wallet-api-55mt.onrender.com";
+import { API_BASE_URL_URL } from "../config/api";
 
 interface UserProfile {
   first_name: string;
@@ -93,7 +92,7 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
 
     try {
       setIsLoading(true);
-      const response = await fetch(`${API_BASE}/accounts/profile/`, {
+      const response = await fetch(`${API_BASE_URL}/accounts/profile/`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${authToken}`,

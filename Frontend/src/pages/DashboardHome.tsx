@@ -20,9 +20,7 @@ import Toast from "../components/withdraw/Toast";
 import Piggy from "../assets/public/fluent_savings-32-filled.svg";
 import Tree from "../assets/public/tabler_growth.svg";
 import { useUserProfile } from "../contexts/UserProfileContext";
-
-// BACKEND URL
-const API_BASE = "https://wallet-api-55mt.onrender.com";
+import { API_BASE_URL_URL } from "../config/api";
 
 type PlanType = "FlexFi" | "GrowFi" | "VaultFi" | "SwiftFi";
 
@@ -130,7 +128,7 @@ const DashboardHome = () => {
     const fetchWallet = async () => {
       if (!wallet) {
         try {
-          const response = await fetch(`${API_BASE}/wallet/info`, {
+          const response = await fetch(`${API_BASE_URL}/wallet/info`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${authToken}`,

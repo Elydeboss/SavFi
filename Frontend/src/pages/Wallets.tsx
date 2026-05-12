@@ -12,14 +12,13 @@ import { useEffect, useState } from "react";
 import Toast from "../components/withdraw/Toast";
 import { useUserProfile } from "../contexts/UserProfileContext";
 import { getMetaMaskDeepLink } from "../lib/api";
+import { API_BASE_URL_URL } from "../config/api";
 
 interface WalletAddress {
   address: string;
   type: string;
   isActive: boolean;
 }
-
-const API_BASE = "https://wallet-api-55mt.onrender.com";
 
 export default function Wallets() {
   const { wallet, setWallet } = useUserProfile();
@@ -128,7 +127,7 @@ export default function Wallets() {
       const authToken = localStorage.getItem("authToken");
       const currentAddresses = wallet?.addresses || [];
 
-      const response = await fetch(`${API_BASE}/wallets/`, {
+      const response = await fetch(`${API_BASE_URL}/wallets/`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${authToken}`,

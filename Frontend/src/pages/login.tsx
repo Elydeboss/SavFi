@@ -9,9 +9,7 @@ import Toast from "../components/withdraw/Toast";
 import { getMetaMaskDeepLink } from "../lib/api";
 //import WalletConnector from "../Modal/Metamask";
 import { useUserProfile } from "../contexts/UserProfileContext";
-
-// BACKEND URL
-const API_BASE = "https://wallet-api-55mt.onrender.com";
+import { API_BASE_URL_URL } from "../config/api";
 
 const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -61,7 +59,7 @@ export default function Login() {
       // Clear any existing profile data
       clearProfile();
 
-      const response = await fetch(`${API_BASE}/accounts/login/`, {
+      const response = await fetch(`${API_BASE_URL}/accounts/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +79,7 @@ export default function Login() {
         localStorage.removeItem("isNewUser");
 
         try {
-          const walletResponse = await fetch(`${API_BASE}/wallets/`, {
+          const walletResponse = await fetch(`${API_BASE_URL}/wallets/`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${data.access}`,
@@ -163,7 +161,7 @@ export default function Login() {
 
       const walletAddress = accounts[0];
 
-      const response = await fetch(`${API_BASE}/accounts/login/`, {
+      const response = await fetch(`${API_BASE_URL}/accounts/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -193,7 +191,7 @@ export default function Login() {
 
         // Fetch wallet for logged-in user
         try {
-          const walletResponse = await fetch(`${API_BASE}/wallet/info`, {
+          const walletResponse = await fetch(`${API_BASE_URL}/wallet/info`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${data.access}`,
