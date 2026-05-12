@@ -1,0 +1,375 @@
+import { useState } from "react";
+import Navbar from "../components/dashboard/Navbar";
+import Breadcrumb from "../components/Breadcrumb";
+import { ChevronDown, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import FlexiFi from "../assets/savingplan/vacation.svg";
+
+// Import types for event handling
+import type { ChangeEvent } from "react";
+
+// 1. IMPORT YOUR WEB3 INTERACTION FUNCTION
+import { saveStablecoin } from "../services/"; // Adjust path as needed
+
+export default function FlexiFiPlan() {
+  const navigate = useNavigate();
+
+  // --- EXISTING STATE ---
+  const [planName, setPlanName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [understood, setUnderstood] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+
+  // --- NEW STATE FOR WEB3 INTERACTION (Typed for TypeScript) ---
+  // Fix 1: Explicitly type null/string for error and success
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  // --- EXISTING CALCULATIONS ---
+  const availableBalance = 120.54;
+  const lockedAmount = amount ? parseFloat(amount) : 0;
+  const expectedInterest = lockedAmount * 0.08;
+  const totalPayout = lockedAmount + expectedInterest;
+
+  // --- EXISTING CHECKBOX HANDLERS (Typed for TypeScript) ---
+  // Fix 2: Use ChangeEvent<HTMLInputElement> and remove optional chaining
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setUnderstood(event.target.checked);
+  };
+
+  const handleAgreeCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setAgreed(event.target.checked);
+  };
+
+  // Check if the button should be disabled
+  const isButtonDisabled =
+    !(amount && parseFloat(amount) > 0 && understood && agreed) || isProcessing;
+
+  // 3. DEFINE THE ASYNC HANDLER FOR THE BUTTON CLICK
+  const handleCreatePlan = async () => {
+    // Clear previous states
+    setError(null);
+    setSuccess(null);
+
+    if (isButtonDisabled) return;
+
+    setIsProcessing(true);
+
+    try {
+      // We pass the string amount to the Web3 function
+      // Assuming saveStablecoin returns a string (txHash)
+      const txHash = await saveStablecoin(amount);
+
+      setSuccess(
+        `Plan created successfully! Transaction Hash: ${txHash?.substring(
+          0,
+          8
+        )}...`
+      );
+    } catch (err) {
+      console.error("Transaction Error:", err);
+      let errorMessage = "Transaction failed. Please check your wallet.";
+
+      // Fix 3: Safely handle 'unknown' error type
+      if (err instanceof Error) {
+        errorMessage = err.message || errorMessage;
+      } else if (
+        typeof err === "object" &&
+        err !== null &&
+        "message" in err &&
+        typeof err.message === "string"
+      ) {
+        errorMessage = err.message;
+      }
+
+      // Add a common fallback for user-rejected transactions
+      if (
+        errorMessage.includes("MetaMask Tx Signature") ||
+        errorMessage.includes("user rejected transaction")
+      ) {
+        errorMessage = "Transaction rejected by user.";
+      }
+
+      setError(errorMessage);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  return (
+    <div className="bg-neutral-200 min-h-screen dark:bg-gray-600 dark:text-white">
+      <div className="">
+        <Navbar title="Create FlexiFi plan" />
+        <div className="p-4 mt-18 md:mt-0">
+          <Breadcrumb
+            items={[
+              { label: "Savings plan", href: "/savings" },
+              { label: "Start new plan", href: "/savings/new" },
+              { label: "FlexiFi" },
+            ]}
+          />
+        </div>
+
+        <div className="max-w-3xl mx-auto px-4 md:px-0 pb-12">
+          {/* Plan Header */}
+          <div className="bg-neutral-50 dark:bg-gray-700 rounded-2xl p-6 mb-6">
+            <div className="flex items-start gap-4 mb-6">
+              <div className="w-14 h-14 rounded-xl bg-vaultfi-light flex items-center justify-center">
+                <img src={FlexiFi} alt="VaultFi Logo" className="" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-foreground mb-1">
+                  FlexiFi
+                </h2>
+                <p className="text-muted-foreground">Flexible plan</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-6 pt-6 border-t border-[#D0D3D6]">
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Duration</p>
+                <p className="text-lg font-semibold text-foreground">
+                  3 months
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">
+                  Interest rate:
+                </p>
+                <p className="text-lg font-semibold text-[#27B97D]">3%</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">
+                  Early withdrawals
+                </p>
+                <p className="text-lg font-semibold text-[#E89E50]">
+                  Penalty applies
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6 mt-3 pt-6">
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Start date</p>
+                <p className="text-base font-medium text-foreground">
+                  Nov 25, 2025
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">
+                  Maturity date
+                </p>
+                <p className="text-base font-medium text-foreground">
+                  Feb 25, 2026
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* About This Plan */}
+          <div className="mb-6">
+            <button
+              onClick={() => setShowAbout(!showAbout)}
+              className="w-full mt-6 p-6 bg-neutral-50 dark:bg-gray-700 rounded-tl-2xl rounded-tr-2xl  flex items-center justify-between text-left hover:text-primary transition-colors"
+            >
+              <span className="font-semibold text-foreground">
+                About this plan
+              </span>
+              <ChevronDown
+                className={`w-5 h-5 text-muted-foreground transition-transform ${
+                  showAbout ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {showAbout && (
+              <ul className="mt-4 space-y-2 px-6 py-2 text-sm text-muted-foreground">
+                <li className="flex gap-2 items-start">
+                  <span className="w-2 h-2  mt-1 bg-black-text dark:bg-white rounded-full shrink-0"></span>
+                  <span>
+                    GrowFi is designed for short-term savings goals you want to
+                    achieve within 90 days. Ideal for users who want quick
+                    payouts, moderate interest
+                  </span>
+                </li>
+                <li className="flex gap-2 items-start">
+                  <span className="w-2 h-2  mt-1 bg-black-text dark:bg-white rounded-full shrink-0"></span>
+                  <span>
+                    Interest is calculated daily and fully paid at maturity
+                  </span>
+                </li>
+                <li className="flex gap-2 items-start">
+                  <span className="w-2 h-2  mt-1 bg-black-text dark:bg-white rounded-full shrink-0"></span>
+                  <span>
+                    Your funds are securely locked on-chain using smart contract
+                    logic until maturity.
+                  </span>
+                </li>
+                <li className="flex gap-2 items-start">
+                  <span className="w-2 h-2  mt-1 bg-black-text dark:bg-white rounded-full shrink-0"></span>
+                  <span>
+                    When your plan matures, your principal plus interest will
+                    automatically move to your total USDT balance, where you can
+                    withdraw or create a new plan.
+                  </span>
+                </li>
+              </ul>
+            )}
+          </div>
+
+          {/* Create Plan Form */}
+          <div className="bg-neutral-50 dark:bg-gray-700 rounded-2xl p-6 ">
+            <div className="space-y-6">
+              {/* Plan Name */}
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Plan name{" "}
+                  <span className="text-muted-foreground">(Optional)</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g Rent 2025, Laptop savings"
+                  value={planName}
+                  onChange={(e) => setPlanName(e.target.value)}
+                  className="text-base w-full text-[#979799] placeholder:text-[#979799] rounded-md p-3 bg-[#EAEDEF] dark:bg-gray-600 dark:text-white/80 dark:placeholder:text-white/80  focus:outline-0 focus:ring-2 focus:ring-blue"
+                />
+              </div>
+
+              {/* Amount to Lock */}
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Amount to lock (USX)
+                </label>
+                <div className="flex items-center gap-4 text-[#979799] placeholder:text-[#979799] rounded-md p-3 bg-[#EAEDEF] dark:bg-gray-600 dark:text-white/80">
+                  <input
+                    type="number"
+                    placeholder="e.g 100"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="text-base flex-1 text-[#979799] placeholder:text-[#979799] bg-[#EAEDEF] dark:bg-gray-600 dark:text-white/80 dark:placeholder:text-white/80  focus:outline-0"
+                  />
+                  <button
+                    onClick={() => setAmount(availableBalance.toString())}
+                    className="text-sm text-blue font-medium"
+                  >
+                    Max
+                  </button>
+                </div>
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-sm text-muted-foreground">
+                    Available balance:{" "}
+                    <span className="font-bold">{availableBalance} USX</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Summary */}
+              {amount && parseFloat(amount) > 0 && (
+                <div className="rounded-xl bg-[#EAEDEF] dark:bg-gray-600 dark:text-white/80 p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">
+                      Amount to be locked
+                    </span>
+                    <span className="text-base font-semibold text-foreground">
+                      {lockedAmount.toFixed(2)} USX
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">
+                      Expected interest earned
+                    </span>
+                    <span className="text-base font-semibold text-[#27B97D]">
+                      +{expectedInterest.toFixed(2)} USX
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between pt-3">
+                    <span className="text-sm font-medium text-foreground">
+                      Total payout at maturity
+                    </span>
+                    <span className="text-lg font-bold text-foreground">
+                      {totalPayout.toFixed(2)} USX
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              <div>
+                {/* Confirmation Checkbox */}
+                <div className="flex items-center gap-3 px-4 mb-3">
+                  <input
+                    type="checkbox"
+                    id="understand"
+                    checked={understood}
+                    onChange={handleCheckboxChange}
+                    className=" w-5 h-5 accent-blue"
+                  />
+                  <label
+                    htmlFor="understand"
+                    className="text-sm text-black-text dark:text-white font-medium cursor-pointer"
+                  >
+                    I understand this amount will be locked till maturity date
+                  </label>
+                </div>
+
+                {/* Agree Checkbox */}
+                <div className="flex items-center gap-3 px-4">
+                  <input
+                    type="checkbox"
+                    id="agree"
+                    checked={agreed}
+                    onChange={handleAgreeCheckboxChange}
+                    className=" w-5 h-5 accent-blue"
+                  />
+                  <label
+                    htmlFor="agree"
+                    className="text-sm text-black-text dark:text-white font-medium cursor-pointer"
+                  >
+                    I agree to the early withdrawal penalty
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Status Messages */}
+          {error && (
+            <div className="mt-4 p-3 rounded-md bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300 font-medium">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="mt-4 p-3 rounded-md bg-[#27B97D]/10 text-[#27B97D] dark:bg-green-900/50 dark:text-[#27B97D] font-medium">
+              {success}
+            </div>
+          )}
+
+          {/* Actions */}
+          <div className="flex gap-3 mt-5 w-[80%] mx-auto">
+            <button
+              onClick={handleCreatePlan}
+              disabled={isButtonDisabled}
+              className={`flex-1 border-2 font-semibold cursor-pointer py-2.5 rounded-full 
+                  ${
+                    isButtonDisabled
+                      ? "bg-blue/40 border-blue/40 text-white/70 cursor-not-allowed"
+                      : "bg-blue text-white border-blue hover:bg-blue/90"
+                  } flex items-center justify-center space-x-2`}
+            >
+              {isProcessing && <Loader2 className="w-5 h-5 animate-spin" />}
+              <span>{isProcessing ? "Processing..." : "Create plan"}</span>
+            </button>
+            <button
+              onClick={() => navigate("/savings/new")}
+              className="flex-1 text-blue border-2 font-semibold cursor-pointer border-blue py-2.5 rounded-full"
+              disabled={isProcessing}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

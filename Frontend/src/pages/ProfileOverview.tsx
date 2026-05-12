@@ -5,9 +5,7 @@ import Breadcrumb from "../components/Breadcrumb";
 import { toast } from "sonner";
 import { useUserProfile } from "../contexts/UserProfileContext";
 import { useEffect, useState } from "react";
-
-// BACKEND URL
-const API_BASE = "https://wallet-api-55mt.onrender.com";
+import { API_BASE_URL_URL } from "../config/api";
 
 export default function ProfileOverview() {
   const { profile, wallet, setWallet } = useUserProfile();
@@ -24,7 +22,7 @@ export default function ProfileOverview() {
 
       setIsLoadingWallet(true);
       try {
-        const response = await fetch(`${API_BASE}/wallet/info`, {
+        const response = await fetch(`${API_BASE_URL}/wallet/info`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${authToken}`,

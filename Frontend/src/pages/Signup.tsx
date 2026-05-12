@@ -10,8 +10,7 @@ import { useUserProfile } from "../contexts/UserProfileContext";
 import Toast from "../components/withdraw/Toast";
 import { getMetaMaskDeepLink } from "../lib/api";
 import { ethers } from "ethers";
-
-const API_BASE = "https://wallet-api-55mt.onrender.com";
+import { API_BASE_URL_URL } from "../config/api";
 
 const registerSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),
@@ -67,7 +66,7 @@ export default function Signup() {
       clearProfile();
 
       // REGISTER
-      const registerRes = await fetch(`${API_BASE}/accounts/register/`, {
+      const registerRes = await fetch(`${API_BASE_URL}/accounts/register/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(validated),
@@ -84,7 +83,7 @@ export default function Signup() {
       }
 
       // LOGIN
-      const loginRes = await fetch(`${API_BASE}/accounts/login/`, {
+      const loginRes = await fetch(`${API_BASE_URL}/accounts/login/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -109,7 +108,7 @@ export default function Signup() {
       localStorage.setItem("email", loginData.email);
 
       // CREATE WALLET
-      const walletRes = await fetch(`${API_BASE}/wallets/`, {
+      const walletRes = await fetch(`${API_BASE_URL}/wallets/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -193,7 +192,7 @@ export default function Signup() {
       const walletAddress = accounts[0];
 
       // Use wallet address as username for registration
-      const response = await fetch(`${API_BASE}/accounts/register/`, {
+      const response = await fetch(`${API_BASE_URL}/accounts/register/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -209,7 +208,7 @@ export default function Signup() {
 
       if (response.status === 201 || response.ok) {
         // Auto-login after MetaMask registration
-        const loginResponse = await fetch(`${API_BASE}/accounts/login/`, {
+        const loginResponse = await fetch(`${API_BASE_URL}/accounts/login/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -244,7 +243,7 @@ export default function Signup() {
           // Create wallet for new user with MetaMask address
           try {
             console.log("Creating wallet for MetaMask user:", walletAddress);
-            const walletCreateResponse = await fetch(`${API_BASE}/wallets/`, {
+            const walletCreateResponse = await fetch(`${API_BASE_URL}/wallets/`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -272,7 +271,7 @@ export default function Signup() {
             } else {
               // Fetch existing wallet
               const existingWalletResponse = await fetch(
-                `${API_BASE}/wallet/info/`,
+                `${API_BASE_URL}/wallet/info/`,
                 {
                   method: "GET",
                   headers: {
@@ -305,7 +304,7 @@ export default function Signup() {
         }
       } else {
         // User might already exist, try to login
-        const loginResponse = await fetch(`${API_BASE}/accounts/login/`, {
+        const loginResponse = await fetch(`${API_BASE_URL}/accounts/login/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -326,7 +325,7 @@ export default function Signup() {
           localStorage.removeItem("isNewUser");
 
           // Fetch wallet
-          const walletResponse = await fetch(`${API_BASE}/wallet/info/`, {
+          const walletResponse = await fetch(`${API_BASE_URL}/wallet/info/`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${loginData.access}`,
