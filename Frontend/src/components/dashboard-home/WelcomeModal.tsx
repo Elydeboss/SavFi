@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Sparkles, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useUserProfile } from "../../contexts/UserProfileContext";
-import { API_BASE_URL_URL } from "../../config/api";
+import { API_BASE_URL } from "../../config/api";
 
 interface WelcomeModalProps {
   onComplete: () => void;

@@ -4,13 +4,13 @@ import savefiABI from "../contract/SaveFi.json";
 const CONTRACT_ADDRESS = "0x84eaac1b2dc3f84d92ff84c3ec205b1fa74671fc";
 import { useNavigate } from "react-router-dom";
 
-function connectWallet() {
+function ConnectWallet() {
   const [walletAddress, setWalletAddress] = useState("");
   const [contract, setContract] = useState<Contract | null>(null);
   const navigate = useNavigate();
 
   // Connect Wallet
-  const connectWallet = async () => {
+  const handleConnectWallet = async () => {
     if (!window.ethereum) return alert("Install MetaMask!");
 
     const accounts = await window.ethereum.request({
@@ -46,10 +46,10 @@ function connectWallet() {
       {walletAddress ? (
         <p>Connected: {walletAddress}</p>
       ) : (
-        <button onClick={connectWallet}> Continue with Metamask</button>
+        <button onClick={handleConnectWallet}> Continue with Metamask</button>
       )}
     </div>
   );
 }
 
-export default connectWallet;
+export default ConnectWallet;

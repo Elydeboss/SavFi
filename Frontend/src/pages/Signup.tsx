@@ -10,7 +10,7 @@ import { useUserProfile } from "../contexts/UserProfileContext";
 import Toast from "../components/withdraw/Toast";
 import { getMetaMaskDeepLink } from "../lib/api";
 import { ethers } from "ethers";
-import { API_BASE_URL_URL } from "../config/api";
+import { API_BASE_URL } from "../config/api";
 
 const registerSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),

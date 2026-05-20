@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import Toast from "../components/withdraw/Toast";
 import { useUserProfile } from "../contexts/UserProfileContext";
 import { getMetaMaskDeepLink } from "../lib/api";
-import { API_BASE_URL_URL } from "../config/api";
+import { API_BASE_URL } from "../config/api";
 
 interface WalletAddress {
   address: string;

@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import { useMemo } from "react";
 
 interface Transaction {
   date: string;
@@ -48,7 +49,10 @@ const TransactionDetailModal = ({
   };
 
   // Generate a transaction ID
-  const transactionId = `TXN${Date.now().toString().slice(-8)}`;
+  const transactionId = useMemo(
+    () => `TXN${Date.now().toString().slice(-8)}`,
+    []
+  );
 
   return (
     <div
