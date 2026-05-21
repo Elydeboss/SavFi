@@ -47,7 +47,7 @@ const Sidebar: FC<SidebarProps> = ({ onTitleChange, onPageChange }) => {
     if (activeIndex < sidebarItems.length) {
       const item = sidebarItems[activeIndex];
       onTitleChange?.(item.label);
-      onPageChange?.(item.component());
+      onPageChange?.(item.component);
     } else {
       onTitleChange?.('Profile');
       onPageChange?.(<Profile />);

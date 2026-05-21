@@ -9,7 +9,7 @@ import FlexiFi from "../assets/savingplan/vacation.svg";
 import type { ChangeEvent } from "react";
 
 // 1. IMPORT YOUR WEB3 INTERACTION FUNCTION
-import { saveStablecoin } from "../services/"; // Adjust path as needed
+import { saveStablecoin } from "../services/blockchain.js"; // Adjust path as needed
 
 export default function FlexiFiPlan() {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
-import type { ethers, Signer } from "ethers";
+import { ethers, type Signer } from "ethers";
 import { USX_ADDRESS, VAULT_ADDRESS,
-   STABLECOIN_DECIMALS } from "../constant/";
+   STABLECOIN_DECIMALS } from "../constant/addresses.js";
 
 // NOTE: Ensure these paths correctly point to your compiled ABIs!
 import USX_ABI from "../abis/StablecoinABI.json";
