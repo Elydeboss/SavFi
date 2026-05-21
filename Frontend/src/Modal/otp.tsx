@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Landpage-header";
 
 // API endpoint for OTP verification
-const VERIFY_API_URL = "/api/accounts/verify-otp/";
+const VERIFY_API_URL = `${import.meta.env.VITE_API_BASE_URL}/accounts/verify-otp/`;
 
 interface LocationState {
   userEmail?: string;
@@ -32,7 +32,7 @@ export default function OTPPage() {
     setIsVerifying(true);
     setError("");
 
-    const requestData = { email: userEmail, otp_code: otpCode };
+    const requestData = { email: userEmail, otp: otpCode };
 
     try {
       const response = await fetch(VERIFY_API_URL, {
