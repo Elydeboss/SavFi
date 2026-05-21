@@ -21,13 +21,13 @@ export default function FlexiFiPlan() {
   const totalPayout = lockedAmount + expectedInterest;
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUnderstood(event?.target.checked); // Toggle the checked state
+    setUnderstood(event?.target.checked); // Toggle the checked state
   };
 
   const handleAgreeCheckboxChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setAgreed(event?.target.checked); // Toggle the checked state
+    setAgreed(event?.target.checked); // Toggle the checked state
   };
 
   const isButtonDisabled = !(

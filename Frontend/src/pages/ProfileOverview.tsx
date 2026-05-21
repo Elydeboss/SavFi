@@ -5,7 +5,7 @@ import Breadcrumb from "../components/Breadcrumb";
 import { toast } from "sonner";
 import { useUserProfile } from "../contexts/UserProfileContext";
 import { useEffect, useState } from "react";
-import { API_BASE_URL_URL } from "../config/api";
+import { API_BASE_URL } from "../config/api";
 
 export default function ProfileOverview() {
   const { profile, wallet, setWallet } = useUserProfile();

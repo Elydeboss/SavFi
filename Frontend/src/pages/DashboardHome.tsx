@@ -20,7 +20,7 @@ import Toast from "../components/withdraw/Toast";
 import Piggy from "../assets/public/fluent_savings-32-filled.svg";
 import Tree from "../assets/public/tabler_growth.svg";
 import { useUserProfile } from "../contexts/UserProfileContext";
-import { API_BASE_URL_URL } from "../config/api";
+import { API_BASE_URL } from "../config/api";
 
 type PlanType = "FlexFi" | "GrowFi" | "VaultFi" | "SwiftFi";
 
@@ -104,6 +104,43 @@ const DashboardHome = () => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
+  // Initialize display plans with default values
+  const initializeDisplayPlans = () => {
+    // For now, show all 4 plans in 0% state (fresh account)
+    const plans: DisplayPlan[] = [
+      {
+        type: "FlexFi",
+        duration: PLAN_CONFIGS.FlexFi.duration,
+        interest: PLAN_CONFIGS.FlexFi.interestDisplay,
+        balance: 0,
+        isActive: false,
+      },
+      {
+        type: "GrowFi",
+        duration: PLAN_CONFIGS.GrowFi.duration,
+        interest: PLAN_CONFIGS.GrowFi.interestDisplay,
+        balance: 0,
+        isActive: false,
+      },
+      {
+        type: "VaultFi",
+        duration: PLAN_CONFIGS.VaultFi.duration,
+        interest: PLAN_CONFIGS.VaultFi.interestDisplay,
+        balance: 0,
+        isActive: false,
+      },
+      {
+        type: "SwiftFi",
+        interest: PLAN_CONFIGS.SwiftFi.interestDisplay,
+        balance: 0,
+        isActive: false,
+      },
+    ];
+
+    setDisplayPlans(plans);
+    setTotalBalance(0);
+  };
+
   const walletAddress = wallet?.addresses?.[0] || wallet?.id || "";
 
   useEffect(() => {
@@ -153,42 +190,6 @@ const DashboardHome = () => {
     initializeDisplayPlans();
     setIsLoading(false);
   }, [navigate, profile, wallet, setWallet]);
-
-  const initializeDisplayPlans = () => {
-    // For now, show all 4 plans in 0% state (fresh account)
-    const plans: DisplayPlan[] = [
-      {
-        type: "FlexFi",
-        duration: PLAN_CONFIGS.FlexFi.duration,
-        interest: PLAN_CONFIGS.FlexFi.interestDisplay,
-        balance: 0,
-        isActive: false,
-      },
-      {
-        type: "GrowFi",
-        duration: PLAN_CONFIGS.GrowFi.duration,
-        interest: PLAN_CONFIGS.GrowFi.interestDisplay,
-        balance: 0,
-        isActive: false,
-      },
-      {
-        type: "VaultFi",
-        duration: PLAN_CONFIGS.VaultFi.duration,
-        interest: PLAN_CONFIGS.VaultFi.interestDisplay,
-        balance: 0,
-        isActive: false,
-      },
-      {
-        type: "SwiftFi",
-        interest: PLAN_CONFIGS.SwiftFi.interestDisplay,
-        balance: 0,
-        isActive: false,
-      },
-    ];
-
-    setDisplayPlans(plans);
-    setTotalBalance(0);
-  };
 
   const handleWelcomeComplete = () => {
     setShowWelcomeModal(false);

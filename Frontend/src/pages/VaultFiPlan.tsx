@@ -21,7 +21,7 @@ export default function VaultFiPlan() {
   const totalPayout = lockedAmount + expectedInterest;
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUnderstood(event?.target.checked); // Toggle the checked state
+    setUnderstood(event?.target.checked); // Toggle the checked state
   };
 
   const isButtonDisabled = !(amount && parseFloat(amount) > 0 && understood);

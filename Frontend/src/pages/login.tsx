@@ -9,7 +9,7 @@ import Toast from "../components/withdraw/Toast";
 import { getMetaMaskDeepLink } from "../lib/api";
 //import WalletConnector from "../Modal/Metamask";
 import { useUserProfile } from "../contexts/UserProfileContext";
-import { API_BASE_URL_URL } from "../config/api";
+import { API_BASE_URL } from "../config/api";
 
 const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),

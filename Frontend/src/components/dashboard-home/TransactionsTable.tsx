@@ -25,6 +25,45 @@ interface TransactionsTableProps {
   loading?: boolean; // optional
 }
 
+// Empty state components moved outside to avoid recreation on each render
+interface EmptyNewUserProps {
+  message?: string;
+}
+
+const EmptyNewUser = ({ message }: EmptyNewUserProps) => (
+  <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-neutral-300 dark:border-neutral-600 p-10 text-center bg-neutral-50 dark:bg-gray-700">
+    <div className="text-2xl font-semibold text-foreground mb-2">
+      {message || "No transactions yet"}
+    </div>
+    <p className="text-sm text-muted-foreground max-w-md">
+      When you deposit, convert to USDT/USDC, or start a plan, your activity
+      will appear here.
+    </p>
+  </div>
+);
+
+interface EmptyFilterProps {
+  activeFilter: string;
+  onClearFilter: () => void;
+}
+
+const EmptyFilter = ({ activeFilter, onClearFilter }: EmptyFilterProps) => (
+  <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-neutral-300 dark:border-neutral-600 p-10 text-center bg-neutral-50 dark:bg-gray-700">
+    <div className="text-2xl font-semibold text-foreground mb-2">
+      No "{activeFilter}" found
+    </div>
+    <p className="text-sm text-muted-foreground max-w-md">
+      Try a different filter or clear filters to see all your transactions.
+    </p>
+    <button
+      onClick={onClearFilter}
+      className="mt-4 inline-flex items-center gap-2 rounded-lg bg-foreground px-4 py-2 text-sm font-semibold text-background hover:bg-foreground/90"
+    >
+      Clear filter
+    </button>
+  </div>
+);
+
 const TransactionsTable = ({
   transactions: incomingTransactions = [], //  default to empty (no dummy data)
   loading = false,
@@ -106,35 +145,6 @@ const TransactionsTable = ({
     }
   };
 
-  const EmptyNewUser = () => (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-neutral-300 dark:border-neutral-600 p-10 text-center bg-neutral-50 dark:bg-gray-700">
-      <div className="text-2xl font-semibold text-foreground mb-2">
-        No transactions yet
-      </div>
-      <p className="text-sm text-muted-foreground max-w-md">
-        When you deposit, convert to USDT/USDC, or start a plan, your activity
-        will appear here.
-      </p>
-    </div>
-  );
-
-  const EmptyFilter = () => (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-neutral-300 dark:border-neutral-600 p-10 text-center bg-neutral-50 dark:bg-gray-700">
-      <div className="text-2xl font-semibold text-foreground mb-2">
-        No “{activeFilter}” found
-      </div>
-      <p className="text-sm text-muted-foreground max-w-md">
-        Try a different filter or clear filters to see all your transactions.
-      </p>
-      <button
-        onClick={() => setActiveFilter("All")}
-        className="mt-4 inline-flex items-center gap-2 rounded-lg bg-foreground px-4 py-2 text-sm font-semibold text-background hover:bg-foreground/90"
-      >
-        Clear filter
-      </button>
-    </div>
-  );
-
   return (
     <div>
       <div className="flex items-center justify-between flex-wrap">
@@ -168,7 +178,7 @@ const TransactionsTable = ({
       ) : !hasAnyTransactions ? (
         <EmptyNewUser />
       ) : !hasFilteredResults ? (
-        <EmptyFilter />
+        <EmptyFilter activeFilter={activeFilter} onClearFilter={() => setActiveFilter("All")} />
       ) : (
         <div className="rounded-2xl overflow-hidden">
           {isMobile ? (

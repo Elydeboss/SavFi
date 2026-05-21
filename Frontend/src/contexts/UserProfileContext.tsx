@@ -6,7 +6,7 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
-import { API_BASE_URL_URL } from "../config/api";
+import { API_BASE_URL } from "../config/api";
 
 interface UserProfile {
   first_name: string;

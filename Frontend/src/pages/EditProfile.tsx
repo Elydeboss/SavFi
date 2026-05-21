@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 // import { Camera } from "lucide-react";
 import { useUserProfile } from "../contexts/UserProfileContext";
-import { API_BASE_URL_URL } from "../config/api";
+import { API_BASE_URL } from "../config/api";
 
 export default function EditProfile() {
   const { profile, updateProfile } = useUserProfile();
