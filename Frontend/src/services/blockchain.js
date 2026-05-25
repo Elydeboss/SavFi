@@ -3,7 +3,7 @@ import {
   USX_ADDRESS,
   VAULT_ADDRESS,
   STABLECOIN_DECIMALS,
-} from "../constants/addresses";
+} from "../constant/addresses";
 
 // Assuming you import your ABIs like this:
 import USX_ABI from "../abis/StablecoinABI.json";

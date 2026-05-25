@@ -1,10 +1,10 @@
 import { ethers, type Signer } from "ethers";
 import { USX_ADDRESS, VAULT_ADDRESS,
-   STABLECOIN_DECIMALS } from "../constant/addresses.js";
+   STABLECOIN_DECIMALS } from "./constant/addresses.js";
 
 // NOTE: Ensure these paths correctly point to your compiled ABIs!
-import USX_ABI from "../abis/StablecoinABI.json";
-import VAULT_ABI from "../abis/VaultABI.json";
+import USX_ABI from "./abis/StablecoinABI.json";
+import VAULT_ABI from "./abis/VaultABI.json";
 
 /**
  * Executes the entire two-step process: Approval and Deposit.
