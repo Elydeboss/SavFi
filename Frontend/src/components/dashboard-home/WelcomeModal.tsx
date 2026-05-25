@@ -29,16 +29,16 @@ const WelcomeModal = ({ onComplete }: WelcomeModalProps) => {
     try {
       const authToken = localStorage.getItem("authToken");
 
-      const formData = new FormData();
-      formData.append("first_name", firstName);
-      formData.append("second_name", lastName);
-
       const response = await fetch(`${API_BASE_URL}/accounts/profile/`, {
         method: "PUT",
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          "Authorization": `Bearer ${authToken}`,
+          "Content-Type": "application/json",
         },
-        body: formData,
+        body: JSON.stringify({
+          first_name: firstName,
+          second_name: lastName,
+        }),
       });
 
       if (response.ok) {

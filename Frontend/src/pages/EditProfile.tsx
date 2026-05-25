@@ -1,5 +1,5 @@
 import Breadcrumb from "../components/Breadcrumb";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 // import { Camera } from "lucide-react";
 import { useUserProfile } from "../contexts/UserProfileContext";
@@ -17,8 +17,6 @@ export default function EditProfile() {
   const [bio, setBio] = useState("");
   const [avatar, setAvatar] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  //const [isFetching, setIsFetching] = useState(true);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Initialize from context (instant, no delay)
   useEffect(() => {
@@ -75,33 +73,23 @@ export default function EditProfile() {
         return;
       }
 
-      // Create a new FormData object
-      const formData = new FormData();
-
-      // Append regular fields to the FormData
-      formData.append("first_name", firstName);
-      formData.append("second_name", secondName);
-      formData.append("username", username);
-      formData.append("phone", phone);
-      formData.append("country", country);
-      formData.append("state", state);
-      formData.append("bio", bio);
-
-      // If there's a file selected, append it as avatar
-      if (fileInputRef.current?.files?.[0]) {
-        console.log("File selected:", fileInputRef.current.files[0]); // Check if file is selected
-        formData.append("avatar", fileInputRef.current.files[0]);
-      } else {
-        console.error("No file selected for avatar");
-      }
-
-      // Send the FormData as a PUT request
+      // Send profile data as JSON
       const response = await fetch(`${API_BASE_URL}/accounts/profile/`, {
         method: "PUT",
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          "Authorization": `Bearer ${authToken}`,
+          "Content-Type": "application/json",
         },
-        body: formData, // Send the FormData object
+        body: JSON.stringify({
+          first_name: firstName,
+          second_name: secondName,
+          username: username,
+          phone: phone,
+          country: country,
+          state: state,
+          bio: bio,
+          avatar: avatar,
+        }),
       });
 
       if (response.ok) {
