@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { api } from '../../lib/api'; // axios client configured with VITE_API_BASE_URL
+import { API_BASE_URL } from '../../config/api';
 import type { RegisterFormValues } from './registerSchema';
 import { registerSchema } from './registerSchema';
 
@@ -61,22 +61,24 @@ export default function RegisterForm() {
       // Generate username from email (or replace with your logic)
       const username = values.email.split('@')[0];
 
-      const res = await api.post('/accounts/register/', {
-        username,
-        email: values.email,
-        password: values.password,
+      const res = await fetch(`${API_BASE_URL}/accounts/register/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email: values.email, password: values.password }),
       });
 
-      console.log('Response:', res.data);
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.detail || `HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      console.log('Response:', data);
       setSuccess(true);
       setValues(initialValues);
       setErrors({});
     } catch (err: any) {
-      const backendError =
-        err.response?.data?.detail ||
-        Object.values(err.response?.data || {}).join(', ') ||
-        err.message ||
-        'Registration failed';
+      const backendError = err.message || 'Registration failed';
       console.error('Registration error:', backendError);
       setServerError(backendError);
     } finally {
